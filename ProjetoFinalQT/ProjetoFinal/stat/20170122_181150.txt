@@ -1,0 +1,2 @@
+TimeStamp|Ticks|FrameNum|FPS|LogaDados|Robo|achou|trajetoria|Xd|Yd|Xa|Ya|DistMelhorPonto|velAtual|velDesejada|erroVel|SaidaControleLinear|angAtual|angDesejado|erroAng|SaidaControleAngular|SinalDeControle1|SinalDeControle2|
+20170121_181220|35163|11|0,000000|1|CarroTeste|0|circulo_r120_xc320_yc240|0|0|0|0|0,000000|0,000000|0,000000|0,000000|0,000000|0,000000|0,000000|0,000000|0,000000|0,000000|0,000000|

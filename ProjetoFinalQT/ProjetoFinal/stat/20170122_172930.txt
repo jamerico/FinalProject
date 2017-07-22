@@ -1,0 +1,2 @@
+TimeStamp|Ticks|FrameNum|FPS|LogaDados|Robo|achou|trajetoria|Xd|Yd|Xa|Ya|DistMelhorPonto|velAtual|velDesejada|erroVel|SaidaControleLinear|angAtual|angDesejado|erroAng|SaidaControleAngular|SinalDeControle1|SinalDeControle2|
+20170121_172958|28312|1|0,000001|0||0||0|0|0|0||||||||||||

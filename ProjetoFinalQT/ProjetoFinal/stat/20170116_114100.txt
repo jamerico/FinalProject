@@ -1,0 +1,1 @@
+Timestamp|Ticks|FrameNum|FPS|Robo|Xd|Yd|Xa|Ya|

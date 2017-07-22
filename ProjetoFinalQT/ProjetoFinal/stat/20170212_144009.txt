@@ -1,0 +1,2 @@
+TimeStamp|Ticks|FrameNum|FPS|LogaDados|Robo|achou|trajetoria|Xd|Yd|Xa|Ya|DistMelhorPonto|velAtual|velAtualDerivSuja|velDesejada|erroVel|SaidaControleLinear|angAtual|angDesejado|erroAng|SaidaControleAngular|SinalDeControle1|SinalDeControle2|
+20170211_144115|52757|22|22.000000|1|CarroTeste|1|circulo_r60_xc160_yc120|210|153|259|178|55.009090|0.000000|0.000000|80.000000|80.000000|536.090168|3.926991|3.255314|-0.671676|-20.327624|5.407009|48.202008|

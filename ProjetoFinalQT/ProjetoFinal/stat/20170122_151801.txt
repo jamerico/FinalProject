@@ -1,0 +1,1 @@
+TimeStamp|Ticks|FrameNum|FPS|LogaDados|Robo|achou|trajetoria|Xd|Yd|Xa|Ya|DistMelhorPonto|velAtual|velDesejada|erroVel|SaidaControleLinear|angAtual|angDesejado|erroAng|SaidaControleAngular|SinalDeControle1|SinalDeControle2|

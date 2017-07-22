@@ -1,0 +1,190 @@
+2017-05-05 16:44:49 -------- Inicio Execução Programa -------------
+2017-05-05 16:44:53 Inicio Construtor dbStorage 
+2017-05-05 16:44:53 Opened MyDb.db.
+2017-05-05 16:44:53 Error executing SQLite3 statement: no such table: tb_cor
+2017-05-05 16:44:53 Criando tabela tb_cor 
+2017-05-05 16:44:53 tb_cor criada com sucesso
+2017-05-05 16:44:53 Error executing SQLite3 statement: no such table: tb_paramcontrole
+2017-05-05 16:44:53 Criando tabela tb_paramcontrole 
+2017-05-05 16:44:53 tb_paramcontrole criada com sucesso
+2017-05-05 16:44:53 Error executing SQLite3 statement: no such table: tb_objeto
+2017-05-05 16:44:53 Criando tabela tb_objeto 
+2017-05-05 16:44:53 tb_objeto criada com sucesso
+2017-05-05 16:44:53 Error executing SQLite3 statement: no such table: tb_trajetoria
+2017-05-05 16:44:53 Criando tabela tb_trajetoria 
+2017-05-05 16:44:53 tb_trajetoria criada com sucesso
+2017-05-05 16:44:53 Error executing SQLite3 statement: no such table: tb_ponto
+2017-05-05 16:44:53 Criando tabela tb_ponto 
+2017-05-05 16:44:53 tb_ponto criada com sucesso
+2017-05-05 16:44:53 Buscando cor todas as cores
+2017-05-05 16:44:53 Buscando todos os parametros de controle
+2017-05-05 16:44:53 Buscando todos os objetos
+2017-05-05 16:44:53 Buscando trajetoria: circulo_r80_xc160_yc120
+2017-05-05 16:44:53 Error executing SQLite3 statement: no such column: nome
+2017-05-05 16:44:53 Buscando cor todas as cores
+2017-05-05 16:44:54 Buscando todos os parametros de controle
+2017-05-05 16:44:54 Buscando todos os objetos
+2017-05-05 16:44:54 Buscando todas as trajetorias
+2017-05-05 16:44:54 Error executing SQLite3 statement: no such column: flg_ativo
+2017-05-05 16:44:54 Buscando cor todas as cores
+2017-05-05 16:44:54 Buscando todos os parametros de controle
+2017-05-05 16:44:54 Buscando cor todas as cores
+2017-05-05 16:44:54 Buscando nomes trajetorias
+2017-05-05 16:44:54 Error executing SQLite3 statement: no such column: nome
+2017-05-05 16:44:54 Buscando todos os objetos
+2017-05-05 16:58:25 -------- Inicio Execução Programa -------------
+2017-05-05 16:58:27 Inicio Construtor dbStorage 
+2017-05-05 16:58:27 Opened MyDb.db.
+2017-05-05 16:58:27 Tabela tb_cor já existe.
+2017-05-05 16:58:27 Tabela tb_paramcontrole já existe.
+2017-05-05 16:58:27 Tabela tb_objeto já existe.
+2017-05-05 16:58:27 Tabela tb_trajetoria já existe.
+2017-05-05 16:58:27 Tabela tb_ponto já existe.
+2017-05-05 16:58:27 Buscando cor todas as cores
+2017-05-05 16:58:27 Buscando todos os parametros de controle
+2017-05-05 16:58:27 Buscando todos os objetos
+2017-05-05 16:58:27 Buscando trajetoria: circulo_r80_xc160_yc120
+2017-05-05 16:58:27 Error executing SQLite3 statement: no such column: nome
+2017-05-05 16:58:27 Buscando cor todas as cores
+2017-05-05 16:58:28 Buscando todos os parametros de controle
+2017-05-05 16:58:28 Buscando todos os objetos
+2017-05-05 16:58:28 Buscando todas as trajetorias
+2017-05-05 16:58:28 Error executing SQLite3 statement: no such column: flg_ativo
+2017-05-05 16:58:28 Buscando cor todas as cores
+2017-05-05 16:58:28 Buscando todos os parametros de controle
+2017-05-05 16:58:28 Buscando cor todas as cores
+2017-05-05 16:58:28 Buscando nomes trajetorias
+2017-05-05 16:58:28 Error executing SQLite3 statement: no such column: nome
+2017-05-05 16:58:28 Buscando todos os objetos
+2017-05-05 16:58:47 -------- Inicio Execução Programa -------------
+2017-05-05 16:58:49 Inicio Construtor dbStorage 
+2017-05-05 16:58:49 Opened MyDb.db.
+2017-05-05 16:58:49 Tabela tb_cor já existe.
+2017-05-05 16:58:49 Tabela tb_paramcontrole já existe.
+2017-05-05 16:58:49 Tabela tb_objeto já existe.
+2017-05-05 16:58:49 Tabela tb_trajetoria já existe.
+2017-05-05 16:58:49 Tabela tb_ponto já existe.
+2017-05-05 16:58:49 Buscando cor todas as cores
+2017-05-05 16:58:49 Buscando todos os parametros de controle
+2017-05-05 16:58:49 Buscando todos os objetos
+2017-05-05 16:58:49 Buscando trajetoria: circulo_r80_xc160_yc120
+2017-05-05 16:58:49 Error executing SQLite3 statement: no such column: nome
+2017-05-05 16:58:49 Buscando cor todas as cores
+2017-05-05 16:58:49 Buscando todos os parametros de controle
+2017-05-05 16:58:49 Buscando todos os objetos
+2017-05-05 16:58:49 Buscando todas as trajetorias
+2017-05-05 16:58:49 Error executing SQLite3 statement: no such column: flg_ativo
+2017-05-05 16:58:49 Buscando cor todas as cores
+2017-05-05 16:58:49 Buscando todos os parametros de controle
+2017-05-05 16:58:49 Buscando cor todas as cores
+2017-05-05 16:58:49 Buscando nomes trajetorias
+2017-05-05 16:58:49 Error executing SQLite3 statement: no such column: nome
+2017-05-05 16:58:49 Buscando todos os objetos
+2017-07-08 11:56:21 -------- Inicio Execução Programa -------------
+2017-07-08 11:56:22 Inicio Construtor dbStorage 
+2017-07-08 11:56:22 Opened MyDb.db.
+2017-07-08 11:56:22 Tabela tb_cor já existe.
+2017-07-08 11:56:22 Tabela tb_paramcontrole já existe.
+2017-07-08 11:56:22 Tabela tb_objeto já existe.
+2017-07-08 11:56:22 Tabela tb_trajetoria já existe.
+2017-07-08 11:56:22 Tabela tb_ponto já existe.
+2017-07-08 11:56:22 Buscando cor todas as cores
+2017-07-08 11:56:22 Buscando todos os parametros de controle
+2017-07-08 11:56:22 Buscando todos os objetos
+2017-07-08 11:56:22 Buscando trajetoria: circulo_r80_xc160_yc120
+2017-07-08 11:56:22 Error executing SQLite3 statement: no such column: nome
+2017-07-08 11:56:22 Buscando cor todas as cores
+2017-07-08 11:56:22 Buscando todos os parametros de controle
+2017-07-08 11:56:22 Buscando todos os objetos
+2017-07-08 11:56:22 Buscando todas as trajetorias
+2017-07-08 11:56:22 Error executing SQLite3 statement: no such column: flg_ativo
+2017-07-08 11:56:22 Buscando cor todas as cores
+2017-07-08 11:56:22 Buscando todos os parametros de controle
+2017-07-08 11:56:22 Buscando cor todas as cores
+2017-07-08 11:56:22 Buscando nomes trajetorias
+2017-07-08 11:56:22 Error executing SQLite3 statement: no such column: nome
+2017-07-08 11:56:22 Buscando todos os objetos
+2017-07-08 11:58:24 -------- Inicio Execução Programa -------------
+2017-07-08 11:58:25 Inicio Construtor dbStorage 
+2017-07-08 11:58:25 Opened MyDb.db.
+2017-07-08 11:58:25 Tabela tb_cor já existe.
+2017-07-08 11:58:25 Tabela tb_paramcontrole já existe.
+2017-07-08 11:58:25 Tabela tb_objeto já existe.
+2017-07-08 11:58:25 Tabela tb_trajetoria já existe.
+2017-07-08 11:58:25 Tabela tb_ponto já existe.
+2017-07-08 11:58:25 Buscando cor todas as cores
+2017-07-08 11:58:25 Buscando todos os parametros de controle
+2017-07-08 11:58:25 Buscando todos os objetos
+2017-07-08 11:58:25 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:25 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando controle: CarroTestePID
+2017-07-08 11:58:26 Buscando cor: 
+2017-07-08 11:58:26 Buscando cor: Azul
+2017-07-08 11:58:26 Buscando cor: Verde
+2017-07-08 11:58:26 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando controle: CarroTestePID
+2017-07-08 11:58:26 Buscando cor: 
+2017-07-08 11:58:26 Buscando cor: Amarelo
+2017-07-08 11:58:26 Buscando cor: Verde
+2017-07-08 11:58:26 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando controle: CarroTestePID
+2017-07-08 11:58:26 Buscando cor: 
+2017-07-08 11:58:26 Buscando cor: Verde
+2017-07-08 11:58:26 Buscando cor: Amarelo
+2017-07-08 11:58:26 Buscando trajetoria: circulo_r80_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r80_xc160_yc120
+2017-07-08 11:58:26 Buscando cor todas as cores
+2017-07-08 11:58:26 Buscando todos os parametros de controle
+2017-07-08 11:58:26 Buscando todos os objetos
+2017-07-08 11:58:26 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando controle: CarroTestePID
+2017-07-08 11:58:26 Buscando cor: 
+2017-07-08 11:58:26 Buscando cor: Azul
+2017-07-08 11:58:26 Buscando cor: Verde
+2017-07-08 11:58:26 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando controle: CarroTestePID
+2017-07-08 11:58:26 Buscando cor: 
+2017-07-08 11:58:26 Buscando cor: Amarelo
+2017-07-08 11:58:26 Buscando cor: Verde
+2017-07-08 11:58:26 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:26 Buscando controle: CarroTestePID
+2017-07-08 11:58:26 Buscando cor: 
+2017-07-08 11:58:26 Buscando cor: Verde
+2017-07-08 11:58:26 Buscando cor: Amarelo
+2017-07-08 11:58:26 Buscando todas as trajetorias
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r68_xc160_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: bean_a1.7_b2_xc160_yc120_scale45
+2017-07-08 11:58:26 Buscando pontos para trajetoria: bean_a1.7_b2_xc160_yc120_scale40
+2017-07-08 11:58:26 Buscando pontos para trajetoria: bean_a1.7_b2_xc160_yc120_scale35
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc130_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc190_yc120
+2017-07-08 11:58:26 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando pontos para trajetoria: circulo_r80_xc160_yc120
+2017-07-08 11:58:27 Buscando cor todas as cores
+2017-07-08 11:58:27 Buscando todos os parametros de controle
+2017-07-08 11:58:27 Buscando cor todas as cores
+2017-07-08 11:58:27 Buscando nomes trajetorias
+2017-07-08 11:58:27 Buscando todos os objetos
+2017-07-08 11:58:27 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando controle: CarroTestePID
+2017-07-08 11:58:27 Buscando cor: 
+2017-07-08 11:58:27 Buscando cor: Azul
+2017-07-08 11:58:27 Buscando cor: Verde
+2017-07-08 11:58:27 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando controle: CarroTestePID
+2017-07-08 11:58:27 Buscando cor: 
+2017-07-08 11:58:27 Buscando cor: Amarelo
+2017-07-08 11:58:27 Buscando cor: Verde
+2017-07-08 11:58:27 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-08 11:58:27 Buscando controle: CarroTestePID
+2017-07-08 11:58:27 Buscando cor: 
+2017-07-08 11:58:27 Buscando cor: Verde
+2017-07-08 11:58:27 Buscando cor: Amarelo
