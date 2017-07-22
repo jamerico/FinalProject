@@ -156,6 +156,11 @@ StrRetorno Objeto::ControleJacoud(){
 
 StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
+	// log files
+	ofstream objectStream;
+	objectStream.open("roboData.txt", ios::out | ios::app);
+	// end log files
+
 	clock_t now = clock();
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 
@@ -234,9 +239,16 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	myfile2.close();
 
 	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
+
+	// convert from -255/255 scale to -5/5 volts
+	double sinalTensao1Volts = sinalTensao1 > 0 ? sinalTensao1 * 5 / 255 : -sinalTensao1 * 5 / 255;
+	double sinalTensao2Volts = sinalTensao2 > 0 ? sinalTensao2 * 5 / 255 : -sinalTensao2 * 5 / 255;
+
+	objectStream << sinalTensao1Volts << ',' << sinalTensao2Volts << ',' << posAtual.ang << "\n";
+	objectStream.close();
+
 	return StrRetorno(0,0,0,0,posAtual.ang, AngRef, erroAng, 0,Position(0,0), saidaControleLinear,saidaControleAngular, sinalTensao1, sinalTensao2, false);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
-
 
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
 }

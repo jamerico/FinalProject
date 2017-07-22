@@ -334,6 +334,8 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 			StrRetorno rtn;
 			//bool sentido = objetos[idxObj].nome == "CarroTeste";
 			//bool sentido = objetos[idxObj].nome == "CarroTeste";
+			Logger::Output("TO AQUI");
+
 			
 			if (objetos[idxObj].achou && objetos[idxObj].ctrl.nome != "")
 			{
