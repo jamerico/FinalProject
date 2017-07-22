@@ -75872,3 +75872,87 @@
 2017-07-22 18:21:40 Buscando cor: 
 2017-07-22 18:21:40 Buscando cor: Verde
 2017-07-22 18:21:40 Buscando cor: Amarelo
+2017-07-22 18:25:11 -------- Inicio Execução Programa -------------
+2017-07-22 18:25:12 Inicio Construtor dbStorage 
+2017-07-22 18:25:12 Opened MyDb.db.
+2017-07-22 18:25:12 Tabela tb_cor já existe.
+2017-07-22 18:25:12 Tabela tb_paramcontrole já existe.
+2017-07-22 18:25:12 Tabela tb_objeto já existe.
+2017-07-22 18:25:12 Tabela tb_trajetoria já existe.
+2017-07-22 18:25:14 Tabela tb_ponto já existe.
+2017-07-22 18:25:14 Buscando cor todas as cores
+2017-07-22 18:25:14 Buscando todos os parametros de controle
+2017-07-22 18:25:14 Buscando todos os objetos
+2017-07-22 18:25:14 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:14 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:15 Buscando controle: CarroTestePID
+2017-07-22 18:25:15 Buscando cor: 
+2017-07-22 18:25:15 Buscando cor: Azul
+2017-07-22 18:25:15 Buscando cor: Verde
+2017-07-22 18:25:15 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:15 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:15 Buscando controle: CarroTestePID
+2017-07-22 18:25:15 Buscando cor: 
+2017-07-22 18:25:15 Buscando cor: Amarelo
+2017-07-22 18:25:15 Buscando cor: Verde
+2017-07-22 18:25:16 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:16 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:16 Buscando controle: CarroTestePID
+2017-07-22 18:25:16 Buscando cor: 
+2017-07-22 18:25:16 Buscando cor: Verde
+2017-07-22 18:25:16 Buscando cor: Amarelo
+2017-07-22 18:25:16 Buscando trajetoria: circulo_r80_xc160_yc120
+2017-07-22 18:25:16 Buscando pontos para trajetoria: circulo_r80_xc160_yc120
+2017-07-22 18:25:17 Buscando cor todas as cores
+2017-07-22 18:25:17 Buscando todos os parametros de controle
+2017-07-22 18:25:17 Buscando todos os objetos
+2017-07-22 18:25:17 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:17 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:18 Buscando controle: CarroTestePID
+2017-07-22 18:25:18 Buscando cor: 
+2017-07-22 18:25:18 Buscando cor: Azul
+2017-07-22 18:25:18 Buscando cor: Verde
+2017-07-22 18:25:18 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:18 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:18 Buscando controle: CarroTestePID
+2017-07-22 18:25:18 Buscando cor: 
+2017-07-22 18:25:18 Buscando cor: Amarelo
+2017-07-22 18:25:18 Buscando cor: Verde
+2017-07-22 18:25:18 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:18 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:19 Buscando controle: CarroTestePID
+2017-07-22 18:25:19 Buscando cor: 
+2017-07-22 18:25:19 Buscando cor: Verde
+2017-07-22 18:25:19 Buscando cor: Amarelo
+2017-07-22 18:25:19 Buscando todas as trajetorias
+2017-07-22 18:25:19 Buscando pontos para trajetoria: circulo_r68_xc160_yc120
+2017-07-22 18:25:19 Buscando pontos para trajetoria: bean_a1.7_b2_xc160_yc120_scale45
+2017-07-22 18:25:20 Buscando pontos para trajetoria: bean_a1.7_b2_xc160_yc120_scale40
+2017-07-22 18:25:20 Buscando pontos para trajetoria: bean_a1.7_b2_xc160_yc120_scale35
+2017-07-22 18:25:21 Buscando pontos para trajetoria: circulo_r60_xc130_yc120
+2017-07-22 18:25:21 Buscando pontos para trajetoria: circulo_r60_xc190_yc120
+2017-07-22 18:25:21 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:22 Buscando pontos para trajetoria: circulo_r80_xc160_yc120
+2017-07-22 18:25:22 Buscando cor todas as cores
+2017-07-22 18:25:22 Buscando todos os parametros de controle
+2017-07-22 18:25:22 Buscando cor todas as cores
+2017-07-22 18:25:22 Buscando nomes trajetorias
+2017-07-22 18:25:22 Buscando todos os objetos
+2017-07-22 18:25:22 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:22 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:23 Buscando controle: CarroTestePID
+2017-07-22 18:25:23 Buscando cor: 
+2017-07-22 18:25:23 Buscando cor: Azul
+2017-07-22 18:25:23 Buscando cor: Verde
+2017-07-22 18:25:23 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:23 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:23 Buscando controle: CarroTestePID
+2017-07-22 18:25:23 Buscando cor: 
+2017-07-22 18:25:23 Buscando cor: Amarelo
+2017-07-22 18:25:23 Buscando cor: Verde
+2017-07-22 18:25:23 Buscando trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:23 Buscando pontos para trajetoria: circulo_r60_xc160_yc120
+2017-07-22 18:25:24 Buscando controle: CarroTestePID
+2017-07-22 18:25:24 Buscando cor: 
+2017-07-22 18:25:24 Buscando cor: Verde
+2017-07-22 18:25:24 Buscando cor: Amarelo
