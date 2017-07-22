@@ -1,2 +1,0 @@
-TimeStamp|Ticks|FrameNum|FPS|Robo|achou|trajetoria|Xd|Yd|Xa|Ya|DistMelhorPonto|velAtual|velDesejada|erroVel|angAtual|angDesejado|erroAng|
-20170115_123657|9360|1|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,||0||0|0|0|0|-9.25596e+061|-9.25596e+061|-9.25596e+061|-9.25596e+061|-9.25596e+061|-9.25596e+061|-9.25596e+061|
