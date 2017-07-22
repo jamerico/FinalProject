@@ -1,0 +1,9 @@
+Linear:
+P 92
+I 90
+D 1.5
+
+Angular:
+P 60
+I 395
+D 1.53

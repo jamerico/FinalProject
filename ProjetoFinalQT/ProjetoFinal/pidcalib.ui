@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PIDCalib</class>
+ <widget class="QWidget" name="PIDCalib">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>674</width>
+    <height>378</height>
+   </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>PIDCalib</string>
+  </property>
+  <widget class="QLabel" name="label_14">
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>0</y>
+     <width>70</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <underline>false</underline>
+     <strikeout>false</strikeout>
+     <stylestrategy>PreferDefault</stylestrategy>
+     <kerning>false</kerning>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Área de Teste</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line_4">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>98</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_5">
+   <property name="geometry">
+    <rect>
+     <x>222</x>
+     <y>0</y>
+     <width>98</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>19</y>
+     <width>301</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tabTraj">
+    <attribute name="title">
+     <string>Carga de trajetoria</string>
+    </attribute>
+    <widget class="QComboBox" name="trajComboBox">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>20</y>
+       <width>201</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Trajetória:</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="clockwiseCheckBoxTraj">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Sentido Horário</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabPointAndClick">
+    <attribute name="title">
+     <string>Point and Click</string>
+    </attribute>
+    <widget class="QLabel" name="label_15">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>181</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selecione um ponto na imagem</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabLemniscata">
+    <attribute name="title">
+     <string>Lemniscata</string>
+    </attribute>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>35</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Período :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="radiusLabelLemniscata">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>75</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QSlider" name="radiusSliderLemniscata">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>75</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QSlider" name="periodSliderLemniscata">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>35</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="periodLabelLemniscata">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>35</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>75</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string> Raio :</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="clockwiseCheckBoxLemniscata">
+     <property name="geometry">
+      <rect>
+       <x>-28</x>
+       <y>110</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Sentido Horário</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>281</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selecione um ponto na imagem para ser o centro da curva</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabCirculo">
+    <attribute name="title">
+     <string>Circulo</string>
+    </attribute>
+    <widget class="QSlider" name="radiusSliderCirculo">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>75</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QSlider" name="periodSliderCirculo">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>35</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="clockwiseCheckBoxCirculo">
+     <property name="geometry">
+      <rect>
+       <x>-28</x>
+       <y>110</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Sentido Horário</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="radiusLabelCirculo">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>75</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_21">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>35</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Período :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="periodLabelCirculo">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>35</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_22">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>75</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string> Raio :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_23">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>281</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selecione um ponto na imagem para ser o centro do círculo</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabLinha">
+    <attribute name="title">
+     <string>Linha</string>
+    </attribute>
+    <widget class="QCheckBox" name="clockwiseCheckBoxLinha">
+     <property name="geometry">
+      <rect>
+       <x>-4</x>
+       <y>60</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Sentido do Moviento</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_24">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>281</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selecione dois pontos na imagem para definir uma linha</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="sentidoLabelLinha">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>60</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Baixo/Esquerda</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="stopTestButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Pausar</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startTestButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>196</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Iniciar</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="manualCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>200</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Controle Manual</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="congelaCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>220</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Congela/Descongela</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showCarsCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>200</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Mostrar Robô</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>311</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <widget class="QPushButton" name="newRobotButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Novo</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>12</x>
+      <y>20</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> Robô:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>40</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PID:</string>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="newPIDButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>50</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nova</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="robotComboBox">
+    <property name="geometry">
+     <rect>
+      <x>52</x>
+      <y>20</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="pidComboBox">
+    <property name="geometry">
+     <rect>
+      <x>52</x>
+      <y>50</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Salvar</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="robotSecComboBox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>52</x>
+      <y>80</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>80</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> Robô 2:</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QTextBrowser" name="text">
+   <property name="geometry">
+    <rect>
+     <x>335</x>
+     <y>250</y>
+     <width>321</width>
+     <height>111</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="LogStatCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>220</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Log Stat</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_6">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>10</y>
+     <width>316</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Parâmetros do PID</string>
+   </property>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>115</y>
+      <width>191</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Angular</string>
+    </property>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Integrador (I) :</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="DASpinBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>50</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Derivativo (D) :</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="IASpinBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>80</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="PASpinBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>20</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Proporcional (P) :</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>15</y>
+      <width>191</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Linear</string>
+    </property>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Integrador (I) :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Derivativo (D) :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Proporcional (P) :</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="DLSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>40</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="ILSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>70</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="PLSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>10</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-100.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>130</y>
+      <width>91</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>AngDesejado</string>
+    </property>
+    <widget class="QDoubleSpinBox" name="kAngDesSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="decimals">
+      <number>3</number>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.010000000000000</double>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>20</y>
+      <width>91</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Cruise Control</string>
+    </property>
+    <widget class="QDoubleSpinBox" name="velSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="decimals">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

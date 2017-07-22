@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RoboConfig</class>
+ <widget class="QWidget" name="RoboConfig">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>196</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RoboConfig</string>
+  </property>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>-320</x>
+     <y>210</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>103</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Nome :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>PID :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Endereço do X-Bee :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>SetPointVel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>20</y>
+     <width>126</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QComboBox" name="nomeComboBox"/>
+    </item>
+    <item>
+     <widget class="QComboBox" name="pidComboBox"/>
+    </item>
+    <item>
+     <widget class="QComboBox" name="xBeeAdressComboBox"/>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="VelSpinBox">
+      <property name="maximum">
+       <number>500</number>
+      </property>
+      <property name="singleStep">
+       <number>5</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>20</y>
+     <width>85</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Tipo de Objeto:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Trajetória</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Cor Primária :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Cor Secundária :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Cor Terciária :</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>365</x>
+     <y>20</y>
+     <width>176</width>
+     <height>156</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QComboBox" name="TipoObjetoComboBox"/>
+    </item>
+    <item>
+     <widget class="QComboBox" name="trajComboBox"/>
+    </item>
+    <item>
+     <widget class="QComboBox" name="corPriComboBox"/>
+    </item>
+    <item>
+     <widget class="QComboBox" name="corSecComboBox"/>
+    </item>
+    <item>
+     <widget class="QComboBox" name="corTerComboBox"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>236</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="newButton">
+      <property name="text">
+       <string>Novo</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="saveButton">
+      <property name="text">
+       <string>Salvar</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="deleteButton">
+      <property name="text">
+       <string>Deletar</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <zorder>pushButton</zorder>
+  <zorder>newButton</zorder>
+  <zorder>saveButton</zorder>
+  <zorder>deleteButton</zorder>
+  <zorder>pidComboBox</zorder>
+  <zorder>nomeComboBox</zorder>
+  <zorder>corTerComboBox</zorder>
+  <zorder>corPriComboBox</zorder>
+  <zorder>corSecComboBox</zorder>
+  <zorder>xBeeAdressComboBox</zorder>
+  <zorder>TipoObjetoComboBox</zorder>
+  <zorder>splitter</zorder>
+  <zorder>trajComboBox</zorder>
+  <zorder>label_8</zorder>
+  <zorder>label_9</zorder>
+  <zorder>VelSpinBox</zorder>
+  <zorder>label_2</zorder>
+  <zorder>deleteButton</zorder>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
