@@ -296,3 +296,5 @@ __pycache__/
 
 ProjetoFinalQT/x64
 ProjetoFinalQT/ProjetoFinal/stat
+log.txt
+*.log
