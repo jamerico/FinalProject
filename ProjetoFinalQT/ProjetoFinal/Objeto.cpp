@@ -13,11 +13,14 @@ Objeto::Objeto()
 	Speeds.push_back(0.0);
 	//posAnterior.ticks = clock();
 	//posAnterior.timev = time(&timev);
+
 	
+
 }
 
 Objeto::~Objeto()
 {
+	
 }
 
 #pragma endregion
@@ -156,15 +159,23 @@ StrRetorno Objeto::ControleJacoud(){
 
 StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
+	ofstream objectStream, signalsStream;
+
 	// log files
-	ofstream objectStream;
 	objectStream.open("roboData.txt", ios::out | ios::app);
+	signalsStream.open("signalsStream.txt", ios::out | ios::app);
+
+
+
+
+
+
 	// end log files
 
 	clock_t now = clock();
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 
-	double AngRef = (160*M_PI/180)+(60*M_PI/180.0)* sin(2*M_PI*1*t);
+	double AngRef = (30*M_PI/180)+(60*M_PI/180.0)* sin(2*M_PI*1*t);
 	double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
 
 	double erroAng = AngRef - posAtual.ang;
@@ -175,18 +186,13 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double y = -pow((posAtual.ang - (90 * M_PI / 180)),2) + 10;
 
 	LowPassFilter(y);
-	ofstream lowPassFilterFile;
-	lowPassFilterFile.open("lowPassFilter.txt", ios::out | ios::app);
-	lowPassFilterFile << outputFilter << "\n";
-	lowPassFilterFile.close();
+	
 
 	double outputHighPass = y - outputFilter;
 	double gradientEstimative = sin(2 * M_PI * 1 * t)*outputHighPass;
 
-	ofstream gradientEstimativeFile;
-	gradientEstimativeFile.open("signalsESC.txt", ios::out | ios::app);
-	gradientEstimativeFile << posAtual.ang << ',' << y << ',' << outputFilter << ',' << outputHighPass << ','<< gradientEstimative << "\n";
-	gradientEstimativeFile.close();
+
+
 
 
 	ControleAngular(pParam, erroAng);
@@ -222,30 +228,28 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255);
 	//sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255);
 
-	ofstream myfile;
-	myfile.open("dadosJacoudLinear.txt", ios::out | ios::app);
-	myfile << PosRef << ',' << posAtual.x << ',' << erroLin << ',' << sinalTensao1 << ',' << sinalTensao2 << "\n";
-	myfile.close();
-
-	ofstream myfile3;
-	myfile3.open("dadosJacoudAngular.txt", ios::out | ios::app);
-	myfile3 << AngRef << ',' << posAtual.ang << ',' << erroAng << ',' << sinalTensao1 << ',' << sinalTensao2 << "\n";
-	myfile3.close();
 
 
-	ofstream myfile2;
-	myfile2.open("plotLinear.txt", ios::out | ios::app);
-	myfile2 << PosRef << ',' << posAtual.x << "\n";
-	myfile2.close();
+
 
 	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
 
 	// convert from -255/255 scale to -5/5 volts
 	double sinalTensao1Volts = sinalTensao1 > 0 ? sinalTensao1 * 5 / 255 : -sinalTensao1 * 5 / 255;
 	double sinalTensao2Volts = sinalTensao2 > 0 ? sinalTensao2 * 5 / 255 : -sinalTensao2 * 5 / 255;
+	
+	
+	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
+	signalsStream << outputFilter << ',' << outputHighPass << ',' << gradientEstimative << "\n";
+	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
+	objectStream << sinalTensao1Volts << ',' << sinalTensao2Volts << ',' << posAtual.ang << ',' << AngRef << "\n";
 
-	objectStream << sinalTensao1Volts << ',' << sinalTensao2Volts << ',' << posAtual.ang << "\n";
+	
+
+	signalsStream.close();
+
 	objectStream.close();
+
 
 	return StrRetorno(0,0,0,0,posAtual.ang, AngRef, erroAng, 0,Position(0,0), saidaControleLinear,saidaControleAngular, sinalTensao1, sinalTensao2, false);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
