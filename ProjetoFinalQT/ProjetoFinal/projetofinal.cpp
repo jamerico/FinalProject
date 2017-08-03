@@ -23,7 +23,7 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 
 
 
-	Vision::instance(0);
+	Vision::instance(1);
 
 	//Cor c("teste1", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 0, 999);
 	//dbStorage::instance()->salvaCor(c);
@@ -1030,7 +1030,8 @@ void ProjetoFinal::DesenhaTrajetorias2()
 void ProjetoFinal::FindObjects(vector<vector<cv::Point>> posicaoCores){
 
 	//double limiar = 45;
-	double limiar = 9.5;
+	//double limiar = 9.5;
+	double limiar = 16;
 	for (int idxObj = 0; idxObj < objetos.size(); idxObj++)
 	{
 		objetos[idxObj].achou = false;
