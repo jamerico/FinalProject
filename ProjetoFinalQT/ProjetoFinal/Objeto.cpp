@@ -159,11 +159,12 @@ StrRetorno Objeto::ControleJacoud(){
 
 StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
-	ofstream objectStream, signalsStream;
+	ofstream objectStream, signalsStream, testStream;
 
 	// log files
 	objectStream.open("roboData.txt", ios::out | ios::app);
 	signalsStream.open("signalsStream.txt", ios::out | ios::app);
+	testStream.open("testStream.txt", ios::out | ios::app);
 
 
 
@@ -175,27 +176,52 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	clock_t now = clock();
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 
-	double AngRef = (30*M_PI/180)+(60*M_PI/180.0)* sin(2*M_PI*1*t);
+	double _sin = sin(2 * M_PI * 1 * t); 
+
+
+	//double AngRef = (30 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
+	double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
+
+
 	double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
+
+
 
 	double erroAng = AngRef - posAtual.ang;
 	
 	double erroLin = PosRef - posAtual.x;
 
 
-	double y = -pow((posAtual.ang - (90 * M_PI / 180)),2) + 10;
+	double y = -pow((posAtual.ang - (90* M_PI / 180)),2) + 10;
 
-	LowPassFilter(y);
+	LowPassFilter(y, 0.5);
 	
 
 	double outputHighPass = y - outputFilter;
-	double gradientEstimative = sin(2 * M_PI * 1 * t)*outputHighPass;
 
 
+	double sinDoubleFreq = _sin*outputHighPass;
 
 
+	LowPassFilter2(sinDoubleFreq, 0.5);
+
+	double gradientEstimative = outputFilter2;
+
+	integralESC = integralESC + taxaH*gradientEstimative;
+
+
+	if (integralESC > (180*M_PI/180)){
+		integralESC = 180 * M_PI / 180;
+	}
+	if (integralESC < (0 * M_PI / 180)){
+		integralESC = 0 * M_PI / 180;
+	}
+
+	double uEsc = integralESC + (30 * M_PI / 180)*_sin;
 
 	ControleAngular(pParam, erroAng);
+	//ControleAngular(pParam, erroAng);
+
 	//ControleCruzeiro(pParam, erroLin);
 
 	//saidaControleAngular = 0; // jean
@@ -225,30 +251,25 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 
-	//sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255);
-	//sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255);
-
-
-
-
-
-	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
-
 	// convert from -255/255 scale to -5/5 volts
-	double sinalTensao1Volts = sinalTensao1 > 0 ? sinalTensao1 * 5 / 255 : -sinalTensao1 * 5 / 255;
-	double sinalTensao2Volts = sinalTensao2 > 0 ? sinalTensao2 * 5 / 255 : -sinalTensao2 * 5 / 255;
-	
-	
-	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
-	signalsStream << outputFilter << ',' << outputHighPass << ',' << gradientEstimative << "\n";
-	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
-	objectStream << sinalTensao1Volts << ',' << sinalTensao2Volts << ',' << posAtual.ang << ',' << AngRef << "\n";
+	double sinalTensao1Volts = sinalTensao1 * 5 / 255;
+	double sinalTensao2Volts = sinalTensao2 * 5 / 255;
 
-	
+
+	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
+	signalsStream << y << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << "\n";
+	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
+	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << posAtual.ang << ',' << AngRef << "\n";
+
 
 	signalsStream.close();
 
 	objectStream.close();
+	testStream.close();
+
+	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
+
+
 
 
 	return StrRetorno(0,0,0,0,posAtual.ang, AngRef, erroAng, 0,Position(0,0), saidaControleLinear,saidaControleAngular, sinalTensao1, sinalTensao2, false);
@@ -319,10 +340,21 @@ void Objeto::PID(double erro, float kP, float kI, float kD, bool isLinear)
 	}
 }
 
-void Objeto::LowPassFilter(double input)
+void Objeto::LowPassFilter(double input, double omegaH)
 {
-	double omegaH = 0.25;// tem que matar a senoide
+	//double omegaH = 0.25;// tem que matar a senoide
+	//double omegaH = 0.35;// tem que matar a senoide
+
 	outputFilter = (1 - taxaH * omegaH)*outputFilter + taxaH*omegaH*input;
+
+}
+
+void Objeto::LowPassFilter2(double input, double omegaH)
+{
+	//double omegaH = 0.25;// tem que matar a senoide
+	//double omegaH = 0.35;// tem que matar a senoide
+
+	outputFilter2 = (1 - taxaH * omegaH)*outputFilter2 + taxaH*omegaH*input;
 
 }
 
