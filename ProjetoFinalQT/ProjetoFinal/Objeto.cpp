@@ -174,13 +174,16 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	// end log files
 
 	clock_t now = clock();
+	//double t = (now*0.3) / CLOCKS_PER_SEC;
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 
 	double _sin = sin(2 * M_PI * 1 * t); 
 
 
-	//double AngRef = (30 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
-	double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
+	//double AngRef = (90 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
+	double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
+
+	//double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
 
 
 	double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
@@ -192,7 +195,13 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double erroLin = PosRef - posAtual.x;
 
 
-	double y = -pow((posAtual.ang - (90* M_PI / 180)),2) + 10;
+	double xSource = 140;
+	double ySource = 140;
+	double angSorce = (pi+qAtan2(ySource - posAtual.y, xSource - posAtual.x))*180/M_PI;
+
+
+
+	double y = -pow((posAtual.ang - (0* M_PI / 180)),2) + 10;
 
 	LowPassFilter(y, 0.5);
 	
@@ -225,7 +234,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//ControleCruzeiro(pParam, erroLin);
 
 	//saidaControleAngular = 0; // jean
-	saidaControleLinear = 0;
+	//saidaControleLinear = -20/0.05;
 
 	//int raio = 120;
 	//int xc = 320;
@@ -242,7 +251,9 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double kPos = 3;
 	//saidaControleLinear = 0;//pParam.pLin*erroPos;
 
-	MontaSinaisTensao();
+	//MontaSinaisTensao();
+	MontaSinaisTensao2(t);
+
 	//float fatorDimensao = 0.0475;	// Fator q se refere ao tamanho do carro/2 isso em metros, ao menos eu acho q eh essa unidade
 	//saidaControleLinear = 0;
 	//double kAng = pParam.pAng;
@@ -259,7 +270,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
 	signalsStream << y << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << "\n";
 	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
-	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << posAtual.ang << ',' << AngRef << "\n";
+	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSorce << "\n";
 
 
 	signalsStream.close();
@@ -386,10 +397,35 @@ void Objeto::ControleAngular(paramControle pParam, double pErro){
 void Objeto::MontaSinaisTensao(){
 	float fatorDimensao = 0.0475;	// Fator q se refere ao tamanho do carro/2 isso em metros, ao menos eu acho q eh essa unidade
 
-	
-	
+
+	//saidaControleAngular = 0.6 / 0.0413;
+
 	sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao),255);
 	sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao),255);	
+
+
+
+	//if (posAtual.timev - posAnterior.timev == 0) // não atualizou
+	//{
+	//	sinalTensao1 = 0;
+	//	sinalTensao2 = 0;
+	//}
+	//else{
+	//	sinalTensao1 = sinalTensao1;
+	//}
+
+}
+
+void Objeto::MontaSinaisTensao2(double t){
+	float fatorDimensao = 0.0475;	// Fator q se refere ao tamanho do carro/2 isso em metros, ao menos eu acho q eh essa unidade
+
+
+	//saidaControleAngular = 0.6 / 0.0413;
+	//saidaControleAngular = saidaControleAngular + (0.5*sin(2 * 3.141592 * 20 * t)) / 0.0413; // << --_signalStream_saved_identificacao_jitter
+
+	sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255);
+	sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255);
+
 
 
 	//if (posAtual.timev - posAnterior.timev == 0) // não atualizou

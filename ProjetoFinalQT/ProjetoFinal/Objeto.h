@@ -90,6 +90,7 @@ public:
 	void LowPassFilter(double input, double omegaH);
 	void LowPassFilter2(double input, double omegaH);
 
+
 	//Serial s;
 
 	// Metodos
@@ -102,6 +103,7 @@ public:
 	void ControleAngular(paramControle, double);		// Calcula o sinal de controle da parte Angular
 	void AtualizaVelocidade();
 	void MontaSinaisTensao();							// Constroi o sinal de tensao de cada roda q sera enviada ao carro
+	void MontaSinaisTensao2(double t);							// Constroi o sinal de tensao de cada roda q sera enviada ao carro
 
 	
 	bool achou = false;
