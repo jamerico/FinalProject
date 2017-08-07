@@ -4,6 +4,7 @@
 
 #include<QtCore>
 
+cv::Mat ProjetoFinal::processedMat;
 
 using namespace cv;
 
@@ -23,7 +24,7 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 
 
 
-	Vision::instance(1);
+	Vision::instance(0);
 
 	//Cor c("teste1", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 0, 999);
 	//dbStorage::instance()->salvaCor(c);
@@ -52,9 +53,9 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 
 	}
 
-	
+
 	// Vetor com cores para cada objeto
-	coresDrawObj.push_back(cv::Scalar(255,200,200));
+	coresDrawObj.push_back(cv::Scalar(255, 200, 200));
 	coresDrawObj.push_back(cv::Scalar(255, 255, 0));
 	coresDrawObj.push_back(cv::Scalar(255, 0, 255));
 	coresDrawObj.push_back(cv::Scalar(255, 255, 255));
@@ -73,7 +74,7 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	//	mapCorObjeto[obj.nome] = cv::Scalar()
 	//}
 
-	
+
 	//for (int idxObj = 0; idxObj < objetos.size(); idxObj++)
 	//{
 	//	if (objetos[idxObj].nome == "CarroTeste" || objetos[idxObj].nome == "CarroTeste2")
@@ -82,8 +83,8 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	//	}
 
 	//}
-	
-	
+
+
 
 	//Trajetoria t = dbStorage::instance()->getTrajetoria("circulo_r1");
 	//Trajetoria t = dbStorage::instance()->getTrajetoria("circulo_r120_xc320_yc240");
@@ -94,8 +95,8 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	//tuple<Position, double> tp = t.getMelhorPonto(p);
 	//double tempo = double(clock() - c) / (CLOCKS_PER_SEC/1000);
 
-//#include "opencv2/cudaarithm.hpp"	double teste = p.getValueAt(2);
-	
+	//#include "opencv2/cudaarithm.hpp"	double teste = p.getValueAt(2);
+
 	// Setup da interface grafica
 	ui.setupUi(this);
 
@@ -106,7 +107,7 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	tmrTimer = new QTimer(this);
 	connect(tmrTimer, SIGNAL(timeout()), this, SLOT(processFrameAndUpdateGUI()));
 	tmrTimer->start(33); // esse valor parece ser a taxa de amostragem
-	
+
 }
 
 ProjetoFinal::~ProjetoFinal()
@@ -119,9 +120,13 @@ ProjetoFinal::~ProjetoFinal()
 void ProjetoFinal::processFrameAndUpdateGUI(){
 	// Funcao q vai processar os disponibilizar a imagem
 
+	
+
+
+
 	if (mostrarImagemNaTela || runningTest || filtroCam->transferirImagemParaCameraCalib || pidCam->transferirImagemParaPIDCalib)
 	{
-		originalMat =  Vision::instance()->ProcessFramesRtn();
+		originalMat = Vision::instance()->ProcessFramesRtn();
 		//ui.XYText->clear();
 		//ui.XYText->append
 		frameNum += 1;
@@ -182,8 +187,15 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 		}
 	}
 	else if ((mostrarImagemNaTela) && (filtroCam->transferirImagemParaCameraCalib) && (!(pidCam->transferirImagemParaPIDCalib)))
-	{		
-		filtroCam->processFrameAndUpdateGUI(Vision::originalMat);		
+	{
+		filtroCam->processFrameAndUpdateGUI(Vision::originalMat);
+
+		processedMat = filtroCam->processedMat;
+
+		QImage qimgProcessed((uchar*)processedMat.data, processedMat.cols, processedMat.rows, processedMat.step, QImage::Format_Grayscale8);
+
+		ui.label->setPixmap(QPixmap::fromImage(qimgProcessed));
+
 		if (!filtroCam->mostrarOuAtualizar)
 		{
 			filtroCam->show();
@@ -195,7 +207,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 		}
 	}
 	else if ((mostrarImagemNaTela) && (!(filtroCam->transferirImagemParaCameraCalib)) && (pidCam->transferirImagemParaPIDCalib))
-	{				
+	{
 		pidCam->processFrameAndUpdateGUI(Vision::originalMat);
 		if (!pidCam->mostrarOuAtualizar)
 		{
@@ -208,7 +220,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 		}
 	}
 	else if ((mostrarImagemNaTela) && (filtroCam->transferirImagemParaCameraCalib) && (pidCam->transferirImagemParaPIDCalib))
-	{		
+	{
 		filtroCam->processFrameAndUpdateGUI(Vision::originalMat);
 		pidCam->processFrameAndUpdateGUI(Vision::originalMat);
 		if (!filtroCam->mostrarOuAtualizar)
@@ -292,7 +304,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 			taxaH = ((clock() - tempo) / ((double)CLOCKS_PER_SEC));
 			//Sleep(1);
 		}
-		
+
 		if (taxaH > 1)
 		{
 			taxaH = 1.0 / 22.0;
@@ -307,7 +319,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 
 		FindObjects(Vision::instance()->getPosicaoCores(cores, false));
 
-		
+
 		if (mostrarTrajetorias)
 		{
 			DesenhaTrajetorias2();
@@ -336,7 +348,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 			//bool sentido = objetos[idxObj].nome == "CarroTeste";
 			Logger::Output("TO AQUI");
 
-			
+
 			if (objetos[idxObj].achou && objetos[idxObj].ctrl.nome != "")
 			{
 				//rtn = objetos[idxObj].Controle(objetos[idxObj].ctrl, true, 0.02);
@@ -354,7 +366,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 			rtn.logaDados = true;
 			Logger::asyncStatWriter(rtn);
 		}
-		
+
 
 		if (mostrarImagemNaTela)
 		{
@@ -376,7 +388,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 void ProjetoFinal::Observador(){
 
 	//int distSegura = 65; //vel 80px/s
-	
+
 	cv::Scalar corObj;
 	double xd, yd;
 	double angDraw = M_PI_4;
@@ -388,7 +400,7 @@ void ProjetoFinal::Observador(){
 	double distance;
 	double raioCarro = 10;
 	double minDist = 2.5 * raioCarro;
-	double newSetPoint;		
+	double newSetPoint;
 	double kCoefFren = 1;
 	double velMax = 0;
 	double limiarVelChange = 5;
@@ -444,10 +456,10 @@ void ProjetoFinal::Observador(){
 		pontos.push_back(cv::Point(objetos[idxObj].posAtual.x, objetos[idxObj].posAtual.y));
 		arrx[6] = objetos[idxObj].posAtual.x;
 		arry[6] = objetos[idxObj].posAtual.y;
-		
+
 		bool alguemDentro = false;
 		double minDistRtn = 500;
-		
+
 		for (int idxObj2 = 0; idxObj2 < objetos.size(); idxObj2++)
 		{
 			if (objetos[idxObj].nome != objetos[idxObj2].nome) //é outro cara
@@ -477,7 +489,7 @@ void ProjetoFinal::Observador(){
 								}
 							}
 						}
-						
+
 						if (existeTrajAux && minDistU > distSegura)
 						{
 							objetos[idxObj].usaTrajAux = true;
@@ -512,22 +524,22 @@ void ProjetoFinal::Observador(){
 
 							}
 							Logger::Output("Coef Frenagem: %f0 \n", coefFrenagem);
-							
+
 							distance = objetos[idxObj].posAtual.distance(objetos[idxObj2].posAtual);
 							Logger::Output("Distance: %f0 \n", distance);
 							Logger::Output("Safety Distance: %f0 \n", distSegura);
 
 							newSetPoint = velMax - (kCoefFren*coefFrenagem*(distSegura - distance));
 							Logger::Output("New Set Point: %f0 \n", newSetPoint);
-							
+
 							objetos[idxObj].setPointVel = mathHelper::upperSat(newSetPoint, objetos[idxObj].setPointVelOrig);
 							Logger::Output("New Set Point Sat: %f0 \n", objetos[idxObj].setPointVel);
 							//Logger::Output("Integral: %f0 \n", objetos[idxObj].saidaLinearI);
 							//objetos[idxObj].saidaLinearI = 0;//.1*objetos[idxObj].saidaLinearI;
 							break;
 						}
-						
-						
+
+
 					}
 					else
 					{
@@ -576,14 +588,14 @@ void ProjetoFinal::Observador(){
 				}
 			}
 		}
-		
+
 		if (objetos[idxObj].usaTrajAux && minDistRtn > 60 && minDistRtn < 500)
 		{
 			objetos[idxObj].usaTrajAux = false;
 			//Logger::Output("eu coloquei para false pq eu quis!");
 		}
 
-		
+
 
 		if (ui.checkShowDrawBox->isChecked())
 		{
@@ -599,8 +611,8 @@ void ProjetoFinal::Observador(){
 				CV_AA, 0);
 		}
 
-		
-		
+
+
 	}
 
 }
@@ -663,7 +675,7 @@ void ProjetoFinal::keyReleaseEvent(QKeyEvent *event){
 }
 
 void ProjetoFinal::on_startButton_clicked()
-{	
+{
 	//if (tmrTimer->isActive() == false)
 	//{
 	//	ui.XYText->appendPlainText("Reiniciado");		
@@ -678,26 +690,29 @@ void ProjetoFinal::on_startButton_clicked()
 
 	Serial::instance()->EnviarMensagem2(0, 0, "ACAC");
 
-//#pragma omp parallel shared(runningTest)
-//	{
-//		while (runningTest)
-//		{
-//			ui.XYText->appendPlainText("~-=~");
-//		}
-//
-//	}
+	//#pragma omp parallel shared(runningTest)
+	//	{
+	//		while (runningTest)
+	//		{
+	//			ui.XYText->appendPlainText("~-=~");
+	//		}
+	//
+	//	}
 
-//#pragma omp sections
-//	{
-//#pragma omp section
-//		{
-//			while (runningTest)
-//			{
-//				ui.XYText->appendPlainText("~-=~");
-//			}
-//		}
-//	}
+	//#pragma omp sections
+	//	{
+	//#pragma omp section
+	//		{
+	//			while (runningTest)
+	//			{
+	//				ui.XYText->appendPlainText("~-=~");
+	//			}
+	//		}
+	//	}
 }
+
+
+
 
 void ProjetoFinal::on_pauseButton_clicked(){
 	//if (tmrTimer->isActive() == true)
@@ -719,7 +734,7 @@ void ProjetoFinal::on_pauseButton_clicked(){
 
 	}
 
-	
+
 }
 
 void ProjetoFinal::on_checkShowBlob_stateChanged(int state)
@@ -790,92 +805,92 @@ void ProjetoFinal::on_checkShowimageBox_stateChanged(int state){
 		ui.checkShowTraj->setEnabled(true);
 
 		namedWindow("Imagem", 1);					//create window to show 
-//		long frameNum = 0;
-//		clock_t tempo = clock();
-//
-//		//Mat processedMat = cv::Mat(originalMat.cols, originalMat.rows, CV_8UC3);
-//		while (mostrarImagemNaTela) {
-//#ifdef OUTPUTBIEL
-//			Logger::Output("------- Frame: %f0 ------- \n", frameNum);
-//			Logger::Output("FPS: %f0 \n", 1/((clock() - tempo) / ((double)CLOCKS_PER_SEC)));
-//
-//			tempo = clock();
-//
-//#endif
-//			Vision::instance()->ProcessFrames();
-//			// Convert input image to HSV	
-//			//cvtColor(originalMat, originalMat, COLOR_BGR2HSV);
-//
-//			//std::thread hMin([](Vision frame, Ui::ProjetoFinalClass ui, vector<Cor> cores){
-//			//	Vision::instance()->getBlobs(cores[2], ui.checkShowBlob->isChecked());
-//			//}, frame, ui, cores);
-//
-//			//hMin.detach();
-//			////hMin.join();
-//
-//			//processedMat = cv::Mat(originalMat.cols, originalMat.rows, CV_8UC3);
-//			/*cv::cvtColor(originalMat, processedMat, cv::COLOR_BGR2HSV);*/
-//
-//			/*clock_t beginNovo = clock();*/
-//
-//
-//
-//	/*		vector<Cor> newCores;
-//			for each (Objeto obj in objetos)
-//			{
-//				if (obj.nome == "CarroTeste")
-//				{
-//					newCores.push_back(obj.primColor);
-//					newCores.push_back(obj.secColor);
-//				}
-//			}
-//*/
-//			/*for each (Cor myCor in newCores)
-//			{
-//				posicaoCores.push_back(Vision::instance()->getBlobs(myCor, ui.checkShowBlob->isChecked()));
-//
-//			}*/
-//
-//
-//			//Comentado versão single thread
-//			/*clock_t tempoPosicao = clock();
-//			vector<vector <cv::Point> > posicaoCores;
-//			for (int i = 0; i < cores.size(); i++)
-//			{
-//					posicaoCores.push_back(Vision::instance()->getBlobs(cores[i], ui.checkShowBlob->isChecked()));
-//			}
-//			Logger::Output("Tempo get posição: %f0 \n", ((clock() - tempoPosicao) / ((double)CLOCKS_PER_SEC)) * 1000);*/
-//
-//			clock_t tempoPosicao = clock();
-//
-//			vector<vector <cv::Point> > posicaoCores = Vision::instance()->getPosicaoCores(cores, false);
-//
-//			Logger::Output("Tempo get posição: %f0 \n", ((clock() - tempoPosicao) / ((double)CLOCKS_PER_SEC))*1000);
-//
-//
-//			Vision::originalMat.copyTo(originalMat);
-//			FindObjects(posicaoCores);
-//			
-//			/*parallel_for_		*/
-//
-//			for each (Objeto obj in objetos)
-//			{
-//				if (obj.nome == "CarroTeste")
-//				{
-//					obj.Controle();
-//					//Serial::instance()->EnviarMensagem2(150, 150, "ACAC");
-//					//ui.XYText->appendPlainText("CONTROLE");
-//				}
-//			}
-//
-//			//Vision::instance()->getAllBlobs(cores, ui.checkShowBlob->isChecked());			
-//			waitKey(1);							//delay 33ms
-//			imshow("window", originalMat);  //print image to screen
-//			//imshow("window", Vision::originalMat);  //print image to screen
-//			//imshow("window", Mat(Vision::originalGpuMat));
-//			//float tempoGpuNovo = float(clock() - beginNovo) / CLOCKS_PER_SEC;
-//			frameNum++;
-//		}		
+		//		long frameNum = 0;
+		//		clock_t tempo = clock();
+		//
+		//		//Mat processedMat = cv::Mat(originalMat.cols, originalMat.rows, CV_8UC3);
+		//		while (mostrarImagemNaTela) {
+		//#ifdef OUTPUTBIEL
+		//			Logger::Output("------- Frame: %f0 ------- \n", frameNum);
+		//			Logger::Output("FPS: %f0 \n", 1/((clock() - tempo) / ((double)CLOCKS_PER_SEC)));
+		//
+		//			tempo = clock();
+		//
+		//#endif
+		//			Vision::instance()->ProcessFrames();
+		//			// Convert input image to HSV	
+		//			//cvtColor(originalMat, originalMat, COLOR_BGR2HSV);
+		//
+		//			//std::thread hMin([](Vision frame, Ui::ProjetoFinalClass ui, vector<Cor> cores){
+		//			//	Vision::instance()->getBlobs(cores[2], ui.checkShowBlob->isChecked());
+		//			//}, frame, ui, cores);
+		//
+		//			//hMin.detach();
+		//			////hMin.join();
+		//
+		//			//processedMat = cv::Mat(originalMat.cols, originalMat.rows, CV_8UC3);
+		//			/*cv::cvtColor(originalMat, processedMat, cv::COLOR_BGR2HSV);*/
+		//
+		//			/*clock_t beginNovo = clock();*/
+		//
+		//
+		//
+		//	/*		vector<Cor> newCores;
+		//			for each (Objeto obj in objetos)
+		//			{
+		//				if (obj.nome == "CarroTeste")
+		//				{
+		//					newCores.push_back(obj.primColor);
+		//					newCores.push_back(obj.secColor);
+		//				}
+		//			}
+		//*/
+		//			/*for each (Cor myCor in newCores)
+		//			{
+		//				posicaoCores.push_back(Vision::instance()->getBlobs(myCor, ui.checkShowBlob->isChecked()));
+		//
+		//			}*/
+		//
+		//
+		//			//Comentado versão single thread
+		//			/*clock_t tempoPosicao = clock();
+		//			vector<vector <cv::Point> > posicaoCores;
+		//			for (int i = 0; i < cores.size(); i++)
+		//			{
+		//					posicaoCores.push_back(Vision::instance()->getBlobs(cores[i], ui.checkShowBlob->isChecked()));
+		//			}
+		//			Logger::Output("Tempo get posição: %f0 \n", ((clock() - tempoPosicao) / ((double)CLOCKS_PER_SEC)) * 1000);*/
+		//
+		//			clock_t tempoPosicao = clock();
+		//
+		//			vector<vector <cv::Point> > posicaoCores = Vision::instance()->getPosicaoCores(cores, false);
+		//
+		//			Logger::Output("Tempo get posição: %f0 \n", ((clock() - tempoPosicao) / ((double)CLOCKS_PER_SEC))*1000);
+		//
+		//
+		//			Vision::originalMat.copyTo(originalMat);
+		//			FindObjects(posicaoCores);
+		//			
+		//			/*parallel_for_		*/
+		//
+		//			for each (Objeto obj in objetos)
+		//			{
+		//				if (obj.nome == "CarroTeste")
+		//				{
+		//					obj.Controle();
+		//					//Serial::instance()->EnviarMensagem2(150, 150, "ACAC");
+		//					//ui.XYText->appendPlainText("CONTROLE");
+		//				}
+		//			}
+		//
+		//			//Vision::instance()->getAllBlobs(cores, ui.checkShowBlob->isChecked());			
+		//			waitKey(1);							//delay 33ms
+		//			imshow("window", originalMat);  //print image to screen
+		//			//imshow("window", Vision::originalMat);  //print image to screen
+		//			//imshow("window", Mat(Vision::originalGpuMat));
+		//			//float tempoGpuNovo = float(clock() - beginNovo) / CLOCKS_PER_SEC;
+		//			frameNum++;
+		//		}		
 	}
 
 }
@@ -889,7 +904,7 @@ void ProjetoFinal::on_actionCalibrar_Filtros_de_Cor_triggered(){
 void ProjetoFinal::on_actionCalibrar_Controle_triggered(){
 	// Esta funcao deve criar uma nova tela para configurar os parametros de controle dos carrinhos
 	ui.XYText->appendPlainText("Calibracao de PID aberta");
-	pidCam->transferirImagemParaPIDCalib = true;		
+	pidCam->transferirImagemParaPIDCalib = true;
 }
 
 void ProjetoFinal::on_actionNovo_Robo_triggered(){
@@ -985,7 +1000,7 @@ void ProjetoFinal::DesenhaTrajetorias2()
 			{
 				trajDraw = objetos[idxObj].traj;
 			}
-			
+
 			if (!mapTrajetoriasDesenhadas[trajDraw.nome])
 			{
 				imgTrajetoria = cv::Mat(originalMat.rows, originalMat.cols, CV_8UC3);
@@ -1098,7 +1113,7 @@ void ProjetoFinal::DrawCar(Objeto obj)
 	x = raioDesenho * cos(obj.posAtual.ang) + obj.posAtual.x;
 	y = raioDesenho * sin(obj.posAtual.ang) + obj.posAtual.y;
 
-	cv::Point ponto2 = cv::Point(x,y);
+	cv::Point ponto2 = cv::Point(x, y);
 	cv::line(originalMat, centrObj, ponto2, cv::Scalar(255, 255, 255), 2);
 }
 
@@ -1116,3 +1131,5 @@ void ProjetoFinal::DrawCar(Objeto obj, cv::Scalar pCor)
 	cv::line(originalMat, centrObj, ponto2, pCor, 2);
 }
 #pragma endregion
+
+

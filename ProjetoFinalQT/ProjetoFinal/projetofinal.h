@@ -48,6 +48,9 @@ public:
 
 	void ProjetoFinal::closeEvent(QCloseEvent *evento);
 
+	static cv::Mat processedMat;
+
+
 public slots:
 	void processFrameAndUpdateGUI();
 
@@ -61,7 +64,7 @@ private slots:
 	void on_actionCalibrar_Controle_triggered();
 	void on_actionNovo_Robo_triggered();
 	void on_checkShowTraj_stateChanged(int state);
-	
+
 
 private:
 	Ui::ProjetoFinalClass ui;
@@ -77,7 +80,7 @@ private:
 	//cv::Mat processedMat;
 
 	QImage qimgOriginal;
-	//QImage qimgProcessed;
+	QImage qimgProcessed;
 
 	//Vision frame = Vision(0);
 
@@ -104,6 +107,8 @@ private:
 	//int getIdxCorPorNome(string, vector<Cor>);
 	void DrawCar(Objeto obj);
 	void DrawCar(Objeto obj, cv::Scalar pCor);
+
+
 };
 
 #endif // PROJETOFINAL_H

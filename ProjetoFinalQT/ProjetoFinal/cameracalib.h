@@ -31,6 +31,11 @@ public:
 	vector<Cor> cores;									// Vetor contendo as cores
 
 	bool atualizaCores = false;
+	cv::Mat filtroDeBlobPorArea(cv::Mat, float, float);	// filtra os blobs pela area Minima e pela Maxima
+
+	static cv::Mat processedMat;
+
+
 
 private slots:
 	void on_saveCamCalibButton_clicked();
@@ -41,11 +46,8 @@ private slots:
 private:
 	Ui::CameraCalib uiCalib;
 
-	cv::Mat filtroDeBlobPorArea(cv::Mat, float, float);	// filtra os blobs pela area Minima e pela Maxima
 	void LoadColorHSV(string colorName);
 
-	static cv::Mat processedMat;	
-	QImage qimgProcessed;
 	QTimer* tmrTimer;
 };
 

@@ -197,7 +197,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	double xSource = 140;
 	double ySource = 140;
-	double angSorce = (pi+qAtan2(ySource - posAtual.y, xSource - posAtual.x))*180/M_PI;
+	double angSorce = (M_PI+qAtan2(ySource - posAtual.y, xSource - posAtual.x))*180/M_PI;
 
 
 

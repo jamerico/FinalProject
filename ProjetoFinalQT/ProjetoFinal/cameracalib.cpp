@@ -160,7 +160,7 @@ void CameraCalib::processFrameAndUpdateGUI(cv::Mat frame){
 	processedMat = im_with_keypoints;*/
 
 	// Passa a imagem na tela
-	QImage qimgProcessed((uchar*)processedMat.data, processedMat.cols, processedMat.rows, processedMat.step, QImage::Format_Grayscale8);		
+	QImage qimgProcessed((uchar*)processedMat.data, processedMat.cols, processedMat.rows, processedMat.step, QImage::Format_Grayscale8);	
 	uiCalib.label->setPixmap(QPixmap::fromImage(qimgProcessed));
 }
 
