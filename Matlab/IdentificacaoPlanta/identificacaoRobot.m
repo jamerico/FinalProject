@@ -1,6 +1,7 @@
 %% real world variables
 close all;
 robotData = load('C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\roboData.txt');
+signalsData = load('C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\signalsStream.txt');;
 sinalTensao1 = robotData(:,1);
 sinalTensao2 = robotData(:,2);
 uPIDr = robotData(:,3);
@@ -10,15 +11,21 @@ theta = robotData(:,6)*180/pi;
 x = robotData(:,7);
 y = robotData(:,8);
 t = robotData(:,9)-robotData(1,9);
-
+source = signalsData(:,1);
+maximizante = robotData(:,10);
 v1 = sinalTensao1*5/255;
 v2 = sinalTensao2*5/255;
 ur = v1-v2;
 ut = v1+v2;
 
+
+% posicao robot
+figure(1)
 plot(t,x,t,y)
-% thetaRef x theta
-figure(1);
+legend('posicao x','posicao y');
+
+% thetaRef x theta e urobot
+figure(2);
 subplot(2,1,1);
 plot(t,refTheta,t,theta);
 legend('theta ref','theta robot');
@@ -27,15 +34,19 @@ plot(t,ur);
 legend('ur');
 
 
+% ang robot x ang source
+figure(3)
+plot(t,theta,t,maximizante)
+legend('ang robot', 'ang source')
 
 % sinal tensao
-figure(2)
+figure(4)
 plot(t,v1,t,v2)
 legend('v1','v2')
 
 % correcao com ganho atuador
 gainAtuador = 5/255*0.05/0.0475*2;
-figure(3)
+figure(5)
 plot(t,ur,t,uPIDr*gainAtuador)
 
 

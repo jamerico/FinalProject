@@ -186,22 +186,23 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
 
 
-	double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
+	//double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
 
 
 
 	double erroAng = AngRef - posAtual.ang;
 	
-	double erroLin = PosRef - posAtual.x;
+	//double erroLin = PosRef - posAtual.x;
 
 
-	double xSource = 140;
-	double ySource = 140;
-	double angSorce = (pi+qAtan2(ySource - posAtual.y, xSource - posAtual.x))*180/M_PI;
+	double xSource = 240;
+	double ySource = 68;
+	double angSorce = 180-(qAtan2(xSource - posAtual.x, ySource - posAtual.y)) * 180 / M_PI;
+	//double angSorce = 180;
 
 
 
-	double y = -pow((posAtual.ang - (0* M_PI / 180)),2) + 10;
+	double y = -pow((posAtual.ang - (angSorce* M_PI / 180)), 2) + 10;
 
 	LowPassFilter(y, 0.5);
 	
@@ -219,8 +220,8 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	integralESC = integralESC + taxaH*gradientEstimative;
 
 
-	if (integralESC > (180*M_PI/180)){
-		integralESC = 180 * M_PI / 180;
+	if (integralESC > (330*M_PI/180)){
+		integralESC = 330 * M_PI / 180;
 	}
 	if (integralESC < (0 * M_PI / 180)){
 		integralESC = 0 * M_PI / 180;

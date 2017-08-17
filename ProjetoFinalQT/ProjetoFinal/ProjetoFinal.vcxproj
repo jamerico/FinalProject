@@ -106,6 +106,12 @@
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5SerialPortd.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;opencv_calib3d320d.lib;opencv_core320d.lib;opencv_cudaarithm320d.lib;opencv_cudabgsegm320d.lib;opencv_cudacodec320d.lib;opencv_cudafeatures2d320d.lib;opencv_cudafilters320d.lib;opencv_cudaimgproc320d.lib;opencv_cudalegacy320d.lib;opencv_cudaobjdetect320d.lib;opencv_cudaoptflow320d.lib;opencv_cudastereo320d.lib;opencv_cudawarping320d.lib;opencv_cudev320d.lib;opencv_features2d320d.lib;opencv_flann320d.lib;opencv_highgui320d.lib;opencv_imgcodecs320d.lib;opencv_imgproc320d.lib;opencv_ml320d.lib;opencv_objdetect320d.lib;opencv_photo320d.lib;opencv_shape320d.lib;opencv_stitching320d.lib;opencv_superres320d.lib;opencv_video320d.lib;opencv_videoio320d.lib;opencv_videostab320d.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
     </Link>
+    <PreBuildEvent>
+      <Command>cd $(ProjectPath)
+del "roboData.txt"
+del "signalsStream.txt"
+del "testStream.txt"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

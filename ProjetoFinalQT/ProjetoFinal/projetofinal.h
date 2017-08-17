@@ -88,6 +88,7 @@ private:
 	void DesenhaTrajetorias();
 	void DesenhaTrajetorias2();
 
+	bool restartObjects = false; // clean up all objects after the program has paused
 	bool mostrarImagemNaTela = false;	// se true cria uma tela para mostrar a imagem da webCam
 	bool mostrarTrajetorias = false;
 	bool runningTest = false;

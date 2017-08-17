@@ -298,3 +298,5 @@ ProjetoFinalQT/x64
 ProjetoFinalQT/ProjetoFinal/stat
 log.txt
 *.log
+/Matlab/IdentificacaoPlanta/identificacaoPlanta.slx.autosave
+/Matlab/IdentificacaoPlanta/identificacaoRobot.asv

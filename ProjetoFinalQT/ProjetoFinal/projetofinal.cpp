@@ -117,6 +117,8 @@ ProjetoFinal::~ProjetoFinal()
 #pragma endregion
 
 void ProjetoFinal::processFrameAndUpdateGUI(){
+
+
 	// Funcao q vai processar os disponibilizar a imagem
 
 	if (mostrarImagemNaTela || runningTest || filtroCam->transferirImagemParaCameraCalib || pidCam->transferirImagemParaPIDCalib)
@@ -284,6 +286,11 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 
 	if (runningTest)
 	{
+		if (restartObjects){
+			objetos = dbStorage::instance()->getAllObjetos();
+			restartObjects = false;
+		}
+
 		//double FPS
 		//double tempoGasto = clock() - tempo;
 		double taxaH = ((clock() - tempo) / ((double)CLOCKS_PER_SEC));
@@ -708,6 +715,7 @@ void ProjetoFinal::on_pauseButton_clicked(){
 	ui.pauseButton->setEnabled(false);
 	ui.startButton->setEnabled(true);
 
+	restartObjects = true;
 	runningTest = false;
 	ui.XYText->appendPlainText("Not Running Test");
 
