@@ -14,7 +14,12 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -22,7 +27,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -37,12 +41,34 @@ public:
     QPushButton *startButton;
     QPushButton *pauseButton;
     QPlainTextEdit *XYText;
-    QWidget *widget;
-    QVBoxLayout *verticalLayout;
+    QWidget *layoutWidget;
+    QHBoxLayout *horizontalLayout;
     QCheckBox *checkShowimageBox;
-    QCheckBox *checkShowTraj;
     QCheckBox *checkShowDrawBox;
     QCheckBox *checkShowBlob;
+    QCheckBox *checkShowTraj;
+    QGroupBox *groupBox_3;
+    QLabel *label_12;
+    QLabel *label_13;
+    QDoubleSpinBox *DLSpinBox_2;
+    QDoubleSpinBox *PLSpinBox_2;
+    QGroupBox *groupBox;
+    QLabel *label_7;
+    QLabel *label_6;
+    QLabel *label_5;
+    QDoubleSpinBox *DLSpinBox;
+    QDoubleSpinBox *ILSpinBox;
+    QDoubleSpinBox *PLSpinBox;
+    QGroupBox *groupBox_2;
+    QLabel *label_11;
+    QDoubleSpinBox *DASpinBox;
+    QLabel *label_9;
+    QDoubleSpinBox *IASpinBox;
+    QDoubleSpinBox *PASpinBox;
+    QLabel *label_10;
+    QComboBox *pidComboBoxMain;
+    QLabel *label_2;
+    QPushButton *saveButton;
     QMenuBar *menuBar;
     QMenu *menuOp_es;
     QToolBar *mainToolBar;
@@ -52,7 +78,7 @@ public:
     {
         if (ProjetoFinalClass->objectName().isEmpty())
             ProjetoFinalClass->setObjectName(QStringLiteral("ProjetoFinalClass"));
-        ProjetoFinalClass->resize(677, 208);
+        ProjetoFinalClass->resize(595, 528);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -68,50 +94,134 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         startButton = new QPushButton(centralWidget);
         startButton->setObjectName(QStringLiteral("startButton"));
-        startButton->setGeometry(QRect(30, 130, 75, 23));
+        startButton->setGeometry(QRect(380, 440, 75, 23));
         pauseButton = new QPushButton(centralWidget);
         pauseButton->setObjectName(QStringLiteral("pauseButton"));
         pauseButton->setEnabled(false);
-        pauseButton->setGeometry(QRect(110, 130, 75, 23));
+        pauseButton->setGeometry(QRect(470, 440, 75, 23));
         pauseButton->setFlat(false);
         XYText = new QPlainTextEdit(centralWidget);
         XYText->setObjectName(QStringLiteral("XYText"));
-        XYText->setGeometry(QRect(220, 20, 441, 131));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(30, 20, 165, 88));
-        verticalLayout = new QVBoxLayout(widget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        checkShowimageBox = new QCheckBox(widget);
+        XYText->setGeometry(QRect(10, 30, 341, 401));
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 0, 555, 19));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        checkShowimageBox = new QCheckBox(layoutWidget);
         checkShowimageBox->setObjectName(QStringLiteral("checkShowimageBox"));
 
-        verticalLayout->addWidget(checkShowimageBox);
+        horizontalLayout->addWidget(checkShowimageBox);
 
-        checkShowTraj = new QCheckBox(widget);
-        checkShowTraj->setObjectName(QStringLiteral("checkShowTraj"));
-        checkShowTraj->setEnabled(false);
-
-        verticalLayout->addWidget(checkShowTraj);
-
-        checkShowDrawBox = new QCheckBox(widget);
+        checkShowDrawBox = new QCheckBox(layoutWidget);
         checkShowDrawBox->setObjectName(QStringLiteral("checkShowDrawBox"));
         checkShowDrawBox->setEnabled(false);
 
-        verticalLayout->addWidget(checkShowDrawBox);
+        horizontalLayout->addWidget(checkShowDrawBox);
 
-        checkShowBlob = new QCheckBox(widget);
+        checkShowBlob = new QCheckBox(layoutWidget);
         checkShowBlob->setObjectName(QStringLiteral("checkShowBlob"));
         checkShowBlob->setEnabled(false);
 
-        verticalLayout->addWidget(checkShowBlob);
+        horizontalLayout->addWidget(checkShowBlob);
 
+        checkShowTraj = new QCheckBox(layoutWidget);
+        checkShowTraj->setObjectName(QStringLiteral("checkShowTraj"));
+        checkShowTraj->setEnabled(false);
+
+        horizontalLayout->addWidget(checkShowTraj);
+
+        groupBox_3 = new QGroupBox(centralWidget);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        groupBox_3->setGeometry(QRect(380, 80, 191, 91));
+        label_12 = new QLabel(groupBox_3);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setGeometry(QRect(10, 50, 81, 20));
+        label_13 = new QLabel(groupBox_3);
+        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setGeometry(QRect(10, 20, 91, 16));
+        DLSpinBox_2 = new QDoubleSpinBox(groupBox_3);
+        DLSpinBox_2->setObjectName(QStringLiteral("DLSpinBox_2"));
+        DLSpinBox_2->setGeometry(QRect(110, 50, 71, 22));
+        DLSpinBox_2->setMinimum(-100);
+        DLSpinBox_2->setMaximum(100);
+        PLSpinBox_2 = new QDoubleSpinBox(groupBox_3);
+        PLSpinBox_2->setObjectName(QStringLiteral("PLSpinBox_2"));
+        PLSpinBox_2->setGeometry(QRect(110, 20, 71, 22));
+        PLSpinBox_2->setMinimum(-100);
+        PLSpinBox_2->setMaximum(100);
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setGeometry(QRect(380, 300, 191, 101));
+        label_7 = new QLabel(groupBox);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(10, 70, 81, 20));
+        label_6 = new QLabel(groupBox);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(10, 40, 81, 20));
+        label_5 = new QLabel(groupBox);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(10, 20, 91, 16));
+        DLSpinBox = new QDoubleSpinBox(groupBox);
+        DLSpinBox->setObjectName(QStringLiteral("DLSpinBox"));
+        DLSpinBox->setGeometry(QRect(110, 40, 71, 22));
+        DLSpinBox->setMinimum(-100);
+        DLSpinBox->setMaximum(100);
+        ILSpinBox = new QDoubleSpinBox(groupBox);
+        ILSpinBox->setObjectName(QStringLiteral("ILSpinBox"));
+        ILSpinBox->setGeometry(QRect(110, 70, 71, 22));
+        ILSpinBox->setMinimum(-100);
+        ILSpinBox->setMaximum(100);
+        PLSpinBox = new QDoubleSpinBox(groupBox);
+        PLSpinBox->setObjectName(QStringLiteral("PLSpinBox"));
+        PLSpinBox->setGeometry(QRect(110, 10, 71, 22));
+        PLSpinBox->setMinimum(-100);
+        PLSpinBox->setMaximum(100);
+        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_2->setGeometry(QRect(380, 180, 191, 111));
+        label_11 = new QLabel(groupBox_2);
+        label_11->setObjectName(QStringLiteral("label_11"));
+        label_11->setGeometry(QRect(10, 80, 81, 20));
+        DASpinBox = new QDoubleSpinBox(groupBox_2);
+        DASpinBox->setObjectName(QStringLiteral("DASpinBox"));
+        DASpinBox->setGeometry(QRect(110, 50, 71, 22));
+        DASpinBox->setMinimum(-100);
+        DASpinBox->setMaximum(100);
+        label_9 = new QLabel(groupBox_2);
+        label_9->setObjectName(QStringLiteral("label_9"));
+        label_9->setGeometry(QRect(10, 50, 81, 20));
+        IASpinBox = new QDoubleSpinBox(groupBox_2);
+        IASpinBox->setObjectName(QStringLiteral("IASpinBox"));
+        IASpinBox->setGeometry(QRect(110, 80, 71, 22));
+        IASpinBox->setMinimum(-100);
+        IASpinBox->setMaximum(100);
+        PASpinBox = new QDoubleSpinBox(groupBox_2);
+        PASpinBox->setObjectName(QStringLiteral("PASpinBox"));
+        PASpinBox->setGeometry(QRect(110, 20, 71, 22));
+        PASpinBox->setMinimum(-100);
+        PASpinBox->setMaximum(100);
+        label_10 = new QLabel(groupBox_2);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setGeometry(QRect(10, 20, 91, 16));
+        pidComboBoxMain = new QComboBox(centralWidget);
+        pidComboBoxMain->setObjectName(QStringLiteral("pidComboBoxMain"));
+        pidComboBoxMain->setGeometry(QRect(410, 40, 151, 22));
+        pidComboBoxMain->setAutoFillBackground(true);
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(380, 40, 31, 31));
+        label_2->setWordWrap(false);
+        saveButton = new QPushButton(centralWidget);
+        saveButton->setObjectName(QStringLiteral("saveButton"));
+        saveButton->setGeometry(QRect(420, 410, 75, 23));
         ProjetoFinalClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ProjetoFinalClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 677, 21));
+        menuBar->setGeometry(QRect(0, 0, 595, 21));
         menuOp_es = new QMenu(menuBar);
         menuOp_es->setObjectName(QStringLiteral("menuOp_es"));
         ProjetoFinalClass->setMenuBar(menuBar);
@@ -144,9 +254,22 @@ public:
         startButton->setText(QApplication::translate("ProjetoFinalClass", "Iniciar", Q_NULLPTR));
         pauseButton->setText(QApplication::translate("ProjetoFinalClass", "Pausar", Q_NULLPTR));
         checkShowimageBox->setText(QApplication::translate("ProjetoFinalClass", "Mostrar a imagem da C\303\242mera", Q_NULLPTR));
-        checkShowTraj->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Trajet\303\263ria", Q_NULLPTR));
         checkShowDrawBox->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Desenho Rob\303\264", Q_NULLPTR));
         checkShowBlob->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Blobs Imagem", Q_NULLPTR));
+        checkShowTraj->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Trajet\303\263ria", Q_NULLPTR));
+        groupBox_3->setTitle(QApplication::translate("ProjetoFinalClass", "Funcao Maximizante", Q_NULLPTR));
+        label_12->setText(QApplication::translate("ProjetoFinalClass", "Valor do Max", Q_NULLPTR));
+        label_13->setText(QApplication::translate("ProjetoFinalClass", "Maximo (deg)", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("ProjetoFinalClass", "Linear", Q_NULLPTR));
+        label_7->setText(QApplication::translate("ProjetoFinalClass", "Integrador (I) :", Q_NULLPTR));
+        label_6->setText(QApplication::translate("ProjetoFinalClass", "Derivativo (D) :", Q_NULLPTR));
+        label_5->setText(QApplication::translate("ProjetoFinalClass", "Proporcional (P) :", Q_NULLPTR));
+        groupBox_2->setTitle(QApplication::translate("ProjetoFinalClass", "Angular", Q_NULLPTR));
+        label_11->setText(QApplication::translate("ProjetoFinalClass", "Integrador (I) :", Q_NULLPTR));
+        label_9->setText(QApplication::translate("ProjetoFinalClass", "Derivativo (D) :", Q_NULLPTR));
+        label_10->setText(QApplication::translate("ProjetoFinalClass", "Proporcional (P) :", Q_NULLPTR));
+        label_2->setText(QApplication::translate("ProjetoFinalClass", "PID:", Q_NULLPTR));
+        saveButton->setText(QApplication::translate("ProjetoFinalClass", "Salvar", Q_NULLPTR));
         menuOp_es->setTitle(QApplication::translate("ProjetoFinalClass", "Configura\303\247\303\265es", Q_NULLPTR));
     } // retranslateUi
 
