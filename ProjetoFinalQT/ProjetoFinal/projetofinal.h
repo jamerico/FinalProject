@@ -47,8 +47,7 @@ public:
 	void FindObjects(vector<vector<cv::Point>>); // Encontra os objetos apartir do vetor de cores identificado
 
 	void ProjetoFinal::closeEvent(QCloseEvent *evento);
-
-	static cv::Mat processedMat;
+	vector<paramControle> parametrosPid;
 
 
 public slots:
@@ -57,6 +56,7 @@ public slots:
 private slots:
 	void on_startButton_clicked();
 	void on_pauseButton_clicked();
+	void on_saveButton_clicked();
 	void on_checkShowBlob_stateChanged(int state);
 	void on_checkShowimageBox_stateChanged(int state);
 	void on_checkShowDrawBox_stateChanged(int state);
@@ -64,6 +64,9 @@ private slots:
 	void on_actionCalibrar_Controle_triggered();
 	void on_actionNovo_Robo_triggered();
 	void on_checkShowTraj_stateChanged(int state);
+	void atualizaParamControle();
+	void selecionaPID(QString);
+	
 
 
 private:
@@ -74,13 +77,16 @@ private:
 
 	//Trajetoria trajAux;
 
+	// parametros de controle
+	paramControle paramC = paramControle("", 0, 0, 0, 0, 0, 0);		// parametros de controle
+
 	cv::VideoCapture capWebCam;
 
 	cv::Mat originalMat;
 	//cv::Mat processedMat;
 
 	QImage qimgOriginal;
-	QImage qimgProcessed;
+	//QImage qimgProcessed;
 
 	//Vision frame = Vision(0);
 
@@ -107,8 +113,6 @@ private:
 	//int getIdxCorPorNome(string, vector<Cor>);
 	void DrawCar(Objeto obj);
 	void DrawCar(Objeto obj, cv::Scalar pCor);
-
-
 };
 
 #endif // PROJETOFINAL_H

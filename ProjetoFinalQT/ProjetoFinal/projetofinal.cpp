@@ -4,7 +4,6 @@
 
 #include<QtCore>
 
-cv::Mat ProjetoFinal::processedMat;
 
 using namespace cv;
 
@@ -41,6 +40,9 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	nomesPid = dbStorage::instance()->getAllParamsControle();
 	objetos = dbStorage::instance()->getAllObjetos();
 
+
+
+
 	Trajetoria trajAuxGlob = dbStorage::instance()->getTrajetoria("circulo_r80_xc160_yc120");
 
 	for (int i = 0; i < objetos.size(); i++)
@@ -67,7 +69,7 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 
 
 
-
+	
 
 	//for each (Objeto obj in objetos)
 	//{
@@ -100,12 +102,44 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	// Setup da interface grafica
 	ui.setupUi(this);
 
+
+
+	// Carrega as configuracoes de PID existentes e poe no combobox
+	for (int i = 0; i < nomesPid.size(); i++)
+	{
+		ui.pidComboBoxMain->addItem(QString::fromStdString(nomesPid[i].nome));
+
+	}
+
+	if (nomesPid.size() == 1){
+		ui.PLSpinBox->setValue(nomesPid[0].pLin);
+		ui.ILSpinBox->setValue(nomesPid[0].iLin);
+		ui.DLSpinBox->setValue(nomesPid[0].dLin);
+		ui.PASpinBox->setValue(nomesPid[0].pAng);
+		ui.DASpinBox->setValue(nomesPid[0].dAng);
+		ui.IASpinBox->setValue(nomesPid[0].iAng);
+
+	}
+
 	filtroCam = new CameraCalib;
 	pidCam = new PIDCalib;
 	roboCam = new RoboConfig;
 
 	tmrTimer = new QTimer(this);
 	connect(tmrTimer, SIGNAL(timeout()), this, SLOT(processFrameAndUpdateGUI()));
+
+
+	// alteracoes na tela
+	connect(ui.pidComboBoxMain, static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+		[=](const QString &text){ selecionaPID(text); });
+
+	connect(ui.PLSpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
+	connect(ui.DLSpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
+	connect(ui.ILSpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
+	connect(ui.PASpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
+	connect(ui.DASpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
+	connect(ui.IASpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
+
 	tmrTimer->start(33); // esse valor parece ser a taxa de amostragem
 
 }
@@ -119,8 +153,26 @@ ProjetoFinal::~ProjetoFinal()
 
 void ProjetoFinal::processFrameAndUpdateGUI(){
 	// Funcao q vai processar os disponibilizar a imagem
+	ui.XYText->clear();
 
-	
+	// atualiza parametros de controle dos robos
+	for (int idxObj = 0; idxObj < objetos.size(); idxObj++)
+	{
+		for (int idxCtrl = 0; idxCtrl < nomesPid.size(); idxCtrl++)
+		{
+
+			if (objetos[idxObj].ctrl.nome == nomesPid[idxCtrl].nome)
+			{
+				// atualiza o parametro de controle do robo
+
+				objetos[idxObj].ctrl = nomesPid[idxCtrl];
+				ui.XYText->appendPlainText("Parametro de controle atualizado");
+				ui.XYText->appendPlainText("Kp: "+ QString::number(objetos[idxObj].ctrl.pAng));
+
+				//objetos[idxObj].taxaH = 1.0 / 22.0;
+			}
+		}
+	}
 
 
 
@@ -188,13 +240,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 	}
 	else if ((mostrarImagemNaTela) && (filtroCam->transferirImagemParaCameraCalib) && (!(pidCam->transferirImagemParaPIDCalib)))
 	{
-		filtroCam->processFrameAndUpdateGUI(Vision::originalMat);
-
-		processedMat = filtroCam->processedMat;
-
-		QImage qimgProcessed((uchar*)processedMat.data, processedMat.cols, processedMat.rows, processedMat.step, QImage::Format_Grayscale8);
-
-		ui.label->setPixmap(QPixmap::fromImage(qimgProcessed));
+		
 
 		if (!filtroCam->mostrarOuAtualizar)
 		{
@@ -351,9 +397,11 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 
 			if (objetos[idxObj].achou && objetos[idxObj].ctrl.nome != "")
 			{
+
 				//rtn = objetos[idxObj].Controle(objetos[idxObj].ctrl, true, 0.02);
 				rtn = objetos[idxObj].ControleJacoud(objetos[idxObj].ctrl);//, true, 0.02);
 				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
+				ui.XYText->appendPlainText("Teste: " + QString::number(rtn.erroAng));
 			}
 
 			rtn.achou = objetos[idxObj].achou;
@@ -912,6 +960,7 @@ void ProjetoFinal::on_actionNovo_Robo_triggered(){
 	roboCam->chamaConfigRobo = true;
 }
 
+
 void ProjetoFinal::closeEvent(QCloseEvent *evento)
 {
 	mostrarImagemNaTela = false;	// Caso o video esteja aberto
@@ -1132,4 +1181,70 @@ void ProjetoFinal::DrawCar(Objeto obj, cv::Scalar pCor)
 }
 #pragma endregion
 
+
+// controle de PID
+void ProjetoFinal::atualizaParamControle(){
+
+	paramC.pLin = ui.PLSpinBox->value();
+	paramC.iLin = ui.ILSpinBox->value();
+	paramC.dLin = ui.DLSpinBox->value();
+	paramC.pAng = ui.PASpinBox->value();
+	paramC.iAng = ui.IASpinBox->value();
+	paramC.dAng = ui.DASpinBox->value();
+
+	for (int i = 0; i < nomesPid.size(); i++)
+	{
+		if (ui.pidComboBoxMain->currentText().toStdString() == nomesPid[i].nome)
+		{
+
+			nomesPid[i].pLin = paramC.pLin;
+			nomesPid[i].iLin = paramC.iLin;
+			nomesPid[i].dLin = paramC.dLin;
+			nomesPid[i].pAng = paramC.pAng;
+			nomesPid[i].iAng = paramC.iAng;
+			nomesPid[i].dAng = paramC.dAng;
+
+
+			//
+			//uiPID.PLSpinBox->setValue(nomesPid[i].pLin);
+			//uiPID.ILSpinBox->setValue(nomesPid[i].iLin);
+			//uiPID.DLSpinBox->setValue(nomesPid[i].dLin);
+			//uiPID.PASpinBox->setValue(nomesPid[i].pAng);
+			//uiPID.DASpinBox->setValue(nomesPid[i].dAng);
+			//uiPID.IASpinBox->setValue(nomesPid[i].iAng);
+
+
+
+		}
+
+	}
+
+
+}
+
+void ProjetoFinal::selecionaPID(QString pidSelecionado){
+	// seleciona os parametros do PID
+	for (int i = 0; i < nomesPid.size(); i++)
+	{
+		if (pidSelecionado.toStdString() == nomesPid[i].nome)
+		{
+			ui.PLSpinBox->setValue(nomesPid[i].pLin);
+			ui.ILSpinBox->setValue(nomesPid[i].iLin);
+			ui.DLSpinBox->setValue(nomesPid[i].dLin);
+			ui.PASpinBox->setValue(nomesPid[i].pAng);
+			ui.DASpinBox->setValue(nomesPid[i].dAng);
+			ui.IASpinBox->setValue(nomesPid[i].iAng);
+
+			//atualizaParamControle();
+		}
+	}
+
+} 
+
+void ProjetoFinal::on_saveButton_clicked(){
+	// Salva as configuracoes de PID e os objetos
+	dbStorage::instance()->salvaParamsControle(nomesPid);
+	dbStorage::instance()->salvaObjetos(objetos);
+
+}
 
