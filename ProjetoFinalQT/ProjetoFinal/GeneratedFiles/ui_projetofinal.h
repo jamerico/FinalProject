@@ -51,7 +51,7 @@ public:
     QLabel *label_12;
     QLabel *label_13;
     QDoubleSpinBox *DLSpinBox_2;
-    QDoubleSpinBox *PLSpinBox_2;
+    QComboBox *maxEscComboBox;
     QGroupBox *groupBox;
     QLabel *label_7;
     QLabel *label_6;
@@ -148,11 +148,9 @@ public:
         DLSpinBox_2->setGeometry(QRect(110, 50, 71, 22));
         DLSpinBox_2->setMinimum(-100);
         DLSpinBox_2->setMaximum(100);
-        PLSpinBox_2 = new QDoubleSpinBox(groupBox_3);
-        PLSpinBox_2->setObjectName(QStringLiteral("PLSpinBox_2"));
-        PLSpinBox_2->setGeometry(QRect(110, 20, 71, 22));
-        PLSpinBox_2->setMinimum(-100);
-        PLSpinBox_2->setMaximum(100);
+        maxEscComboBox = new QComboBox(groupBox_3);
+        maxEscComboBox->setObjectName(QStringLiteral("maxEscComboBox"));
+        maxEscComboBox->setGeometry(QRect(110, 20, 69, 22));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setGeometry(QRect(380, 300, 191, 101));
@@ -259,7 +257,14 @@ public:
         checkShowTraj->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Trajet\303\263ria", Q_NULLPTR));
         groupBox_3->setTitle(QApplication::translate("ProjetoFinalClass", "Funcao Maximizante", Q_NULLPTR));
         label_12->setText(QApplication::translate("ProjetoFinalClass", "Valor do Max", Q_NULLPTR));
-        label_13->setText(QApplication::translate("ProjetoFinalClass", "Maximo (deg)", Q_NULLPTR));
+        label_13->setText(QApplication::translate("ProjetoFinalClass", "Posicao Max", Q_NULLPTR));
+        maxEscComboBox->clear();
+        maxEscComboBox->insertItems(0, QStringList()
+         << QApplication::translate("ProjetoFinalClass", "1", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "2", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "3", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "4", Q_NULLPTR)
+        );
         groupBox->setTitle(QApplication::translate("ProjetoFinalClass", "Linear", Q_NULLPTR));
         label_7->setText(QApplication::translate("ProjetoFinalClass", "Integrador (I) :", Q_NULLPTR));
         label_6->setText(QApplication::translate("ProjetoFinalClass", "Derivativo (D) :", Q_NULLPTR));

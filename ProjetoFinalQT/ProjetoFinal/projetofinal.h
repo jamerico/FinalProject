@@ -19,6 +19,7 @@
 //#include "opencv2/cudaimgproc.hpp"
 #include "Curva.h"
 #include <QKeyEvent>
+#include "funcCusto.h"
 
 
 //using namespace cv;
@@ -66,7 +67,8 @@ private slots:
 	void on_checkShowTraj_stateChanged(int state);
 	void atualizaParamControle();
 	void selecionaPID(QString);
-	
+	void selecionaMaxEsc(QString);
+
 
 
 private:

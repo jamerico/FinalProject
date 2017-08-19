@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "StrRetorno.h"
 #include <deque>
+#include "funcCusto.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ public:
 	deque<double> Speeds;
 
 	paramControle ctrl;
-
+	funcCusto objFuncCusto;
 	string nome;
 	string cfgXbee;
 
@@ -86,6 +87,7 @@ public:
 	double outputFilter = 0;;
 	double outputFilter2 = 0;;
 	double integralESC = 0;
+
 
 	void LowPassFilter(double input, double omegaH);
 	void LowPassFilter2(double input, double omegaH);

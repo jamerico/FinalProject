@@ -149,7 +149,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Maximo (deg)</string>
+      <string>Posicao Max</string>
      </property>
     </widget>
     <widget class="QDoubleSpinBox" name="DLSpinBox_2">
@@ -168,21 +168,35 @@
       <double>100.000000000000000</double>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="PLSpinBox_2">
+    <widget class="QComboBox" name="maxEscComboBox">
      <property name="geometry">
       <rect>
        <x>110</x>
        <y>20</y>
-       <width>71</width>
+       <width>69</width>
        <height>22</height>
       </rect>
      </property>
-     <property name="minimum">
-      <double>-100.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>100.000000000000000</double>
-     </property>
+     <item>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>4</string>
+      </property>
+     </item>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox">

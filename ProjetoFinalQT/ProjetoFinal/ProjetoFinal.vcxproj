@@ -150,7 +150,9 @@ del "testStream.txt"</Command>
     <ClCompile Include="cameracalib.cpp" />
     <ClCompile Include="Curva.cpp" />
     <ClCompile Include="Estartegia.cpp" />
+    <ClCompile Include="funcCusto.cpp" />
     <ClCompile Include="mathHelper.cpp" />
+    <ClCompile Include="funcCusto.h" />
     <ClCompile Include="SerialClass.cpp" />
     <ClCompile Include="StrRetorno.cpp" />
     <ClCompile Include="Trajetoria.cpp" />

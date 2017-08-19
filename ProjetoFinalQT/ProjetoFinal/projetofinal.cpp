@@ -133,6 +133,9 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	connect(ui.pidComboBoxMain, static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
 		[=](const QString &text){ selecionaPID(text); });
 
+	connect(ui.maxEscComboBox, static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+		[=](const QString &text){ selecionaMaxEsc(text); });
+
 	connect(ui.PLSpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
 	connect(ui.DLSpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
 	connect(ui.ILSpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
@@ -171,13 +174,17 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				ui.XYText->appendPlainText("Parametro de controle atualizado");
 				ui.XYText->appendPlainText("Kp: "+ QString::number(objetos[idxObj].ctrl.pAng));
 
+
+
 				//objetos[idxObj].taxaH = 1.0 / 22.0;
 			}
 		}
 	}
 
+	//ui.pidComboBoxMain
+	selecionaMaxEsc(ui.maxEscComboBox->currentText());
 
-
+	
 	if (mostrarImagemNaTela || runningTest || filtroCam->transferirImagemParaCameraCalib || pidCam->transferirImagemParaPIDCalib)
 	{
 		originalMat = Vision::instance()->ProcessFramesRtn();
@@ -408,7 +415,15 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				//rtn = objetos[idxObj].Controle(objetos[idxObj].ctrl, true, 0.02);
 				rtn = objetos[idxObj].ControleJacoud(objetos[idxObj].ctrl);//, true, 0.02);
 				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
-				ui.XYText->appendPlainText("Teste: " + QString::number(rtn.erroAng));
+				ui.XYText->appendPlainText("Pos Robot: " + QString::number(rtn.posicaoAtual.x) + "," + QString::number(rtn.posicaoAtual.y));
+				ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
+
+				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.angAtual * 180 / M_PI));
+				ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
+				ui.XYText->appendPlainText("Error ang: " + QString::number(rtn.erroAng * 180 / M_PI));
+
+				ui.XYText->appendPlainText("Ref Ang ESC Calculada: " + QString::number(rtn.diffAngEsc));
+
 			}
 
 			rtn.achou = objetos[idxObj].achou;
@@ -1248,6 +1263,45 @@ void ProjetoFinal::selecionaPID(QString pidSelecionado){
 	}
 
 } 
+
+void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
+	// seleciona os parametros do PID
+
+	funcCusto h;
+	switch (maxEscSelecionado.toInt()){
+		case 1:
+			h.posX = 60;
+			h.posY = 68;
+			h.ang = 0;
+			break;
+		case 2:
+			h.posX = 240;
+			h.posY = 68;
+			h.ang = 90;
+			break;
+		case 3:
+			h.posX = 60;
+			h.posY = 220;
+			h.ang = 170;
+			break;
+		case 4:
+			h.posX = 240;
+			h.posY = 220;
+			h.ang = -90;
+			break;
+
+	}
+		
+	for (int i = 0; i < objetos.size(); i++)
+	{
+		
+		objetos[i].objFuncCusto = h;
+			//atualizaParamControle();
+		
+	}
+
+}
+
 
 void ProjetoFinal::on_saveButton_clicked(){
 	// Salva as configuracoes de PID e os objetos

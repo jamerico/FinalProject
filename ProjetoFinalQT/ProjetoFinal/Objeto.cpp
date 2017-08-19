@@ -180,13 +180,25 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double _sin = sin(2 * M_PI * 1 * t); 
 
 
-	//double AngRef = (90 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
-	double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
+	double AngRef = (230 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
+	//double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
 
 	//double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
 
 
 	//double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
+
+	//while (AngRef <= -M_PI){
+	//	//Logger::Output("Menor que pi \n", 0);
+
+	//	AngRef = AngRef + 2 * M_PI;
+	//}
+
+	//while (AngRef >= M_PI) {
+	//	//Logger::Output("Maior que pi \n", 0);
+
+	//	AngRef = AngRef - 2 * M_PI;
+	//}
 
 
 
@@ -195,14 +207,15 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double erroLin = PosRef - posAtual.x;
 
 
-	double xSource = 240;
-	double ySource = 68;
-	double angSorce = 180-(qAtan2(xSource - posAtual.x, ySource - posAtual.y)) * 180 / M_PI;
-	//double angSorce = 180;
+	double xSource = objFuncCusto.posX;
+	double ySource = objFuncCusto.posY;
+	double angSource = objFuncCusto.ang;
+	
+	//double angSorce = 180-(qAtan2(xSource - posAtual.x, ySource - posAtual.y)) * 180 / M_PI;
 
 
 
-	double y = -pow((posAtual.ang - (angSorce* M_PI / 180)), 2) + 10;
+	double y = -pow((posAtual.ang - (angSource* M_PI / 180)), 2) + 10;
 
 	LowPassFilter(y, 0.5);
 	
@@ -220,22 +233,25 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	integralESC = integralESC + taxaH*gradientEstimative;
 
 
-	if (integralESC > (330*M_PI/180)){
-		integralESC = 330 * M_PI / 180;
-	}
-	if (integralESC < (0 * M_PI / 180)){
-		integralESC = 0 * M_PI / 180;
-	}
+	//if (integralESC > (330*M_PI/180)){
+	//	integralESC = 330 * M_PI / 180;
+	//}
+	//if (integralESC < (0 * M_PI / 180)){
+	//	integralESC = 0 * M_PI / 180;
+	//}
 
 	double uEsc = integralESC + (30 * M_PI / 180)*_sin;
 
+	//erroAng = AjustaAngulo(erroAng, true);
+
 	ControleAngular(pParam, erroAng);
+
 	//ControleAngular(pParam, erroAng);
 
 	//ControleCruzeiro(pParam, erroLin);
 
 	//saidaControleAngular = 0; // jean
-	//saidaControleLinear = -20/0.05;
+	//saidaControleLinear = -300; // negativo = pra frente
 
 	//int raio = 120;
 	//int xc = 320;
@@ -271,7 +287,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
 	signalsStream << y << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << "\n";
 	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
-	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSorce << "\n";
+	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSource << "\n";
 
 
 	signalsStream.close();
@@ -284,7 +300,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 
-	return StrRetorno(0,0,0,0,posAtual.ang, AngRef, erroAng, 0,Position(0,0), saidaControleLinear,saidaControleAngular, sinalTensao1, sinalTensao2, false);
+	return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
 
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
@@ -387,8 +403,9 @@ void Objeto::ControleCruzeiro(paramControle pParam, double pErro){
 }
 
 void Objeto::ControleAngular(paramControle pParam, double pErro){
-	double erro = angDesejado - posAtual.ang;
-	erro = AjustaAngulo(erro, true);
+	//double erro = angDesejado - posAtual.ang;
+
+	//double erro = AjustaAngulo(pErro, true);
 
 	//PID(erro, ctrl.pAng, ctrl.iAng, ctrl.dAng, false);
 	PID(pErro, pParam.pAng, pParam.iAng, pParam.dAng, false);

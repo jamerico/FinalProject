@@ -36,7 +36,7 @@ StrRetorno::~StrRetorno()
 }
 
 
-StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja,  double pSetPoint, double pErroVel, double pAngAtual, double pAngDesejado, double pErroAng, double pMDist, Position pMelhorPonto, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat)
+StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja,  double pSetPoint, double pErroVel, double pAngAtual, double pAngDesejado, double pErroAng, double pMDist, Position pMelhorPonto, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pDiffAng)
 {
 	satAng = pSat;
 
@@ -56,4 +56,5 @@ StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja,  double pSet
 
 	mDist = pMDist;
 	melhorPonto = pMelhorPonto ;
+	diffAngEsc = pDiffAng;
 }

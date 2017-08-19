@@ -7,7 +7,7 @@ class StrRetorno
 {
 public:
 	StrRetorno();
-	StrRetorno(double velAtual, double velAtualDerivSuja, double setPoint, double erroVel, double angAtual, double angDesejado, double erroAng, double mDist, Position melhorPonto, double saidaControleLinear, double saidaControleAngular, double sinalControle1, double sinalControle2, bool sat);
+	StrRetorno(double velAtual, double velAtualDerivSuja, double setPoint, double erroVel, double angAtual, double angDesejado, double erroAng, double mDist, Position melhorPonto, double saidaControleLinear, double saidaControleAngular, double sinalControle1, double sinalControle2, bool sat, double diffAngEsc = 0);
 	~StrRetorno();
 
 	double velAtual;
@@ -17,7 +17,7 @@ public:
 	double saidaControleLinear;
 
 
-
+	double diffAngEsc;
 	double angAtual;
 	double angDesejado;
 	double erroAng;
