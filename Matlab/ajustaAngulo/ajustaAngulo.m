@@ -1,7 +1,9 @@
 %% simulacao de giro continuo
 
 %% thetaOrig = [-700:1:1000];
-thetaOrig = [50:-1:-1000];
+thetaOrig = [50:-1:-200];
+thetaOrig = [thetaOrig -200:1:500];
+
 
 deltaY = 0;
 deltaX = 0;
@@ -17,6 +19,10 @@ thetaAng = [];
 
 %% valores calculados
 for(i=1:1:size(thetaOrig,2))
+    
+    deltaYanterior = deltaY;
+    deltaXanterior = deltaX;
+    thetaAnterior = theta;
     
     anguloAtual = thetaOrig(1,i)*pi/180;
     primX = cos(anguloAtual);
@@ -46,9 +52,7 @@ for(i=1:1:size(thetaOrig,2))
     
     thetaAng = [thetaAng theta];
     
-    deltaYanterior = deltaY;
-    deltaXanterior = deltaX;
-    thetaAnterior = theta;
+    
     
     
 end

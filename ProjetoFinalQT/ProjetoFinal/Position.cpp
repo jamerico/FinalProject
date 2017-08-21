@@ -25,6 +25,15 @@ Position::~Position()
 {
 }
 
+Position::Position(uint16_t pX, uint16_t pY, double pAng, double pDeltaX, double pDeltaY)
+{
+	x = pX;
+	y = pY;
+	ang = pAng;
+	deltaX = pDeltaX;
+	deltaY = pDeltaY;
+}
+
 void Position::setPos(uint16_t pX, uint16_t pY, double pAngle)
 {
 	x = pX;
@@ -36,6 +45,15 @@ void Position::setPos(uint16_t pX, uint16_t pY, double pAngle)
 
 }
 
+void Position::setPos(uint16_t pX, uint16_t pY, double pAng, double pDeltaX, double pDeltaY)
+{
+	x = pX;
+	y = pY;
+	ang = pAng;
+	ticks = clock();
+	deltaX = pDeltaX;
+	deltaY = pDeltaY;
+}
 
 bool Position::operator==(const Position& other)
 {
