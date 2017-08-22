@@ -25,13 +25,13 @@ Position::~Position()
 {
 }
 
-Position::Position(uint16_t pX, uint16_t pY, double pAng, double pDeltaX, double pDeltaY)
+Position::Position(uint16_t pX, uint16_t pY, double pAng, double pDeltaXCirculoUnit, double pDeltaYCirculoUnit)
 {
 	x = pX;
 	y = pY;
 	ang = pAng;
-	deltaX = pDeltaX;
-	deltaY = pDeltaY;
+	deltaXCirculoUnit = pDeltaXCirculoUnit;
+	deltaYCirculoUnit = pDeltaYCirculoUnit;
 }
 
 void Position::setPos(uint16_t pX, uint16_t pY, double pAngle)
@@ -45,14 +45,14 @@ void Position::setPos(uint16_t pX, uint16_t pY, double pAngle)
 
 }
 
-void Position::setPos(uint16_t pX, uint16_t pY, double pAng, double pDeltaX, double pDeltaY)
+void Position::setPos(uint16_t pX, uint16_t pY, double pAng, double pDeltaXCirculoUnit, double pDeltaYCirculoUnit)
 {
 	x = pX;
 	y = pY;
 	ang = pAng;
 	ticks = clock();
-	deltaX = pDeltaX;
-	deltaY = pDeltaY;
+	deltaXCirculoUnit = pDeltaXCirculoUnit;
+	deltaYCirculoUnit = pDeltaYCirculoUnit;
 }
 
 bool Position::operator==(const Position& other)

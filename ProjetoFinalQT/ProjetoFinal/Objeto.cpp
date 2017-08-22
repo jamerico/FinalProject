@@ -41,35 +41,43 @@ void Objeto::setPosAtual(double _x, double _y, double _theta)
 
 void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 {
-	posAnterior = posAtual;
+	this->posAnterior = posAtual;
 
 	
 	double x = (pCorPrim.x + pCorSec.x) / 2;
 	double y = (pCorPrim.y + pCorSec.y) / 2;
-	double deltaX = (pCorPrim.x - pCorSec.x);
-	double deltaY = (pCorPrim.y - pCorSec.y);
+	
+	
+	double thetaCirculoUnit = atan2((pCorPrim.x - pCorSec.x), (pCorPrim.y - pCorSec.y));
+	double deltaYCirculoUnit = 2 * cos(thetaCirculoUnit);
+	double deltaXCirculoUnit = 2 * sin(thetaCirculoUnit);
+
+	
+	/*double deltaX = (pCorPrim.x - pCorSec.x);
+	double deltaY = (pCorPrim.y - pCorSec.y);*/
 
 	double theta;
 
 	// se posAnterior = terceiro quadrante e posAtual = quarto quadrante
-	if (posAnterior.deltaX < 0 && posAnterior.deltaY>0 && posAtual.deltaX < 0 && posAtual.deltaY < 0){
+	if (posAnterior.deltaYCirculoUnit < 0 && posAnterior.deltaXCirculoUnit>0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit < 0){
 		posAtual.offset++;
 		posAtual.angMin = posAtual.angMin + 2 * M_PI*posAtual.offset;
 		posAtual.angMax = posAtual.angMax + 2 * M_PI*posAtual.offset;
 
 	}
 	// se posAnterior = quarto quadrante e posAtual = terceiro quadrante
-	if (posAnterior.deltaX < 0 && posAnterior.deltaY<0 && posAtual.deltaX < 0 && posAtual.deltaY > 0){
+	if (posAnterior.deltaYCirculoUnit < 0 && posAnterior.deltaXCirculoUnit<0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit > 0){
 		posAtual.offset--;
 		posAtual.angMin = posAtual.angMin + 2 * M_PI*posAtual.offset;
 		posAtual.angMax = posAtual.angMax + 2 * M_PI*posAtual.offset;
 
 	}
 
-	//todo: inverter os eixos
-	theta = atan2(deltaY, deltaX) + (2 * M_PI)*posAtual.offset;
+	//theta = atan2(deltaY, deltaX) + (2 * M_PI)*posAtual.offset + M_PI_4;
+	//theta = atan2(deltaX, deltaY) + (2 * M_PI)*posAtual.offset + M_PI_4;
+	theta = thetaCirculoUnit + (2 * M_PI)*posAtual.offset + M_PI_4;
 
-	posAtual.setPos(x, y, theta, deltaX, deltaY);
+	posAtual.setPos(x, y, theta, deltaXCirculoUnit, deltaYCirculoUnit);
 
 	//double theta = atan2((pCorPrim.y - pCorSec.y), (pCorPrim.x - pCorSec.x)) + M_PI_4;
 

@@ -12,8 +12,8 @@ public:
 
 
 
-	double deltaX = 0;
-	double deltaY = 0;
+	double deltaXCirculoUnit = 0;
+	double deltaYCirculoUnit = 0;
 	double angMax = M_PI;
 	double angMin = -M_PI;
 	int offset = 0;
@@ -24,7 +24,7 @@ public:
 
 
 	void setPos(uint16_t, uint16_t, double);
-	void setPos(uint16_t pX, uint16_t pY, double pAng, double pDeltaX, double pDeltaY);
+	void setPos(uint16_t pX, uint16_t pY, double pAng, double pDeltaXCirculoUnit, double pDeltaYCirculoUnit);
 
 	
 	uint16_t x;

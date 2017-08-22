@@ -171,8 +171,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				// atualiza o parametro de controle do robo
 
 				objetos[idxObj].ctrl = nomesPid[idxCtrl];
-				ui.XYText->appendPlainText("Parametro de controle atualizado");
-				ui.XYText->appendPlainText("Kp: "+ QString::number(objetos[idxObj].ctrl.pAng));
+				
 
 
 
@@ -395,6 +394,8 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				objetos[idxObj].taxaH = taxaH;
 				//objetos[idxObj].taxaH = 1.0 / 22.0;
 				objetos[idxObj].AtualizaVelocidade();
+				//ui.XYText->appendPlainText("Parametro de controle atualizado");
+
 			}
 		}
 
@@ -415,6 +416,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				//rtn = objetos[idxObj].Controle(objetos[idxObj].ctrl, true, 0.02);
 				rtn = objetos[idxObj].ControleJacoud(objetos[idxObj].ctrl);//, true, 0.02);
 				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
+				ui.XYText->appendPlainText("Kp: " + QString::number(objetos[idxObj].ctrl.pAng));
 				ui.XYText->appendPlainText("Pos Robot: " + QString::number(rtn.posicaoAtual.x) + "," + QString::number(rtn.posicaoAtual.y));
 				ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
 
