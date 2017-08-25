@@ -410,6 +410,8 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 			Logger::Output("TO AQUI");
 
 
+			ui.XYText->appendPlainText("Robot: " + QString::fromStdString(objetos[idxObj].nome) + " localizado: " + QString::number(objetos[idxObj].achou));
+
 			if (objetos[idxObj].achou && objetos[idxObj].ctrl.nome != "")
 			{
 
@@ -417,8 +419,8 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				rtn = objetos[idxObj].ControleJacoud(objetos[idxObj].ctrl);//, true, 0.02);
 				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
 				ui.XYText->appendPlainText("Kp: " + QString::number(objetos[idxObj].ctrl.pAng));
-				ui.XYText->appendPlainText("Pos Robot: " + QString::number(rtn.posicaoAtual.x) + "," + QString::number(rtn.posicaoAtual.y));
 				ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
+				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(objetos[idxObj].posAtual.x) + " , " + QString::number(objetos[idxObj].posAtual.y));
 
 				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.angAtual * 180 / M_PI));
 				ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
@@ -1120,6 +1122,7 @@ void ProjetoFinal::FindObjects(vector<vector<cv::Point>> posicaoCores){
 
 	//double limiar = 45;
 	//double limiar = 9.5;
+	//double limiar = 120; // casa
 	double limiar = 16;
 	for (int idxObj = 0; idxObj < objetos.size(); idxObj++)
 	{
@@ -1147,7 +1150,19 @@ void ProjetoFinal::FindObjects(vector<vector<cv::Point>> posicaoCores){
 						{
 							if (pPrim.distance(pSec) < limiar)
 							{
+								double thetaCirculoUnit = atan2((pPrim.y - pSec.y), (pPrim.x - pSec.x));
+
+								double deltaYCirculoUnit = 2 * cos(thetaCirculoUnit);
+								double deltaXCirculoUnit = 2 * sin(thetaCirculoUnit);
+
+								ui.XYText->appendPlainText("DeltaX atual: " + QString::number(deltaXCirculoUnit));
+								ui.XYText->appendPlainText("DeltaX anterior: " + QString::number(objetos[idxObj].posAnterior.deltaXCirculoUnit));
+								ui.XYText->appendPlainText("DeltaY atual: " + QString::number(deltaYCirculoUnit));
+								ui.XYText->appendPlainText("DeltaY anterior: " + QString::number(objetos[idxObj].posAnterior.deltaYCirculoUnit));
+
 								objetos[idxObj].setPosAtual(pPrim, pSec);
+								
+
 								posicaoCores[idxCorPrimTemp][idxPrim].x = -1000;
 								posicaoCores[idxCorSecTemp][idxSec].x = -1000;
 								objetos[idxObj].achou = true;

@@ -48,7 +48,8 @@ void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 	double y = (pCorPrim.y + pCorSec.y) / 2;
 	
 	
-	double thetaCirculoUnit = atan2((pCorPrim.x - pCorSec.x), (pCorPrim.y - pCorSec.y));
+	double thetaCirculoUnit = atan2((pCorPrim.y - pCorSec.y), (pCorPrim.x - pCorSec.x));
+
 	double deltaYCirculoUnit = 2 * cos(thetaCirculoUnit);
 	double deltaXCirculoUnit = 2 * sin(thetaCirculoUnit);
 
@@ -58,14 +59,14 @@ void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 
 	double theta;
 
-	// se posAnterior = terceiro quadrante e posAtual = quarto quadrante
+	// se posAnterior = segundo quadrante e posAtual = terceiro quadrante
 	if (posAnterior.deltaYCirculoUnit < 0 && posAnterior.deltaXCirculoUnit>0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit < 0){
 		posAtual.offset++;
 		posAtual.angMin = posAtual.angMin + 2 * M_PI*posAtual.offset;
 		posAtual.angMax = posAtual.angMax + 2 * M_PI*posAtual.offset;
 
 	}
-	// se posAnterior = quarto quadrante e posAtual = terceiro quadrante
+	// se posAnterior = quarto terceiro e posAtual = segundo quadrante
 	if (posAnterior.deltaYCirculoUnit < 0 && posAnterior.deltaXCirculoUnit<0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit > 0){
 		posAtual.offset--;
 		posAtual.angMin = posAtual.angMin + 2 * M_PI*posAtual.offset;
@@ -342,7 +343,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 
-	return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
+	return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
 
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
