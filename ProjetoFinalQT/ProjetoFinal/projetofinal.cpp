@@ -426,7 +426,6 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
 				ui.XYText->appendPlainText("Error ang: " + QString::number(rtn.erroAng * 180 / M_PI));
 
-				ui.XYText->appendPlainText("Ref Ang ESC Calculada: " + QString::number(rtn.diffAngEsc));
 
 			}
 
@@ -1152,13 +1151,14 @@ void ProjetoFinal::FindObjects(vector<vector<cv::Point>> posicaoCores){
 							{
 								double thetaCirculoUnit = atan2((pPrim.y - pSec.y), (pPrim.x - pSec.x));
 
-								double deltaYCirculoUnit = 2 * cos(thetaCirculoUnit);
+								/*double deltaYCirculoUnit = 2 * cos(thetaCirculoUnit);
 								double deltaXCirculoUnit = 2 * sin(thetaCirculoUnit);
 
 								ui.XYText->appendPlainText("DeltaX atual: " + QString::number(deltaXCirculoUnit));
 								ui.XYText->appendPlainText("DeltaX anterior: " + QString::number(objetos[idxObj].posAnterior.deltaXCirculoUnit));
 								ui.XYText->appendPlainText("DeltaY atual: " + QString::number(deltaYCirculoUnit));
-								ui.XYText->appendPlainText("DeltaY anterior: " + QString::number(objetos[idxObj].posAnterior.deltaYCirculoUnit));
+								ui.XYText->appendPlainText("DeltaY anterior: " + QString::number(objetos[idxObj].posAnterior.deltaYCirculoUnit));*/
+								ui.XYText->appendPlainText("Offset atual: " + QString::number(objetos[idxObj].posAtual.offset));
 
 								objetos[idxObj].setPosAtual(pPrim, pSec);
 								
@@ -1299,12 +1299,12 @@ void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
 		case 3:
 			h.posX = 60;
 			h.posY = 220;
-			h.ang = 170;
+			h.ang = 180;
 			break;
 		case 4:
 			h.posX = 240;
 			h.posY = 220;
-			h.ang = -90;
+			h.ang = 270;
 			break;
 
 	}

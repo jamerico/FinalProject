@@ -49,9 +49,11 @@ void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 	
 	
 	double thetaCirculoUnit = atan2((pCorPrim.y - pCorSec.y), (pCorPrim.x - pCorSec.x));
+	//double thetaCirculoUnit = atan2((pCorPrim.x - pCorSec.x), (pCorPrim.y - pCorSec.y));
 
-	double deltaYCirculoUnit = 2 * cos(thetaCirculoUnit);
-	double deltaXCirculoUnit = 2 * sin(thetaCirculoUnit);
+
+	double deltaXCirculoUnit = 2 * cos(thetaCirculoUnit);
+	double deltaYCirculoUnit = 2 * sin(thetaCirculoUnit);
 
 	
 	/*double deltaX = (pCorPrim.x - pCorSec.x);
@@ -60,14 +62,14 @@ void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 	double theta;
 
 	// se posAnterior = segundo quadrante e posAtual = terceiro quadrante
-	if (posAnterior.deltaYCirculoUnit < 0 && posAnterior.deltaXCirculoUnit>0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit < 0){
+	if (posAnterior.deltaYCirculoUnit >= 0 && posAnterior.deltaXCirculoUnit<0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit < 0){
 		posAtual.offset++;
 		posAtual.angMin = posAtual.angMin + 2 * M_PI*posAtual.offset;
 		posAtual.angMax = posAtual.angMax + 2 * M_PI*posAtual.offset;
 
 	}
 	// se posAnterior = quarto terceiro e posAtual = segundo quadrante
-	if (posAnterior.deltaYCirculoUnit < 0 && posAnterior.deltaXCirculoUnit<0 && deltaYCirculoUnit < 0 && deltaXCirculoUnit > 0){
+	if (posAnterior.deltaYCirculoUnit <= 0 && posAnterior.deltaXCirculoUnit<0 && deltaYCirculoUnit > 0 && deltaXCirculoUnit < 0){
 		posAtual.offset--;
 		posAtual.angMin = posAtual.angMin + 2 * M_PI*posAtual.offset;
 		posAtual.angMax = posAtual.angMax + 2 * M_PI*posAtual.offset;
@@ -76,7 +78,7 @@ void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 
 	//theta = atan2(deltaY, deltaX) + (2 * M_PI)*posAtual.offset + M_PI_4;
 	//theta = atan2(deltaX, deltaY) + (2 * M_PI)*posAtual.offset + M_PI_4;
-	theta = thetaCirculoUnit + (2 * M_PI)*posAtual.offset + M_PI_4;
+	theta = thetaCirculoUnit +(2 * M_PI)*posAtual.offset -M_PI_4;
 
 	posAtual.setPos(x, y, theta, deltaXCirculoUnit, deltaYCirculoUnit);
 
@@ -223,8 +225,8 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double _sin = sin(2 * M_PI * 1 * t); 
 
 
-	double AngRef = (230 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
-	//double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
+	//double AngRef = (-240 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
+	double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
 
 	//double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
 
@@ -245,7 +247,19 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 
+
 	double erroAng = AngRef - posAtual.ang;
+	
+	//if (erroAng > (360 * M_PI / 180)){
+	//	erroAng = 360 * M_PI / 180;
+	//}
+	//if (erroAng < (-360 * M_PI / 180)){
+	//	erroAng = -360 * M_PI / 180;
+	//}
+
+
+
+
 	
 	//double erroLin = PosRef - posAtual.x;
 
@@ -276,12 +290,12 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	integralESC = integralESC + taxaH*gradientEstimative;
 
 
-	//if (integralESC > (330*M_PI/180)){
-	//	integralESC = 330 * M_PI / 180;
-	//}
-	//if (integralESC < (0 * M_PI / 180)){
-	//	integralESC = 0 * M_PI / 180;
-	//}
+	if (integralESC > (360*M_PI/180)){
+		integralESC = 360 * M_PI / 180;
+	}
+	if (integralESC < (-360 * M_PI / 180)){
+		integralESC = -360 * M_PI / 180;
+	}
 
 	double uEsc = integralESC + (30 * M_PI / 180)*_sin;
 
@@ -311,8 +325,8 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double kPos = 3;
 	//saidaControleLinear = 0;//pParam.pLin*erroPos;
 
-	//MontaSinaisTensao();
-	MontaSinaisTensao2(t);
+	MontaSinaisTensao();
+	//MontaSinaisTensao2(t);
 
 	//float fatorDimensao = 0.0475;	// Fator q se refere ao tamanho do carro/2 isso em metros, ao menos eu acho q eh essa unidade
 	//saidaControleLinear = 0;
