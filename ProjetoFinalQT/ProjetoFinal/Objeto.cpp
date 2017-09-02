@@ -223,12 +223,14 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 
 	double _sin = sin(2 * M_PI * 1 * t); 
+	//double _sin = sin(2 * M_PI * 2 * t);
+
 
 
 	//double AngRef = (-240 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
 	double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
 
-	//double AngRef = integralESC + (10 * M_PI / 180.0)* _sin;
+	//double AngRef = integralESC + (20 * M_PI / 180.0)* _sin;
 
 
 	//double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
@@ -275,7 +277,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double y = -pow((posAtual.ang - (angSource* M_PI / 180)), 2) + 10;
 
 	LowPassFilter(y, 0.5);
-	
+	//LowPassFilter(y, 1);
 
 	double outputHighPass = y - outputFilter;
 
@@ -284,6 +286,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 	LowPassFilter2(sinDoubleFreq, 0.5);
+	//LowPassFilter2(sinDoubleFreq, 1);
 
 	double gradientEstimative = outputFilter2;
 
