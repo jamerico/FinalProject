@@ -87,7 +87,8 @@ public:
 	double outputFilter = 0;;
 	double outputFilter2 = 0;;
 	double integralESC = 0;
-
+	double ampSenoide = 0;
+	double freqSenoide = 0;
 
 	void LowPassFilter(double input, double omegaH);
 	void LowPassFilter2(double input, double omegaH);

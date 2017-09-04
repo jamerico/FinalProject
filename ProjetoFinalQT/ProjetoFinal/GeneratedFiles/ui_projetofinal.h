@@ -50,8 +50,8 @@ public:
     QGroupBox *groupBox_3;
     QLabel *label_12;
     QLabel *label_13;
-    QDoubleSpinBox *DLSpinBox_2;
-    QComboBox *maxEscComboBox;
+    QDoubleSpinBox *freqSenoideCoringa;
+    QDoubleSpinBox *ampSenoideCoringa;
     QGroupBox *groupBox;
     QLabel *label_7;
     QLabel *label_6;
@@ -69,6 +69,11 @@ public:
     QComboBox *pidComboBoxMain;
     QLabel *label_2;
     QPushButton *saveButton;
+    QGroupBox *groupBox_4;
+    QLabel *label_14;
+    QLabel *label_15;
+    QDoubleSpinBox *DLSpinBox_3;
+    QComboBox *maxEscComboBox;
     QMenuBar *menuBar;
     QMenu *menuOp_es;
     QToolBar *mainToolBar;
@@ -78,7 +83,7 @@ public:
     {
         if (ProjetoFinalClass->objectName().isEmpty())
             ProjetoFinalClass->setObjectName(QStringLiteral("ProjetoFinalClass"));
-        ProjetoFinalClass->resize(595, 528);
+        ProjetoFinalClass->resize(772, 390);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -94,15 +99,15 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         startButton = new QPushButton(centralWidget);
         startButton->setObjectName(QStringLiteral("startButton"));
-        startButton->setGeometry(QRect(380, 440, 75, 23));
+        startButton->setGeometry(QRect(380, 300, 75, 23));
         pauseButton = new QPushButton(centralWidget);
         pauseButton->setObjectName(QStringLiteral("pauseButton"));
         pauseButton->setEnabled(false);
-        pauseButton->setGeometry(QRect(470, 440, 75, 23));
+        pauseButton->setGeometry(QRect(470, 300, 75, 23));
         pauseButton->setFlat(false);
         XYText = new QPlainTextEdit(centralWidget);
         XYText->setObjectName(QStringLiteral("XYText"));
-        XYText->setGeometry(QRect(10, 30, 341, 401));
+        XYText->setGeometry(QRect(10, 30, 341, 301));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 0, 555, 19));
@@ -136,24 +141,26 @@ public:
 
         groupBox_3 = new QGroupBox(centralWidget);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(380, 80, 191, 91));
+        groupBox_3->setGeometry(QRect(360, 130, 191, 91));
         label_12 = new QLabel(groupBox_3);
         label_12->setObjectName(QStringLiteral("label_12"));
         label_12->setGeometry(QRect(10, 50, 81, 20));
         label_13 = new QLabel(groupBox_3);
         label_13->setObjectName(QStringLiteral("label_13"));
         label_13->setGeometry(QRect(10, 20, 91, 16));
-        DLSpinBox_2 = new QDoubleSpinBox(groupBox_3);
-        DLSpinBox_2->setObjectName(QStringLiteral("DLSpinBox_2"));
-        DLSpinBox_2->setGeometry(QRect(110, 50, 71, 22));
-        DLSpinBox_2->setMinimum(-100);
-        DLSpinBox_2->setMaximum(100);
-        maxEscComboBox = new QComboBox(groupBox_3);
-        maxEscComboBox->setObjectName(QStringLiteral("maxEscComboBox"));
-        maxEscComboBox->setGeometry(QRect(110, 20, 69, 22));
+        freqSenoideCoringa = new QDoubleSpinBox(groupBox_3);
+        freqSenoideCoringa->setObjectName(QStringLiteral("freqSenoideCoringa"));
+        freqSenoideCoringa->setGeometry(QRect(110, 50, 71, 22));
+        freqSenoideCoringa->setMinimum(-100);
+        freqSenoideCoringa->setMaximum(100);
+        ampSenoideCoringa = new QDoubleSpinBox(groupBox_3);
+        ampSenoideCoringa->setObjectName(QStringLiteral("ampSenoideCoringa"));
+        ampSenoideCoringa->setGeometry(QRect(110, 20, 71, 22));
+        ampSenoideCoringa->setMinimum(-100);
+        ampSenoideCoringa->setMaximum(100);
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(380, 300, 191, 101));
+        groupBox->setGeometry(QRect(570, 190, 191, 101));
         label_7 = new QLabel(groupBox);
         label_7->setObjectName(QStringLiteral("label_7"));
         label_7->setGeometry(QRect(10, 70, 81, 20));
@@ -180,7 +187,7 @@ public:
         PLSpinBox->setMaximum(100);
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(380, 180, 191, 111));
+        groupBox_2->setGeometry(QRect(570, 60, 191, 111));
         label_11 = new QLabel(groupBox_2);
         label_11->setObjectName(QStringLiteral("label_11"));
         label_11->setGeometry(QRect(10, 80, 81, 20));
@@ -207,19 +214,36 @@ public:
         label_10->setGeometry(QRect(10, 20, 91, 16));
         pidComboBoxMain = new QComboBox(centralWidget);
         pidComboBoxMain->setObjectName(QStringLiteral("pidComboBoxMain"));
-        pidComboBoxMain->setGeometry(QRect(410, 40, 151, 22));
+        pidComboBoxMain->setGeometry(QRect(600, 30, 151, 22));
         pidComboBoxMain->setAutoFillBackground(true);
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(380, 40, 31, 31));
+        label_2->setGeometry(QRect(570, 30, 31, 31));
         label_2->setWordWrap(false);
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QStringLiteral("saveButton"));
-        saveButton->setGeometry(QRect(420, 410, 75, 23));
+        saveButton->setGeometry(QRect(630, 300, 75, 23));
+        groupBox_4 = new QGroupBox(centralWidget);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        groupBox_4->setGeometry(QRect(360, 30, 191, 91));
+        label_14 = new QLabel(groupBox_4);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(10, 50, 81, 20));
+        label_15 = new QLabel(groupBox_4);
+        label_15->setObjectName(QStringLiteral("label_15"));
+        label_15->setGeometry(QRect(10, 20, 91, 16));
+        DLSpinBox_3 = new QDoubleSpinBox(groupBox_4);
+        DLSpinBox_3->setObjectName(QStringLiteral("DLSpinBox_3"));
+        DLSpinBox_3->setGeometry(QRect(110, 50, 71, 22));
+        DLSpinBox_3->setMinimum(-100);
+        DLSpinBox_3->setMaximum(100);
+        maxEscComboBox = new QComboBox(groupBox_4);
+        maxEscComboBox->setObjectName(QStringLiteral("maxEscComboBox"));
+        maxEscComboBox->setGeometry(QRect(110, 20, 69, 22));
         ProjetoFinalClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ProjetoFinalClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 595, 21));
+        menuBar->setGeometry(QRect(0, 0, 772, 21));
         menuOp_es = new QMenu(menuBar);
         menuOp_es->setObjectName(QStringLiteral("menuOp_es"));
         ProjetoFinalClass->setMenuBar(menuBar);
@@ -255,16 +279,9 @@ public:
         checkShowDrawBox->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Desenho Rob\303\264", Q_NULLPTR));
         checkShowBlob->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Blobs Imagem", Q_NULLPTR));
         checkShowTraj->setText(QApplication::translate("ProjetoFinalClass", "Mostrar Trajet\303\263ria", Q_NULLPTR));
-        groupBox_3->setTitle(QApplication::translate("ProjetoFinalClass", "Funcao Maximizante", Q_NULLPTR));
-        label_12->setText(QApplication::translate("ProjetoFinalClass", "Valor do Max", Q_NULLPTR));
-        label_13->setText(QApplication::translate("ProjetoFinalClass", "Posicao Max", Q_NULLPTR));
-        maxEscComboBox->clear();
-        maxEscComboBox->insertItems(0, QStringList()
-         << QApplication::translate("ProjetoFinalClass", "1", Q_NULLPTR)
-         << QApplication::translate("ProjetoFinalClass", "2", Q_NULLPTR)
-         << QApplication::translate("ProjetoFinalClass", "3", Q_NULLPTR)
-         << QApplication::translate("ProjetoFinalClass", "4", Q_NULLPTR)
-        );
+        groupBox_3->setTitle(QApplication::translate("ProjetoFinalClass", "Senoide", Q_NULLPTR));
+        label_12->setText(QApplication::translate("ProjetoFinalClass", "Freq", Q_NULLPTR));
+        label_13->setText(QApplication::translate("ProjetoFinalClass", "Amp", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("ProjetoFinalClass", "Linear", Q_NULLPTR));
         label_7->setText(QApplication::translate("ProjetoFinalClass", "Integrador (I) :", Q_NULLPTR));
         label_6->setText(QApplication::translate("ProjetoFinalClass", "Derivativo (D) :", Q_NULLPTR));
@@ -275,6 +292,16 @@ public:
         label_10->setText(QApplication::translate("ProjetoFinalClass", "Proporcional (P) :", Q_NULLPTR));
         label_2->setText(QApplication::translate("ProjetoFinalClass", "PID:", Q_NULLPTR));
         saveButton->setText(QApplication::translate("ProjetoFinalClass", "Salvar", Q_NULLPTR));
+        groupBox_4->setTitle(QApplication::translate("ProjetoFinalClass", "Funcao Maximizante", Q_NULLPTR));
+        label_14->setText(QApplication::translate("ProjetoFinalClass", "Valor do Max", Q_NULLPTR));
+        label_15->setText(QApplication::translate("ProjetoFinalClass", "Posicao Max", Q_NULLPTR));
+        maxEscComboBox->clear();
+        maxEscComboBox->insertItems(0, QStringList()
+         << QApplication::translate("ProjetoFinalClass", "1", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "2", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "3", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "4", Q_NULLPTR)
+        );
         menuOp_es->setTitle(QApplication::translate("ProjetoFinalClass", "Configura\303\247\303\265es", Q_NULLPTR));
     } // retranslateUi
 
