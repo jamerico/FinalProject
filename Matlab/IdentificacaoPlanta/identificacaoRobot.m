@@ -13,10 +13,15 @@ y = robotData(:,8);
 t = robotData(:,9)-robotData(1,9);
 source = signalsData(:,1);
 maximizante = robotData(:,10);
+refPos = robotData(:,11);
+erroPos = robotData(:,12);
+
 v1 = sinalTensao1*5/255;
 v2 = sinalTensao2*5/255;
-ur = v1-v2;
-ut = v1+v2;
+
+ur = v1-v2; %ur angular
+ut = v1+v2; %ut linear
+
 
 
 % posicao robot
@@ -27,26 +32,39 @@ legend('posicao x','posicao y');
 % thetaRef x theta e urobot
 figure(2);
 subplot(2,1,1);
+plot(t,refPos,t,x);
+legend('x ref','x robot');
+subplot(2,1,2);
+plot(t,ut);
+legend('ut');
+print('xRef_xRobot','-dpng')
+
+% posicao
+figure;
+subplot(2,1,1);
 plot(t,refTheta,t,theta);
 legend('theta ref','theta robot');
 subplot(2,1,2);
 plot(t,ur);
 legend('ur');
+print('thetaRef_thetaRobot','-dpng')
+
+
 
 
 % ang robot x ang source
-figure(3)
+figure
 plot(t,theta,t,maximizante)
 legend('ang robot', 'ang source')
 
 % sinal tensao
-figure(4)
+figure
 plot(t,v1,t,v2)
 legend('v1','v2')
 
 % correcao com ganho atuador
 gainAtuador = 5/255*0.05/0.0475*2;
-figure(5)
+figure
 plot(t,ur,t,uPIDr*gainAtuador)
 
 

@@ -36,7 +36,7 @@ StrRetorno::~StrRetorno()
 }
 
 
-StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja,  double pSetPoint, double pErroVel, double pAngAtual, double pAngDesejado, double pErroAng, double pMDist, Position pMelhorPonto, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pDiffAng)
+StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja, double pSetPoint, double pErroVel, double pAngAtual, double pAngDesejado, double pErroAng, double pMDist, Position pMelhorPonto, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource)
 {
 	satAng = pSat;
 
@@ -56,5 +56,24 @@ StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja,  double pSet
 
 	mDist = pMDist;
 	melhorPonto = pMelhorPonto ;
-	diffAngEsc = pDiffAng;
+	angSource = pAngSource;
+}
+
+StrRetorno::StrRetorno(double pRefPos, double pErroPos, Position pPosAtual, double pAngDesejado, double pErroAng, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource)
+{
+	satAng = pSat;
+
+	refPos = pRefPos;
+	erroPos = pErroPos;
+	saidaControleLinear = pSaidaControleLinear;
+
+	this->posicaoAtual = pPosAtual;
+	angDesejado = pAngDesejado;
+	erroAng = pErroAng;
+	saidaControleAngular = pSaidaControleAngular;
+
+	sinalDeControle1 = pSinalControle1;
+	sinalDeControle2 = pSinalControle2;
+
+	angSource = pAngSource;
 }

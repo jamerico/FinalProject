@@ -50,6 +50,11 @@ public:
 	void ProjetoFinal::closeEvent(QCloseEvent *evento);
 	vector<paramControle> parametrosPid;
 
+	double ampSenoide = 0;
+	double freqSenoide = 0;
+
+	void atualizaParamRobosComObjetosDaTela();
+
 
 public slots:
 	void processFrameAndUpdateGUI();
@@ -66,6 +71,7 @@ private slots:
 	void on_actionNovo_Robo_triggered();
 	void on_checkShowTraj_stateChanged(int state);
 	void atualizaParamControle();
+	void atualizaParamSenoide();
 	void selecionaPID(QString);
 	void selecionaMaxEsc(QString);
 

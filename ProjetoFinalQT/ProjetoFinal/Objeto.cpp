@@ -204,7 +204,7 @@ StrRetorno Objeto::ControleJacoud(){
 
 StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
-	ofstream objectStream, signalsStream, testStream;
+	ofstream objectStream, signalsStream, testStream, fullStream;
 
 	// log files
 	objectStream.open("roboData.txt", ios::out | ios::app);
@@ -222,17 +222,17 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double t = (now*0.3) / CLOCKS_PER_SEC;
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 
-	double _sin = sin(2 * M_PI * 1 * t); 
+	double _sin = sin(2 * M_PI * this->freqSenoide * t); 
 	//double _sin = sin(2 * M_PI * 2 * t);
 
 
-
-	//double AngRef = (-240 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
-	double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
+	double AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
+	//double AngRef = (90 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
+	//double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
 
 	//double AngRef = integralESC + (20 * M_PI / 180.0)* _sin;
 
-
+	double PosRef = (90) + (this->ampSenoide)* _sin;
 	//double PosRef = 160+ 30*sin(2 * M_PI*0.2*t);
 
 	//while (AngRef <= -M_PI){
@@ -263,7 +263,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 	
-	//double erroLin = PosRef - posAtual.x;
+	double erroLin = PosRef - posAtual.x;
 
 
 	double xSource = objFuncCusto.posX;
@@ -305,12 +305,9 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//erroAng = AjustaAngulo(erroAng, true);
 
 	ControleAngular(pParam, erroAng);
+	ControleCruzeiro(pParam, erroLin);
 
-	//ControleAngular(pParam, erroAng);
-
-	//ControleCruzeiro(pParam, erroLin);
-
-	//saidaControleAngular = 0; // jean
+	
 	//saidaControleLinear = -300; // negativo = pra frente
 
 	//int raio = 120;
@@ -327,6 +324,8 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	//double kPos = 3;
 	//saidaControleLinear = 0;//pParam.pLin*erroPos;
+
+	saidaControleAngular = 0; // jean
 
 	MontaSinaisTensao();
 	//MontaSinaisTensao2(t);
@@ -347,7 +346,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
 	signalsStream << y << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << "\n";
 	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
-	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSource << "\n";
+	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSource << ',' << PosRef << ',' << erroLin << ',' << "\n";
 
 
 	signalsStream.close();
@@ -360,8 +359,9 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 
-	return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
+	//return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
+	return StrRetorno(PosRef, erroLin, posAtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
 }
@@ -478,8 +478,11 @@ void Objeto::MontaSinaisTensao(){
 
 	//saidaControleAngular = 0.6 / 0.0413;
 
-	sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao),255);
-	sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao),255);	
+	//sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao),255);
+	//sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao),255);	
+
+	sinalTensao1 = mathHelper::sat(((-0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear e negativo pra frente
+	sinalTensao2 = mathHelper::sat(((-0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear e negativo pra frente
 
 
 

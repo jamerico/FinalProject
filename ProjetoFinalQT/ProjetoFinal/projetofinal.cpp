@@ -143,6 +143,10 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	connect(ui.DASpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
 	connect(ui.IASpinBox, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamControle()));
 
+	connect(ui.ampSenoideCoringa, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamSenoide()));
+	connect(ui.freqSenoideCoringa, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamSenoide()));
+
+
 	tmrTimer->start(33); // esse valor parece ser a taxa de amostragem
 
 }
@@ -157,31 +161,9 @@ ProjetoFinal::~ProjetoFinal()
 void ProjetoFinal::processFrameAndUpdateGUI(){
 
 
-	// Funcao q vai processar os disponibilizar a imagem
-	ui.XYText->clear();
+	
 
-	// atualiza parametros de controle dos robos
-	for (int idxObj = 0; idxObj < objetos.size(); idxObj++)
-	{
-		for (int idxCtrl = 0; idxCtrl < nomesPid.size(); idxCtrl++)
-		{
-
-			if (objetos[idxObj].ctrl.nome == nomesPid[idxCtrl].nome)
-			{
-				// atualiza o parametro de controle do robo
-
-				objetos[idxObj].ctrl = nomesPid[idxCtrl];
-				
-
-
-
-				//objetos[idxObj].taxaH = 1.0 / 22.0;
-			}
-		}
-	}
-
-	//ui.pidComboBoxMain
-	selecionaMaxEsc(ui.maxEscComboBox->currentText());
+	atualizaParamRobosComObjetosDaTela();
 
 	
 	if (mostrarImagemNaTela || runningTest || filtroCam->transferirImagemParaCameraCalib || pidCam->transferirImagemParaPIDCalib)
@@ -350,6 +332,11 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 
 	if (runningTest)
 	{
+
+		// Funcao q vai processar os disponibilizar a imagem
+		ui.XYText->clear();
+
+
 		if (restartObjects){
 			objetos = dbStorage::instance()->getAllObjetos();
 			restartObjects = false;
@@ -420,11 +407,21 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
 				ui.XYText->appendPlainText("Kp: " + QString::number(objetos[idxObj].ctrl.pAng));
 				ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
-				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(objetos[idxObj].posAtual.x) + " , " + QString::number(objetos[idxObj].posAtual.y));
 
-				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.angAtual * 180 / M_PI));
+				ui.XYText->appendPlainText("-------Orientacao-------");
+				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.posicaoAtual.ang * 180 / M_PI));
 				ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
 				ui.XYText->appendPlainText("Error ang: " + QString::number(rtn.erroAng * 180 / M_PI));
+				ui.XYText->appendPlainText("");
+
+				ui.XYText->appendPlainText("-------Posicao-------");
+				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
+				ui.XYText->appendPlainText("Pos Desejada: " + QString::number(rtn.angDesejado * 180 / M_PI));
+				ui.XYText->appendPlainText("Error Pos: " + QString::number(rtn.erroPos));
+
+				ui.XYText->appendPlainText("Amp Senoide: " + QString::number(objetos[idxObj].ampSenoide));
+				ui.XYText->appendPlainText("Freq Senoide: " + QString::number(objetos[idxObj].freqSenoide));
+
 
 
 			}
@@ -754,6 +751,9 @@ void ProjetoFinal::on_startButton_clicked()
 	//	ui.XYText->appendPlainText("Reiniciado");		
 	//	tmrTimer->start(33);
 	//}
+
+	system("C:\\Users\\jeant\\OneDrive\\Documentos\\gitProjetoFinal\\ProjetoFinalQT\\ProjetoFinal\\deleteLogs.bat");
+
 	ui.pauseButton->setEnabled(true);
 	ui.startButton->setEnabled(false);
 
@@ -1262,6 +1262,12 @@ void ProjetoFinal::atualizaParamControle(){
 
 }
 
+void ProjetoFinal::atualizaParamSenoide(){
+	this->ampSenoide = ui.ampSenoideCoringa->value();
+	this->freqSenoide = ui.freqSenoideCoringa->value();
+
+}
+
 void ProjetoFinal::selecionaPID(QString pidSelecionado){
 	// seleciona os parametros do PID
 	for (int i = 0; i < nomesPid.size(); i++)
@@ -1327,3 +1333,28 @@ void ProjetoFinal::on_saveButton_clicked(){
 
 }
 
+
+void ProjetoFinal::atualizaParamRobosComObjetosDaTela(){
+	// atualiza parametros de controle dos robos e paramSenoide
+	for (int idxObj = 0; idxObj < objetos.size(); idxObj++)
+	{
+		objetos[idxObj].ampSenoide = this->ampSenoide;
+		objetos[idxObj].freqSenoide = this->freqSenoide;
+
+
+		for (int idxCtrl = 0; idxCtrl < nomesPid.size(); idxCtrl++)
+		{
+
+			if (objetos[idxObj].ctrl.nome == nomesPid[idxCtrl].nome)
+			{
+				objetos[idxObj].ctrl = nomesPid[idxCtrl];
+
+				//objetos[idxObj].taxaH = 1.0 / 22.0;
+			}
+		}
+	}
+
+
+	//ui.pidComboBoxMain
+	selecionaMaxEsc(ui.maxEscComboBox->currentText());
+}
