@@ -22,6 +22,13 @@ v2 = sinalTensao2*5/255;
 ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
 
+% dados para salvar
+ensaio = 'esc_4_mudancas';
+time = date;
+kp = 45;
+amp=30;
+freq=1;
+strBase = strcat(datestr(now,'mm_dd_yyyy_HH_MM_AM'),'_',ensaio,'_','Kp_ ',num2str(kp),'_','Amp_ ',num2str(amp),'_','Freq_ ',num2str(freq));
 
 
 % posicao robot
@@ -29,25 +36,27 @@ figure(1)
 plot(t,x,t,y)
 legend('posicao x','posicao y');
 
-% thetaRef x theta e urobot
+% posicao
 figure(2);
 subplot(2,1,1);
 plot(t,refPos,t,x);
 legend('x ref','x robot');
 subplot(2,1,2);
 plot(t,ut);
+grid on
 legend('ut');
 print('xRef_xRobot','-dpng')
 
-% posicao
+% orientacao
 figure;
 subplot(2,1,1);
 plot(t,refTheta,t,theta);
 legend('theta ref','theta robot');
 subplot(2,1,2);
 plot(t,ur);
+grid on
 legend('ur');
-print('thetaRef_thetaRobot','-dpng')
+print(strcat(strBase,'_refTheta_theta'),'-dpng');
 
 
 
@@ -55,12 +64,19 @@ print('thetaRef_thetaRobot','-dpng')
 % ang robot x ang source
 figure
 plot(t,theta,t,maximizante)
+grid on
 legend('ang robot', 'ang source')
+titulo='_theta_maximizante_';
+print(strcat(strBase,titulo),'-dpng');
+
 
 % sinal tensao
 figure
 plot(t,v1,t,v2)
+grid on
 legend('v1','v2')
+titulo='_sinal_tensao_';
+print(strcat(strBase,titulo),'-dpng');
 
 % correcao com ganho atuador
 gainAtuador = 5/255*0.05/0.0475*2;

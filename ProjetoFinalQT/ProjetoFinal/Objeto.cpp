@@ -212,7 +212,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	testStream.open("testStream.txt", ios::out | ios::app);
 
 
-
+	bool enableEsc = true;
 
 
 
@@ -224,9 +224,17 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	double _sin = sin(2 * M_PI * this->freqSenoide * t); 
 	//double _sin = sin(2 * M_PI * 2 * t);
+	double AngRef;
 
+	if (enableEsc){
+		AngRef = integralESC + (this->ampSenoide * M_PI / 180.0)* _sin;
+	}
+	else{
+		AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
 
-	double AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
+	}
+
+	//double AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
 	//double AngRef = (90 * M_PI / 180) + (30 * M_PI / 180.0)* _sin;
 	//double AngRef = integralESC  + (30 * M_PI / 180.0)* _sin;
 
@@ -300,7 +308,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 		integralESC = -360 * M_PI / 180;
 	}
 
-	double uEsc = integralESC + (30 * M_PI / 180)*_sin;
+	double uEsc = integralESC + (this->ampSenoide * M_PI / 180)*_sin;
 
 	//erroAng = AjustaAngulo(erroAng, true);
 
@@ -325,7 +333,9 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double kPos = 3;
 	//saidaControleLinear = 0;//pParam.pLin*erroPos;
 
-	saidaControleAngular = 0; // jean
+	//saidaControleAngular = 0; // jean
+	saidaControleLinear = 0;
+
 
 	MontaSinaisTensao();
 	//MontaSinaisTensao2(t);
