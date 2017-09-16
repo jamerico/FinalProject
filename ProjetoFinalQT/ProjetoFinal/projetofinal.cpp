@@ -1300,17 +1300,17 @@ void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
 		case 2:
 			h.posX = 240;
 			h.posY = 68;
-			h.ang = 90;
+			h.ang = 180;
 			break;
 		case 3:
 			h.posX = 60;
 			h.posY = 220;
-			h.ang = 180;
+			h.ang = 460;
 			break;
 		case 4:
 			h.posX = 240;
 			h.posY = 220;
-			h.ang = 270;
+			h.ang = 720;
 			break;
 
 	}

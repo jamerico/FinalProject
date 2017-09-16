@@ -12,6 +12,9 @@ x = robotData(:,7);
 y = robotData(:,8);
 t = robotData(:,9)-robotData(1,9);
 source = signalsData(:,1);
+gradientStimative = signalsData(:,4);
+integralEsc = signalsData(:,5);
+
 maximizante = robotData(:,10);
 refPos = robotData(:,11);
 erroPos = robotData(:,12);
@@ -23,12 +26,15 @@ ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
 
 % dados para salvar
-ensaio = 'esc_4_mudancas';
+ensaio = 'esc_3_mudancas_buscas_180';
 time = date;
-kp = 45;
+kp = 40;
 amp=30;
-freq=1;
+freq=2;
 strBase = strcat(datestr(now,'mm_dd_yyyy_HH_MM_AM'),'_',ensaio,'_','Kp_ ',num2str(kp),'_','Amp_ ',num2str(amp),'_','Freq_ ',num2str(freq));
+enableSalve = false;
+
+
 
 
 % posicao robot
@@ -45,7 +51,9 @@ subplot(2,1,2);
 plot(t,ut);
 grid on
 legend('ut');
-print('xRef_xRobot','-dpng')
+if(enableSalve)
+    print('xRef_xRobot','-dpng')
+end
 
 % orientacao
 figure;
@@ -56,8 +64,9 @@ subplot(2,1,2);
 plot(t,ur);
 grid on
 legend('ur');
-print(strcat(strBase,'_refTheta_theta'),'-dpng');
-
+if(enableSalve)
+    print(strcat(strBase,'_refTheta_theta'),'-dpng');
+end
 
 
 
@@ -67,8 +76,10 @@ plot(t,theta,t,maximizante)
 grid on
 legend('ang robot', 'ang source')
 titulo='_theta_maximizante_';
+grid on
+if(enableSalve)
 print(strcat(strBase,titulo),'-dpng');
-
+end
 
 % sinal tensao
 figure
@@ -76,7 +87,20 @@ plot(t,v1,t,v2)
 grid on
 legend('v1','v2')
 titulo='_sinal_tensao_';
+if(enableSalve)
 print(strcat(strBase,titulo),'-dpng');
+end
+
+% integralESC
+figure
+plot(t,integralEsc*180/pi)
+legend('integralESC');
+titulo='_integral_ESC_';
+grid on
+if(enableSalve)
+print(strcat(strBase,titulo),'-dpng');
+end
+
 
 % correcao com ganho atuador
 gainAtuador = 5/255*0.05/0.0475*2;

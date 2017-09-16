@@ -221,13 +221,20 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	clock_t now = clock();
 	//double t = (now*0.3) / CLOCKS_PER_SEC;
 	double t = (now*0.3) / CLOCKS_PER_SEC;
+	t = t - 7.9296;
 
 	double _sin = sin(2 * M_PI * this->freqSenoide * t); 
 	//double _sin = sin(2 * M_PI * 2 * t);
 	double AngRef;
 
 	if (enableEsc){
+		/*if (abs(outputFilter2) < 0.1){
+			this->ampSenoide = this->ampSenoide*0.8;
+
+		}*/
+
 		AngRef = integralESC + (this->ampSenoide * M_PI / 180.0)* _sin;
+
 	}
 	else{
 		AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
@@ -276,15 +283,25 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	double xSource = objFuncCusto.posX;
 	double ySource = objFuncCusto.posY;
-	double angSource = objFuncCusto.ang;
-	
+	double angSource;
+	angSource = this->objFuncCusto.ang;
+	//double newTime = t - 70;
+	//if ((newTime) < 0){
+	//	angSource = (480)*(1 - exp(-(t / 20)));
+	//}
+	//else{
+	//	angSource = (480)+(240)*(1 - exp(-(newTime / 20)));
+
+	//}
 	//double angSorce = 180-(qAtan2(xSource - posAtual.x, ySource - posAtual.y)) * 180 / M_PI;
 
 
 
 	double y = -pow((posAtual.ang - (angSource* M_PI / 180)), 2) + 10;
 
+	//LowPassFilter(y, 0.2);
 	LowPassFilter(y, 0.5);
+
 	//LowPassFilter(y, 1);
 
 	double outputHighPass = y - outputFilter;
@@ -293,7 +310,9 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double sinDoubleFreq = _sin*outputHighPass;
 
 
+	//LowPassFilter2(sinDoubleFreq, 0.2);
 	LowPassFilter2(sinDoubleFreq, 0.5);
+
 	//LowPassFilter2(sinDoubleFreq, 1);
 
 	double gradientEstimative = outputFilter2;
@@ -301,14 +320,17 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	integralESC = integralESC + taxaH*gradientEstimative;
 
 
-	if (integralESC > (360*M_PI/180)){
-		integralESC = 360 * M_PI / 180;
-	}
-	if (integralESC < (-360 * M_PI / 180)){
-		integralESC = -360 * M_PI / 180;
-	}
+	//if (integralESC > (360*M_PI/180)){
+	//	integralESC = 360 * M_PI / 180;
+	//}
+	//if (integralESC < (-360 * M_PI / 180)){
+	//	integralESC = -360 * M_PI / 180;
+	//}
 
-	double uEsc = integralESC + (this->ampSenoide * M_PI / 180)*_sin;
+	//double ganhoIntegral = 0.5;
+
+	double ganhoIntegral = 0.001;
+	double uEsc = ganhoIntegral*integralESC + (this->ampSenoide * M_PI / 180)*_sin;
 
 	//erroAng = AjustaAngulo(erroAng, true);
 
@@ -316,7 +338,6 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	ControleCruzeiro(pParam, erroLin);
 
 	
-	//saidaControleLinear = -300; // negativo = pra frente
 
 	//int raio = 120;
 	//int xc = 320;
@@ -335,6 +356,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	//saidaControleAngular = 0; // jean
 	saidaControleLinear = 0;
+	//saidaControleLinear = 300; // negativo = pra frente
 
 
 	MontaSinaisTensao();
