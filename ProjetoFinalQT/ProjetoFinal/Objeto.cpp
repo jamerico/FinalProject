@@ -299,7 +299,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	double y = -pow((posAtual.ang - (angSource* M_PI / 180)), 2) + 10;
 
-	//LowPassFilter(y, 0.2);
+	//LowPassFilter(y, 0.30);
 	LowPassFilter(y, 0.5);
 
 	//LowPassFilter(y, 1);
@@ -310,7 +310,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double sinDoubleFreq = _sin*outputHighPass;
 
 
-	//LowPassFilter2(sinDoubleFreq, 0.2);
+	//LowPassFilter2(sinDoubleFreq, 0.3);
 	LowPassFilter2(sinDoubleFreq, 0.5);
 
 	//LowPassFilter2(sinDoubleFreq, 1);

@@ -26,7 +26,7 @@ ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
 
 % dados para salvar
-ensaio = 'esc_3_mudancas_buscas_180';
+ensaio = 'esc_1_ref_busca_480_filtroLento';
 time = date;
 kp = 40;
 amp=30;

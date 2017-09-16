@@ -1,0 +1,3 @@
+
+	double ganhoIntegral = 0.001;
+

@@ -1,0 +1,4 @@
+t = t - 7.9296;
+double angSource = (objFuncCusto.ang)*(1-exp(-(t/20)));
+	double ganhoIntegral = 0.5;
+
