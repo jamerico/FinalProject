@@ -8,8 +8,8 @@ freqSenoide = 4*2*pi;
 ampSenoide = 20; %deg
 ampSenoide2 = 20; 
 
-plot3(t,y1,y2);
-% moduloVetor = sqrt(y1.^2+y2.^2);
-% plot(t,moduloVetor)
-% hold on
-% plot(t,refRobo)
+% plot3(t,y1,y2);
+moduloVetor = sqrt(y1.^2+y2.^2);
+plot(t,moduloVetor)
+hold on
+plot(t,ref)
