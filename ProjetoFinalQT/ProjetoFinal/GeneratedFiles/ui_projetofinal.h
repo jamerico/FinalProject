@@ -70,10 +70,11 @@ public:
     QLabel *label_2;
     QPushButton *saveButton;
     QGroupBox *groupBox_4;
-    QLabel *label_14;
+    QLabel *ganhoEscLabel;
     QLabel *label_15;
-    QDoubleSpinBox *DLSpinBox_3;
+    QDoubleSpinBox *ganhoEsc;
     QComboBox *maxEscComboBox;
+    QCheckBox *boolEnableEsc;
     QMenuBar *menuBar;
     QMenu *menuOp_es;
     QToolBar *mainToolBar;
@@ -141,7 +142,7 @@ public:
 
         groupBox_3 = new QGroupBox(centralWidget);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(360, 130, 191, 91));
+        groupBox_3->setGeometry(QRect(360, 190, 191, 81));
         label_12 = new QLabel(groupBox_3);
         label_12->setObjectName(QStringLiteral("label_12"));
         label_12->setGeometry(QRect(10, 50, 81, 20));
@@ -153,11 +154,16 @@ public:
         freqSenoideCoringa->setGeometry(QRect(110, 50, 71, 22));
         freqSenoideCoringa->setMinimum(-100);
         freqSenoideCoringa->setMaximum(100);
+        freqSenoideCoringa->setSingleStep(0.5);
+        freqSenoideCoringa->setValue(1);
         ampSenoideCoringa = new QDoubleSpinBox(groupBox_3);
         ampSenoideCoringa->setObjectName(QStringLiteral("ampSenoideCoringa"));
+        ampSenoideCoringa->setEnabled(true);
         ampSenoideCoringa->setGeometry(QRect(110, 20, 71, 22));
+        ampSenoideCoringa->setReadOnly(false);
         ampSenoideCoringa->setMinimum(-100);
-        ampSenoideCoringa->setMaximum(100);
+        ampSenoideCoringa->setMaximum(109);
+        ampSenoideCoringa->setValue(20);
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setGeometry(QRect(570, 190, 191, 101));
@@ -225,22 +231,38 @@ public:
         saveButton->setGeometry(QRect(630, 300, 75, 23));
         groupBox_4 = new QGroupBox(centralWidget);
         groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
-        groupBox_4->setGeometry(QRect(360, 30, 191, 91));
-        label_14 = new QLabel(groupBox_4);
-        label_14->setObjectName(QStringLiteral("label_14"));
-        label_14->setGeometry(QRect(10, 50, 81, 20));
+        groupBox_4->setGeometry(QRect(360, 40, 191, 231));
+        ganhoEscLabel = new QLabel(groupBox_4);
+        ganhoEscLabel->setObjectName(QStringLiteral("ganhoEscLabel"));
+        ganhoEscLabel->setGeometry(QRect(10, 80, 81, 20));
         label_15 = new QLabel(groupBox_4);
         label_15->setObjectName(QStringLiteral("label_15"));
-        label_15->setGeometry(QRect(10, 20, 91, 16));
-        DLSpinBox_3 = new QDoubleSpinBox(groupBox_4);
-        DLSpinBox_3->setObjectName(QStringLiteral("DLSpinBox_3"));
-        DLSpinBox_3->setGeometry(QRect(110, 50, 71, 22));
-        DLSpinBox_3->setMinimum(-100);
-        DLSpinBox_3->setMaximum(100);
+        label_15->setGeometry(QRect(10, 50, 91, 16));
+        ganhoEsc = new QDoubleSpinBox(groupBox_4);
+        ganhoEsc->setObjectName(QStringLiteral("ganhoEsc"));
+        ganhoEsc->setGeometry(QRect(110, 80, 71, 22));
+        ganhoEsc->setMinimum(-100);
+        ganhoEsc->setMaximum(100);
+        ganhoEsc->setValue(1);
         maxEscComboBox = new QComboBox(groupBox_4);
         maxEscComboBox->setObjectName(QStringLiteral("maxEscComboBox"));
-        maxEscComboBox->setGeometry(QRect(110, 20, 69, 22));
+        maxEscComboBox->setGeometry(QRect(110, 50, 69, 22));
+        maxEscComboBox->setEditable(false);
+        boolEnableEsc = new QCheckBox(groupBox_4);
+        boolEnableEsc->setObjectName(QStringLiteral("boolEnableEsc"));
+        boolEnableEsc->setGeometry(QRect(60, 20, 70, 17));
         ProjetoFinalClass->setCentralWidget(centralWidget);
+        startButton->raise();
+        pauseButton->raise();
+        XYText->raise();
+        layoutWidget->raise();
+        groupBox->raise();
+        groupBox_2->raise();
+        pidComboBoxMain->raise();
+        label_2->raise();
+        saveButton->raise();
+        groupBox_4->raise();
+        groupBox_3->raise();
         menuBar = new QMenuBar(ProjetoFinalClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 772, 21));
@@ -292,16 +314,21 @@ public:
         label_10->setText(QApplication::translate("ProjetoFinalClass", "Proporcional (P) :", Q_NULLPTR));
         label_2->setText(QApplication::translate("ProjetoFinalClass", "PID:", Q_NULLPTR));
         saveButton->setText(QApplication::translate("ProjetoFinalClass", "Salvar", Q_NULLPTR));
-        groupBox_4->setTitle(QApplication::translate("ProjetoFinalClass", "Funcao Maximizante", Q_NULLPTR));
-        label_14->setText(QApplication::translate("ProjetoFinalClass", "Valor do Max", Q_NULLPTR));
-        label_15->setText(QApplication::translate("ProjetoFinalClass", "Posicao Max", Q_NULLPTR));
+        groupBox_4->setTitle(QApplication::translate("ProjetoFinalClass", "ESC", Q_NULLPTR));
+        ganhoEscLabel->setText(QApplication::translate("ProjetoFinalClass", "Ganho ESC", Q_NULLPTR));
+        label_15->setText(QApplication::translate("ProjetoFinalClass", "Angulo Max", Q_NULLPTR));
         maxEscComboBox->clear();
         maxEscComboBox->insertItems(0, QStringList()
-         << QApplication::translate("ProjetoFinalClass", "1", Q_NULLPTR)
-         << QApplication::translate("ProjetoFinalClass", "2", Q_NULLPTR)
-         << QApplication::translate("ProjetoFinalClass", "3", Q_NULLPTR)
-         << QApplication::translate("ProjetoFinalClass", "4", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "0", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "90", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "180", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "270", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "360", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "420", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "540", Q_NULLPTR)
+         << QApplication::translate("ProjetoFinalClass", "720", Q_NULLPTR)
         );
+        boolEnableEsc->setText(QApplication::translate("ProjetoFinalClass", "Enable ESC", Q_NULLPTR));
         menuOp_es->setTitle(QApplication::translate("ProjetoFinalClass", "Configura\303\247\303\265es", Q_NULLPTR));
     } // retranslateUi
 

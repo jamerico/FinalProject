@@ -49,9 +49,10 @@ public:
 
 	void ProjetoFinal::closeEvent(QCloseEvent *evento);
 	vector<paramControle> parametrosPid;
-
+	bool enableEsc = false;
 	double ampSenoide = 0;
 	double freqSenoide = 0;
+	double ganhoEsc = 0;
 
 	void atualizaParamRobosComObjetosDaTela();
 

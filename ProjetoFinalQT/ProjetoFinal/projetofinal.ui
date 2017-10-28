@@ -118,9 +118,9 @@
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>130</y>
+      <y>190</y>
       <width>191</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="title">
@@ -167,8 +167,17 @@
      <property name="maximum">
       <double>100.000000000000000</double>
      </property>
+     <property name="singleStep">
+      <double>0.500000000000000</double>
+     </property>
+     <property name="value">
+      <double>1.000000000000000</double>
+     </property>
     </widget>
     <widget class="QDoubleSpinBox" name="ampSenoideCoringa">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -177,11 +186,17 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
      <property name="minimum">
       <double>-100.000000000000000</double>
      </property>
      <property name="maximum">
-      <double>100.000000000000000</double>
+      <double>109.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>20.000000000000000</double>
      </property>
     </widget>
    </widget>
@@ -431,45 +446,45 @@
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>30</y>
+      <y>40</y>
       <width>191</width>
-      <height>91</height>
+      <height>231</height>
      </rect>
     </property>
     <property name="title">
-     <string>Funcao Maximizante</string>
+     <string>ESC</string>
     </property>
-    <widget class="QLabel" name="label_14">
+    <widget class="QLabel" name="ganhoEscLabel">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>80</y>
        <width>81</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Valor do Max</string>
+      <string>Ganho ESC</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_15">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>50</y>
        <width>91</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Posicao Max</string>
+      <string>Angulo Max</string>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="DLSpinBox_3">
+    <widget class="QDoubleSpinBox" name="ganhoEsc">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>50</y>
+       <y>80</y>
        <width>71</width>
        <height>22</height>
       </rect>
@@ -480,38 +495,88 @@
      <property name="maximum">
       <double>100.000000000000000</double>
      </property>
+     <property name="value">
+      <double>1.000000000000000</double>
+     </property>
     </widget>
     <widget class="QComboBox" name="maxEscComboBox">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>20</y>
+       <y>50</y>
        <width>69</width>
        <height>22</height>
       </rect>
      </property>
+     <property name="editable">
+      <bool>false</bool>
+     </property>
      <item>
       <property name="text">
-       <string>1</string>
+       <string>0</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>2</string>
+       <string>90</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>3</string>
+       <string>180</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>4</string>
+       <string>270</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>360</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>420</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>540</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>720</string>
       </property>
      </item>
     </widget>
+    <widget class="QCheckBox" name="boolEnableEsc">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>20</y>
+       <width>70</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enable ESC</string>
+     </property>
+    </widget>
    </widget>
+   <zorder>startButton</zorder>
+   <zorder>pauseButton</zorder>
+   <zorder>XYText</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>pidComboBoxMain</zorder>
+   <zorder>label_2</zorder>
+   <zorder>saveButton</zorder>
+   <zorder>groupBox_4</zorder>
+   <zorder>groupBox_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

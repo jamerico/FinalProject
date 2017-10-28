@@ -59,7 +59,7 @@ StrRetorno::StrRetorno(double pVelAtual, double pVelAtualDerivSuja, double pSetP
 	angSource = pAngSource;
 }
 
-StrRetorno::StrRetorno(double pRefPos, double pErroPos, Position pPosAtual, double pAngDesejado, double pErroAng, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource)
+StrRetorno::StrRetorno(double pRefPos, double pErroPos, Position pPosAtual, double pAngDesejado, double pErroAng, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource, double pIntegralEsc, double pt)
 {
 	satAng = pSat;
 
@@ -76,4 +76,6 @@ StrRetorno::StrRetorno(double pRefPos, double pErroPos, Position pPosAtual, doub
 	sinalDeControle2 = pSinalControle2;
 
 	angSource = pAngSource;
+	integralEsc = pIntegralEsc;
+	t = pt;
 }

@@ -146,6 +146,8 @@ ProjetoFinal::ProjetoFinal(QWidget *parent)
 	connect(ui.ampSenoideCoringa, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamSenoide()));
 	connect(ui.freqSenoideCoringa, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamSenoide()));
 
+	connect(ui.ganhoEsc, SIGNAL(valueChanged(double)), this, SLOT(atualizaParamSenoide()));
+	connect(ui.boolEnableEsc, SIGNAL(clicked(bool)), this, SLOT(atualizaParamSenoide()));
 
 	tmrTimer->start(33); // esse valor parece ser a taxa de amostragem
 
@@ -405,22 +407,28 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				//rtn = objetos[idxObj].Controle(objetos[idxObj].ctrl, true, 0.02);
 				rtn = objetos[idxObj].ControleJacoud(objetos[idxObj].ctrl);//, true, 0.02);
 				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
+				ui.XYText->appendPlainText("-------Parâmetros-------");
 				ui.XYText->appendPlainText("Kp: " + QString::number(objetos[idxObj].ctrl.pAng));
-				ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
+				//ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
+				ui.XYText->appendPlainText("Func Custo (deg): " + QString::number(objetos[idxObj].objFuncCusto.ang));
+
+				ui.XYText->appendPlainText("Amp Senoide: " + QString::number(objetos[idxObj].ampSenoide));
+				ui.XYText->appendPlainText("Freq Senoide: " + QString::number(objetos[idxObj].freqSenoide));
+				ui.XYText->appendPlainText("tempo (seg): " + QString::number(rtn.t));
 
 				ui.XYText->appendPlainText("-------Orientacao-------");
+				ui.XYText->appendPlainText("Ref ESC: " + QString::number(rtn.integralEsc * 180 / M_PI));
 				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.posicaoAtual.ang * 180 / M_PI));
 				ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
 				ui.XYText->appendPlainText("Error ang: " + QString::number(rtn.erroAng * 180 / M_PI));
 				ui.XYText->appendPlainText("");
 
-				ui.XYText->appendPlainText("-------Posicao-------");
-				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
-				ui.XYText->appendPlainText("Pos Desejada: " + QString::number(rtn.angDesejado * 180 / M_PI));
-				ui.XYText->appendPlainText("Error Pos: " + QString::number(rtn.erroPos));
+				//ui.XYText->appendPlainText("-------Posicao-------");
+				//ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
+				//ui.XYText->appendPlainText("Pos Desejada: " + QString::number(rtn.angDesejado * 180 / M_PI));
+				//ui.XYText->appendPlainText("Error Pos: " + QString::number(rtn.erroPos));
 
-				ui.XYText->appendPlainText("Amp Senoide: " + QString::number(objetos[idxObj].ampSenoide));
-				ui.XYText->appendPlainText("Freq Senoide: " + QString::number(objetos[idxObj].freqSenoide));
+
 
 
 
@@ -1265,6 +1273,8 @@ void ProjetoFinal::atualizaParamControle(){
 void ProjetoFinal::atualizaParamSenoide(){
 	this->ampSenoide = ui.ampSenoideCoringa->value();
 	this->freqSenoide = ui.freqSenoideCoringa->value();
+	this->ganhoEsc = ui.ganhoEsc->value();
+	this->enableEsc = ui.boolEnableEsc->checkState() == Qt::Checked ? true : false;
 
 }
 
@@ -1291,29 +1301,30 @@ void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
 	// seleciona os parametros do PID
 
 	funcCusto h;
-	switch (maxEscSelecionado.toInt()){
-		case 1:
-			h.posX = 60;
-			h.posY = 68;
-			h.ang = 0;
-			break;
-		case 2:
-			h.posX = 240;
-			h.posY = 68;
-			h.ang = 180;
-			break;
-		case 3:
-			h.posX = 60;
-			h.posY = 220;
-			h.ang = 460;
-			break;
-		case 4:
-			h.posX = 240;
-			h.posY = 220;
-			h.ang = 720;
-			break;
+	h.ang = maxEscSelecionado.toInt();
+	//switch (maxEscSelecionado.toInt()){
+	//	case 1:
+	//		h.posX = 60;
+	//		h.posY = 68;
+	//		h.ang = 0;
+	//		break;
+	//	case 2:
+	//		h.posX = 240;
+	//		h.posY = 68;
+	//		h.ang = 90;
+	//		break;
+	//	case 3:
+	//		h.posX = 60;
+	//		h.posY = 220;
+	//		h.ang = 420;
+	//		break;
+	//	case 4:
+	//		h.posX = 240;
+	//		h.posY = 220;
+	//		h.ang = 540;
+	//		break;
 
-	}
+	//}
 		
 	for (int i = 0; i < objetos.size(); i++)
 	{
@@ -1340,6 +1351,9 @@ void ProjetoFinal::atualizaParamRobosComObjetosDaTela(){
 	{
 		objetos[idxObj].ampSenoide = this->ampSenoide;
 		objetos[idxObj].freqSenoide = this->freqSenoide;
+		objetos[idxObj].ganhoESC = this->ganhoEsc;
+		objetos[idxObj].enableEsc = this->enableEsc;
+
 
 
 		for (int idxCtrl = 0; idxCtrl < nomesPid.size(); idxCtrl++)

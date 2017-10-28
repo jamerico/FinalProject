@@ -212,7 +212,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	testStream.open("testStream.txt", ios::out | ios::app);
 
 
-	bool enableEsc = true;
+	bool enableEsc = this->enableEsc;
 
 
 
@@ -237,7 +237,11 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	}
 	else{
-		AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
+		//AngRef = (90 * M_PI / 180) + (this->ampSenoide * M_PI / 180.0)* _sin;
+		AngRef = this->objFuncCusto.ang + (this->ampSenoide * M_PI / 180.0)* _sin;
+
+		
+
 
 	}
 
@@ -313,6 +317,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//LowPassFilter2(sinDoubleFreq, 0.3);
 	LowPassFilter2(sinDoubleFreq, 0.5);
 
+
 	//LowPassFilter2(sinDoubleFreq, 1);
 
 	double gradientEstimative = outputFilter2;
@@ -329,7 +334,19 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	//double ganhoIntegral = 0.5;
 
-	double ganhoIntegral = 0.001;
+	//double ganhoIntegral = 0.001;
+	double ganhoIntegral = this->ganhoESC;
+
+	integralESC = ganhoIntegral*integralESC;
+
+
+	//if (integralESC > (360*M_PI/180)){
+	//	integralESC = 360 * M_PI / 180;
+	//}
+	//if (integralESC < (-360 * M_PI / 180)){
+	//	integralESC = -360 * M_PI / 180;
+	//}
+
 	double uEsc = ganhoIntegral*integralESC + (this->ampSenoide * M_PI / 180)*_sin;
 
 	//erroAng = AjustaAngulo(erroAng, true);
@@ -393,7 +410,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 	//return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
-	return StrRetorno(PosRef, erroLin, posAtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
+	return StrRetorno(PosRef, erroLin, posAtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC,t);
 
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
 }
@@ -479,7 +496,7 @@ void Objeto::LowPassFilter2(double input, double omegaH)
 }
 
 
-
+ 
 void Objeto::ControleCruzeiro(paramControle pParam, double pErro){
 	/*double velAtual = getVel();
 	double erro = setPointVel - velAtual;*/
@@ -513,8 +530,8 @@ void Objeto::MontaSinaisTensao(){
 	//sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao),255);
 	//sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao),255);	
 
-	sinalTensao1 = mathHelper::sat(((-0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear e negativo pra frente
-	sinalTensao2 = mathHelper::sat(((-0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear e negativo pra frente
+	sinalTensao1 = mathHelper::sat(((-0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear eh negativo pra frente
+	sinalTensao2 = mathHelper::sat(((-0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear eh negativo pra frente
 
 
 

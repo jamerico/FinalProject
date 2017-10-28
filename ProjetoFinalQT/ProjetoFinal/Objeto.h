@@ -89,6 +89,8 @@ public:
 	double integralESC = 0;
 	double ampSenoide = 0;
 	double freqSenoide = 0;
+	double ganhoESC = 0;
+	bool enableEsc = false;
 
 	void LowPassFilter(double input, double omegaH);
 	void LowPassFilter2(double input, double omegaH);

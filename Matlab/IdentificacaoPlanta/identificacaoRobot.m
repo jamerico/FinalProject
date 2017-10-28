@@ -24,7 +24,6 @@ v2 = sinalTensao2*5/255;
 
 ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
-
 % dados para salvar
 ensaio = 'esc_1_ref_busca_480_filtroLento';
 time = date;
