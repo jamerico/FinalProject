@@ -304,9 +304,9 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	double y = -pow((posAtual.ang - (angSource* M_PI / 180)), 2) + 10;
 
 	//LowPassFilter(y, 0.30);
-	LowPassFilter(y, 0.5);
+	//LowPassFilter(y, 0.5);
+	LowPassFilter(y, 0.1); //filtro lento
 
-	//LowPassFilter(y, 1);
 
 	double outputHighPass = y - outputFilter;
 
@@ -315,10 +315,10 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 	//LowPassFilter2(sinDoubleFreq, 0.3);
-	LowPassFilter2(sinDoubleFreq, 0.5);
+	//LowPassFilter2(sinDoubleFreq, 0.5);
+	LowPassFilter2(sinDoubleFreq, 0.1); //filtro lento
 
 
-	//LowPassFilter2(sinDoubleFreq, 1);
 
 	double gradientEstimative = outputFilter2;
 
@@ -530,9 +530,12 @@ void Objeto::MontaSinaisTensao(){
 	//sinalTensao1 = mathHelper::sat(((0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao),255);
 	//sinalTensao2 = mathHelper::sat(((0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao),255);	
 
-	sinalTensao1 = mathHelper::sat(((-0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear eh negativo pra frente
-	sinalTensao2 = mathHelper::sat(((-0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear eh negativo pra frente
+	//sinalTensao1 = mathHelper::sat(((-0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear eh negativo pra frente
+	//sinalTensao2 = mathHelper::sat(((-0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 255); // jean : linear eh negativo pra frente
 
+	// saturacao em 5/3 V
+	sinalTensao1 = mathHelper::sat(((-0.05 * saidaControleLinear) + (0.05 * saidaControleAngular) / fatorDimensao), 85); // jean : linear eh negativo pra frente
+	sinalTensao2 = mathHelper::sat(((-0.05 * saidaControleLinear) - (0.05 * saidaControleAngular) / fatorDimensao), 85); // jean : linear eh negativo pra frente
 
 
 	//if (posAtual.timev - posAnterior.timev == 0) // não atualizou

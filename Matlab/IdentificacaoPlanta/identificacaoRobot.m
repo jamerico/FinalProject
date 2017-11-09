@@ -1,7 +1,10 @@
 %% real world variables
 close all;
-robotData = load('C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\roboData.txt');
-signalsData = load('C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\signalsStream.txt');;
+xrobotDataDir = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\roboData.txt';
+signalsDataDir = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\signalsStream.txt';
+
+robotData = load(xrobotDataDir);
+signalsData = load(signalsDataDir);
 sinalTensao1 = robotData(:,1);
 sinalTensao2 = robotData(:,2);
 uPIDr = robotData(:,3);
@@ -25,15 +28,21 @@ v2 = sinalTensao2*5/255;
 ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
 % dados para salvar
-ensaio = 'esc_1_ref_busca_480_filtroLento';
+ensaio = 'esc_1_ref_busca_270_filtro0.1';
 time = date;
-kp = 40;
-amp=30;
-freq=2;
-strBase = strcat(datestr(now,'mm_dd_yyyy_HH_MM_AM'),'_',ensaio,'_','Kp_ ',num2str(kp),'_','Amp_ ',num2str(amp),'_','Freq_ ',num2str(freq));
-enableSalve = false;
+kp = 45;
+amp=20;
+freq=1.5;
+strBase = strcat(ensaio,'_','Kp_ ',num2str(kp),'_','Amp_ ',num2str(amp),'_','Freq_ ',num2str(freq));
+localParaSalvamento = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ensaiosSalvos';
+fullDir = fullfile(localParaSalvamento,strBase);
+enableSave = true;
 
-
+if(enableSave)
+    mkdir(localParaSalvamento,strBase)
+    copyfile(xrobotDataDir,fullDir)
+    copyfile(signalsDataDir,fullDir)
+end
 
 
 % posicao robot
@@ -50,12 +59,13 @@ subplot(2,1,2);
 plot(t,ut);
 grid on
 legend('ut');
-if(enableSalve)
-    print('xRef_xRobot','-dpng')
+titulo = 'xRef_xRobot';
+if(enableSave)
+    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
 end
 
 % orientacao
-figure;
+figure(3);
 subplot(2,1,1);
 plot(t,refTheta,t,theta);
 legend('theta ref','theta robot');
@@ -63,41 +73,44 @@ subplot(2,1,2);
 plot(t,ur);
 grid on
 legend('ur');
-if(enableSalve)
-    print(strcat(strBase,'_refTheta_theta'),'-dpng');
+titulo = '_refTheta_theta';
+if(enableSave)
+    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
 end
 
 
 
 % ang robot x ang source
-figure
+figure(4)
 plot(t,theta,t,maximizante)
 grid on
 legend('ang robot', 'ang source')
 titulo='_theta_maximizante_';
 grid on
-if(enableSalve)
-print(strcat(strBase,titulo),'-dpng');
+if(enableSave)
+    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
 end
 
 % sinal tensao
-figure
+figure(5)
 plot(t,v1,t,v2)
 grid on
 legend('v1','v2')
 titulo='_sinal_tensao_';
-if(enableSalve)
-print(strcat(strBase,titulo),'-dpng');
+if(enableSave)
+    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+
 end
 
 % integralESC
-figure
+figure(6)
 plot(t,integralEsc*180/pi)
 legend('integralESC');
 titulo='_integral_ESC_';
 grid on
-if(enableSalve)
-print(strcat(strBase,titulo),'-dpng');
+if(enableSave)
+    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+
 end
 
 
