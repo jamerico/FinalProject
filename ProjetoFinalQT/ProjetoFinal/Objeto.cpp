@@ -428,7 +428,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	//variaveis init
 	double Rr = 10;
-	double kL = 1000;
+	double kL = 1;
 	double v = kL*(M_PI*Rr);
 	double h = (v / Rr) / 5; // filtro principal
 
@@ -480,7 +480,9 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double k3 = 0.001 * sqrt(2);
 	double ut = v;
 
-	double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
+	////double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
+	double k = 10; // parece bom
+	double ur = k*thetatil; 
 
 	
 	
