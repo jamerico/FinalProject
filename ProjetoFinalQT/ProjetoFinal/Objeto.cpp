@@ -408,6 +408,7 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 
 
+
 	//return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
 	return StrRetorno(PosRef, erroLin, posAtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC,t);
@@ -415,6 +416,116 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
 }
 
+StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
+
+	ofstream objectStream, signalsStream, testStream, fullStream;
+
+	objectStream.open("roboData.txt", ios::out | ios::app);
+	signalsStream.open("signalsStream.txt", ios::out | ios::app);
+	testStream.open("testStream.txt", ios::out | ios::app);
+
+
+
+	//variaveis init
+	double Rr = 10;
+	double kL = 1000;
+	double v = kL*(M_PI*Rr);
+	double h = (v / Rr) / 5; // filtro principal
+
+
+	bool enableEsc = this->enableEsc;
+
+
+	clock_t now = clock();
+	double t = (now*0.3) / CLOCKS_PER_SEC;
+	t = t - 7.9296;
+
+
+	double robotx = posAtual.x;
+	double roboty = posAtual.y;
+	double thetaRobot = posAtual.ang;
+	double xSource = objFuncCusto.posX;
+	double ySource = objFuncCusto.posY;
+	Position refPos;
+	refPos.setPos(xSource, ySource, 0);
+
+	double deltax = robotx - xSource;
+	double deltay = roboty - ySource;
+
+	if (deltax < 0){
+		if (deltay < 0){
+			if (deltayold > 0){
+				count = count + 1;
+			}
+		}
+		else{
+			if (deltayold < 0){
+				count = count - 1;
+			}
+		}
+	}
+
+	deltayold = deltay;
+	double thetaaux = atan2(deltay, deltax) + 2 *M_PI*count;
+	double thetad = thetaaux - M_PI / 2;
+	double thetatil = posAtual.ang - thetad;
+
+
+
+		
+
+	double D = sqrt(pow(deltax,2) + pow(deltay,2));
+	double L = D - Rr;
+	double k2 = 0.0004; 
+	double k3 = 0.001 * sqrt(2);
+	double ut = v;
+
+	double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
+
+	
+	
+	saidaControleLinear = ut;
+	saidaControleAngular = ur;
+
+	MontaSinaisTensao();
+
+
+	// convert from -255/255 scale to -5/5 volts
+	double sinalTensao1Volts = sinalTensao1 * 5 / 255;
+	double sinalTensao2Volts = sinalTensao2 * 5 / 255;
+
+
+	double outputHighPass = 0;
+	double sinDoubleFreq = 0;
+	double gradientEstimative = 0;
+	double uEsc = 0;
+	double AngRef = 0;
+	double angSource = 0;
+	double PosRef = 0;
+	double erroLin = 0;
+	double y = 0;
+	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
+	signalsStream << y << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << ',' << L << "\n";
+	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
+	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSource << ',' << PosRef << ',' << erroLin << ',' << "\n";
+
+
+	signalsStream.close();
+
+	objectStream.close();
+	testStream.close();
+
+	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
+
+
+
+
+	//return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
+	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
+	return StrRetorno(refPos, posAtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC, t, L,ur,thetatil);
+
+	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
+}
 StrRetorno Objeto::Controle(){
 	return this->Controle(this->ctrl, true, 0.04);
 }

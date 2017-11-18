@@ -405,28 +405,35 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 			{
 
 				//rtn = objetos[idxObj].Controle(objetos[idxObj].ctrl, true, 0.02);
-				rtn = objetos[idxObj].ControleJacoud(objetos[idxObj].ctrl);//, true, 0.02);
-				Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
-				ui.XYText->appendPlainText("-------Parâmetros-------");
-				ui.XYText->appendPlainText("Kp: " + QString::number(objetos[idxObj].ctrl.pAng));
+				rtn = objetos[idxObj].ControleJacoudCircular(objetos[idxObj].ctrl);//, true, 0.02);
+
+				//Logger::Output("Vel: %f0 \n", rtn.velAtualDerivSuja);
+				//ui.XYText->appendPlainText("-------Parâmetros-------");
+				//ui.XYText->appendPlainText("Kp: " + QString::number(objetos[idxObj].ctrl.pAng));
 				//ui.XYText->appendPlainText("Func Custo: " + QString::number(objetos[idxObj].objFuncCusto.posX) + ","+ QString::number(objetos[idxObj].objFuncCusto.posY));
-				ui.XYText->appendPlainText("Func Custo (deg): " + QString::number(objetos[idxObj].objFuncCusto.ang));
+				//ui.XYText->appendPlainText("Func Custo (deg): " + QString::number(objetos[idxObj].objFuncCusto.ang));
 
-				ui.XYText->appendPlainText("Amp Senoide: " + QString::number(objetos[idxObj].ampSenoide));
-				ui.XYText->appendPlainText("Freq Senoide: " + QString::number(objetos[idxObj].freqSenoide));
-				ui.XYText->appendPlainText("tempo (seg): " + QString::number(rtn.t));
+				//ui.XYText->appendPlainText("Amp Senoide: " + QString::number(objetos[idxObj].ampSenoide));
+				//ui.XYText->appendPlainText("Freq Senoide: " + QString::number(objetos[idxObj].freqSenoide));
+				//ui.XYText->appendPlainText("tempo (seg): " + QString::number(rtn.t));
 
-				ui.XYText->appendPlainText("-------Orientacao-------");
-				ui.XYText->appendPlainText("Ref ESC: " + QString::number(rtn.integralEsc * 180 / M_PI));
-				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.posicaoAtual.ang * 180 / M_PI));
-				ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
-				ui.XYText->appendPlainText("Error ang: " + QString::number(rtn.erroAng * 180 / M_PI));
-				ui.XYText->appendPlainText("");
+				//ui.XYText->appendPlainText("-------Orientacao-------");
+				//ui.XYText->appendPlainText("Ref ESC: " + QString::number(rtn.integralEsc * 180 / M_PI));
+				//ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.posicaoAtual.ang * 180 / M_PI));
+				//ui.XYText->appendPlainText("Ang Desejado Ctrl: " + QString::number(rtn.angDesejado * 180 /M_PI));
+				//ui.XYText->appendPlainText("Error ang: " + QString::number(rtn.erroAng * 180 / M_PI));
+				//ui.XYText->appendPlainText("");
 
-				//ui.XYText->appendPlainText("-------Posicao-------");
-				//ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
-				//ui.XYText->appendPlainText("Pos Desejada: " + QString::number(rtn.angDesejado * 180 / M_PI));
+				ui.XYText->appendPlainText("-------Posicao-------");
+				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
+				ui.XYText->appendPlainText("Pos Desejada (x,y): " + QString::number(rtn.posicaoRef.x) + " , " + QString::number(rtn.posicaoRef.y));
+				ui.XYText->appendPlainText("-------Parâmetros-------");
+				ui.XYText->appendPlainText("L: " + QString::number(rtn.L));
+				ui.XYText->appendPlainText("uR: " + QString::number(rtn.uR));
+				ui.XYText->appendPlainText("thetaTil: " + QString::number(rtn.thetaTil));
+
 				//ui.XYText->appendPlainText("Error Pos: " + QString::number(rtn.erroPos));
+				//ui.XYText->appendPlainText("");
 
 
 

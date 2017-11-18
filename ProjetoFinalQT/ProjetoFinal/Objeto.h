@@ -90,6 +90,9 @@ public:
 	double ampSenoide = 0;
 	double freqSenoide = 0;
 	double ganhoESC = 0;
+	int count = 0;
+	double deltayold = 0;
+
 	bool enableEsc = false;
 
 	void LowPassFilter(double input, double omegaH);
@@ -101,6 +104,8 @@ public:
 	// Metodos
 	StrRetorno Controle();								// Concentra o calculo do controle e envia as mensagens
 	StrRetorno ControleJacoud(paramControle);
+	StrRetorno ControleJacoudCircular(paramControle);
+
 	StrRetorno ControleJacoud();
 	StrRetorno Controle(paramControle, bool sentido, double);	// SobreCarga do metodo de Controle
 	void PID(double, float, float, float, bool);		// Calcula a saida do sinal de controle (bloco PID)

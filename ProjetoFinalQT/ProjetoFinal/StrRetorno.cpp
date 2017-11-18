@@ -79,3 +79,28 @@ StrRetorno::StrRetorno(double pRefPos, double pErroPos, Position pPosAtual, doub
 	integralEsc = pIntegralEsc;
 	t = pt;
 }
+
+
+StrRetorno::StrRetorno(Position pRefPos, Position pPosAtual, double pAngDesejado, double pErroAng, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource, double pIntegralEsc, double pt, double pL, double puR, double pThetaTil)
+{
+	satAng = pSat;
+
+	posicaoRef = pRefPos;
+	saidaControleLinear = pSaidaControleLinear;
+
+	this->posicaoAtual = pPosAtual;
+	angDesejado = pAngDesejado;
+	erroAng = pErroAng;
+	saidaControleAngular = pSaidaControleAngular;
+
+	sinalDeControle1 = pSinalControle1;
+	sinalDeControle2 = pSinalControle2;
+
+	angSource = pAngSource;
+	integralEsc = pIntegralEsc;
+	t = pt;
+	L = pL;
+	uR = puR;
+	thetaTil = pThetaTil;
+}
+
