@@ -22,8 +22,8 @@ title('Figura (b)')
 xlabel('tempo (s)')
 ylabel('angulo (graus)')
 grid on
-axis([0 60 -80 260])
-set(gca,'YTick',(-80:40:260))
+axis([0 60 -80 400])
+set(gca,'YTick',(-80:40:400))
 hgexport(fig1,'simulacaoOrientacao') 
 
 fig2 = figure(2)
