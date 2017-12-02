@@ -76,6 +76,8 @@ void Objeto::setPosAtual(Position pCorPrim, Position pCorSec)
 
 	}
 
+
+
 	//theta = atan2(deltaY, deltaX) + (2 * M_PI)*posAtual.offset + M_PI_4;
 	//theta = atan2(deltaX, deltaY) + (2 * M_PI)*posAtual.offset + M_PI_4;
 	theta = thetaCirculoUnit +(2 * M_PI)*posAtual.offset -M_PI_4;
@@ -427,9 +429,9 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 
 	//variaveis init
-	double Rr = 10;
-	double kL = 1;
-	double v = kL*(M_PI*Rr);
+	double Rr = 2;
+	double kL = 25;
+	double v = 5*kL*(M_PI*Rr);
 	double h = (v / Rr) / 5; // filtro principal
 
 
@@ -481,10 +483,11 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double ut = v;
 
 	////double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
-	double k = 10; // parece bom
-	double ur = k*thetatil; 
+	double k = 6; // parece bom
+	//double ur = k*thetatil; 
 
-	
+	double ur = -k2*v*L - k*thetatil - v*cos(thetatil) / (L + Rr);
+
 	
 	saidaControleLinear = ut;
 	saidaControleAngular = ur;

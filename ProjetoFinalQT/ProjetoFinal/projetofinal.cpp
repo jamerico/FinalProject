@@ -430,7 +430,7 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				ui.XYText->appendPlainText("-------Parâmetros-------");
 				ui.XYText->appendPlainText("L: " + QString::number(rtn.L));
 				ui.XYText->appendPlainText("uR: " + QString::number(rtn.uR));
-				ui.XYText->appendPlainText("thetaTil: " + QString::number(rtn.thetaTil));
+				ui.XYText->appendPlainText("thetaTil: " + QString::number(rtn.thetaTil * 180 / M_PI));
 
 				//ui.XYText->appendPlainText("Error Pos: " + QString::number(rtn.erroPos));
 				//ui.XYText->appendPlainText("");
@@ -1309,6 +1309,9 @@ void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
 
 	funcCusto h;
 	h.ang = maxEscSelecionado.toInt();
+	h.posX = 225;
+	h.posY = 85;
+
 	//switch (maxEscSelecionado.toInt()){
 	//	case 1:
 	//		h.posX = 60;
