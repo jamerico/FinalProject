@@ -478,12 +478,15 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	double D = sqrt(pow(deltax,2) + pow(deltay,2));
 	double L = D - Rr;
-	double k2 = 0.0004; 
+	//double k2 = 0.0004; 
+	double k2 = 0.0012;
+
 	double k3 = 0.001 * sqrt(2);
 	double ut = v;
 
 	////double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
-	double k = 6; // parece bom
+	//double k = 6; // parece bom
+	double k = 25;
 	//double ur = k*thetatil; 
 
 	double ur = -k2*v*L - k*thetatil - v*cos(thetatil) / (L + Rr);
