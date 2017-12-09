@@ -1310,7 +1310,7 @@ void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
 	funcCusto h;
 	h.ang = maxEscSelecionado.toInt();
 	h.posX = 225;
-	h.posY = 85;
+	h.posY = 50;
 
 	//switch (maxEscSelecionado.toInt()){
 	//	case 1:

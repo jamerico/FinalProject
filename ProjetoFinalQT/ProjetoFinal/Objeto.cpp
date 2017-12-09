@@ -429,9 +429,9 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 
 	//variaveis init
-	double Rr = 2;
-	double kL = 25;
-	double v = 5*kL*(M_PI*Rr);
+	double Rr = 5;
+	double kL = 250/Rr;
+	double v = kL*(M_PI*Rr); // 250*M_PI da bom
 	double h = (v / Rr) / 5; // filtro principal
 
 
@@ -469,7 +469,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	deltayold = deltay;
 	double thetaaux = atan2(deltay, deltax) + 2 *M_PI*count;
-	double thetad = thetaaux - M_PI / 2;
+	double thetad = thetaaux -M_PI / 2;
 	double thetatil = posAtual.ang - thetad;
 
 
@@ -479,14 +479,14 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double D = sqrt(pow(deltax,2) + pow(deltay,2));
 	double L = D - Rr;
 	//double k2 = 0.0004; 
-	double k2 = 0.0012;
+	double k2 = 0.002;
 
 	double k3 = 0.001 * sqrt(2);
 	double ut = v;
 
 	////double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
 	//double k = 6; // parece bom
-	double k = 25;
+	double k = 30;
 	//double ur = k*thetatil; 
 
 	double ur = -k2*v*L - k*thetatil - v*cos(thetatil) / (L + Rr);
