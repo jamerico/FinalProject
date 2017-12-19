@@ -78,8 +78,6 @@ if(enableSave)
     saveas(gcf,fullfile(diretorioBase,strBase,titulo),'png');
 end
 
-
-
 % ang robot x ang source
 figure(4)
 plot(t,theta,t,maximizante)

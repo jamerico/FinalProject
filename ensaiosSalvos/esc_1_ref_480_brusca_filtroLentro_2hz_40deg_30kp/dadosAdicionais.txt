@@ -1,5 +1,0 @@
-
-	double ganhoIntegral = 0.001;
-	LowPassFilter2(sinDoubleFreq, 0.3);
-
-
