@@ -1,7 +1,8 @@
 %% real world variables
 close all;
-xrobotDataDir = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\roboData.txt';
-signalsDataDir = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\signalsStream.txt';
+diretorioBase = 'G:\Dropbox\Estudos\ProjetoFinal\ensaiosSalvos\esc_1_ref_480_brusca_filtroLentro_2hz_40deg_30kp';
+xrobotDataDir = fullfile(diretorioBase,'roboData.txt');
+signalsDataDir = fullfile(diretorioBase,'signalsStream.txt');
 
 robotData = load(xrobotDataDir);
 signalsData = load(signalsDataDir);
@@ -34,12 +35,11 @@ kp = 45;
 amp=20;
 freq=1.5;
 strBase = strcat(ensaio,'_','Kp_ ',num2str(kp),'_','Amp_ ',num2str(amp),'_','Freq_ ',num2str(freq));
-localParaSalvamento = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ensaiosSalvos';
-fullDir = fullfile(localParaSalvamento,strBase);
-enableSave = true;
+fullDir = fullfile(diretorioBase,strBase);
+enableSave = false;
 
 if(enableSave)
-    mkdir(localParaSalvamento,strBase)
+    mkdir(diretorioBase,strBase)
     copyfile(xrobotDataDir,fullDir)
     copyfile(signalsDataDir,fullDir)
 end
@@ -61,7 +61,7 @@ grid on
 legend('ut');
 titulo = 'xRef_xRobot';
 if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+    saveas(gcf,fullfile(diretorioBase,strBase,titulo),'png');
 end
 
 % orientacao
@@ -75,7 +75,7 @@ grid on
 legend('ur');
 titulo = '_refTheta_theta';
 if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+    saveas(gcf,fullfile(diretorioBase,strBase,titulo),'png');
 end
 
 
@@ -88,7 +88,7 @@ legend('ang robot', 'ang source')
 titulo='_theta_maximizante_';
 grid on
 if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+    saveas(gcf,fullfile(diretorioBase,strBase,titulo),'png');
 end
 
 % sinal tensao
@@ -98,7 +98,7 @@ grid on
 legend('v1','v2')
 titulo='_sinal_tensao_';
 if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+    saveas(gcf,fullfile(diretorioBase,strBase,titulo),'png');
 
 end
 
@@ -109,7 +109,7 @@ legend('integralESC');
 titulo='_integral_ESC_';
 grid on
 if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+    saveas(gcf,fullfile(diretorioBase,strBase,titulo),'png');
 
 end
 
