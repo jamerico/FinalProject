@@ -21,8 +21,8 @@ R=10;
 
 
 %custo
-xstar=7;
-ystar=1;
+xstar=10;
+ystar=10;
 
 %Evitando descontinuidade do atan2
 count1=0;
@@ -30,7 +30,7 @@ count1=0;
 
 % ESC
 %Rr=0.1;
-Rr=1;
+Rr=2;
 
 v=pi*Rr; % 1 volta a cada 2 s --> w=pi
 
@@ -50,3 +50,5 @@ x0(2)=0;
 
 yc0=0;
 deltayold=x0(2)-yc0;
+
+plot(x,y);
