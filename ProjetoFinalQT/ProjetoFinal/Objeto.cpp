@@ -339,9 +339,6 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 	//double ganhoIntegral = 0.001;
 	double ganhoIntegral = this->ganhoESC;
 
-	integralESC = ganhoIntegral*integralESC;
-
-
 	//if (integralESC > (360*M_PI/180)){
 	//	integralESC = 360 * M_PI / 180;
 	//}
@@ -442,12 +439,33 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double t = (now*0.3) / CLOCKS_PER_SEC;
 	t = t - 7.9296;
 
-
-	double robotx = posAtual.x;
-	double roboty = posAtual.y;
 	double thetaRobot = posAtual.ang;
-	double xSource = objFuncCusto.posX;
-	double ySource = objFuncCusto.posY;
+	double robotx = posAtual.x * thetaRobot; // jacoud -> n deveria ser cos(theta) ?
+	double roboty = posAtual.y * thetaRobot;
+	//double xSource = objFuncCusto.posX;
+	//double ySource = objFuncCusto.posY;
+
+	// o ESC entra aqui, gerando xSource e ysource
+	double gain = 0.1;
+
+	LowPassFilter(robotx, 0.1); //filtro lento
+	double xESCtemp = outputFilter * gain;
+	integralESC = integralESC + taxaH*xESCtemp;
+	double xESC = integralESC;
+
+
+
+	LowPassFilter2(roboty, 0.1); //filtro lento
+	double yESCtemp = outputFilter2 * gain;
+	integralESC2 = integralESC2 + taxaH*yESCtemp;
+	double yESC = integralESC2;
+
+	double xSource = xESC;
+	double ySource = yESC;
+
+	/// o ESC termina aqui, gerando xSource e ysource
+
+
 	Position refPos;
 	refPos.setPos(xSource, ySource, 0);
 
