@@ -29,10 +29,10 @@ count1=0;
 
 
 % ESC
-%Rr=0.1;
-Rr=2;
+Rr=5;
+% Rr=2;
 
-v=pi*Rr; % 1 volta a cada 2 s --> w=pi
+v=pi*0.1; % 1 volta a cada 2 s --> w=pi
 
 
 h=(v/Rr)/5; % filtro principal
@@ -51,4 +51,3 @@ x0(2)=0;
 yc0=0;
 deltayold=x0(2)-yc0;
 
-plot(x,y);

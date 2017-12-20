@@ -52,16 +52,17 @@ end
 D=sqrt(deltax^2+deltay^2);
 L=D-Rr;
 % 
-% k2=0.4;
-k2 = 0.5;
-% k3=0.2*sqrt(2);
-k3=5*sqrt(2);
+k2=0.4;
+% k2 = 0.5;
+k3=0.2*sqrt(2);
+% k3=5*sqrt(2);
 
 % 
 ut=v;
 %ur=-k2*v*L*aux-k3*abs(v)*thetatil-v*cos(thetatil)/(L+Rr);
 
-ur=-k2*v*L-k3*abs(v)*thetatil-v*cos(thetatil)/(L+Rr);
+ur=-k2*v*L*0-k3*abs(v)*thetatil-0*v*cos(thetatil)/(L+Rr);
+
 ur1v = [ur1v -k2*v*L];
 ur2v = [ur2v -k3*abs(v)*thetatil];
 ur3v = [ur3v -v*cos(thetatil)/(L+Rr)];
