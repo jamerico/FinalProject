@@ -1,6 +1,6 @@
 %% real world variables
 close all;
-diretorioBase = 'G:\Dropbox\Estudos\ProjetoFinal\ensaiosSalvos\esc_1_ref_480_brusca_filtroLentro_2hz_40deg_30kp';
+diretorioBase = 'G:\Dropbox\Estudos\ProjetoFinal\ensaiosSalvos\esc_1_ref_540';
 xrobotDataDir = fullfile(diretorioBase,'roboData.txt');
 signalsDataDir = fullfile(diretorioBase,'signalsStream.txt');
 
@@ -29,12 +29,12 @@ v2 = sinalTensao2*5/255;
 ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
 % dados para salvar
-nomeDoEnsaio = '1dof_1ref_480';
+nomeDoEnsaio = '1dof_1ref_540_movendo';
 time = date;
 kp = 45;
 amp=20;
 freq=1.5;
-tSimu = 23;
+tSimu = 85;
 
 
 fullDir = fullfile(diretorioBase,nomeDoEnsaio);
@@ -52,23 +52,25 @@ end
 fig1 = figure(1);
 subplot(2,1,1);
 plot(t,source)
+set(gca,'XTick',(0:5:tSimu))
 title('Figura (a)') 
 xlabel('tempo (s)')
 ylabel('Função Custo')
 grid on
-axis([0 tSimu -70 15])
-set(gca,'YTick',(-70:10:15))
+axis([0 tSimu -0 11])
+set(gca,'YTick',(-0:1:11))
 subplot(2,1,2)
 plot(t,theta,t,maximizante)
+set(gca,'XTick',(0:5:tSimu))
 title('Figura (b)') 
 xlabel('tempo (s)')
 ylabel('angulo (graus)')
 grid on
-axis([0 tSimu -80 900])
-set(gca,'YTick',(-80:100:900))
+axis([0 tSimu -80 600])
+set(gca,'YTick',(-80:100:600))
 if(enableSave)
-    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('simulacaoFuncaoCustoeOrientacao',nomeDoEnsaio)),'eps');
-    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('simulacaoFuncaoCustoeOrientacao',nomeDoEnsaio)),'png');
+    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('experimentoFuncaoCustoeOrientacao',nomeDoEnsaio)),'epsc');
+    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('experimentoFuncaoCustoeOrientacao',nomeDoEnsaio)),'png');
 
 end
 
@@ -80,18 +82,20 @@ title('Figura (a)')
 xlabel('tempo (s)')
 ylabel('angulo(graus)')
 grid on
-axis([0 tSimu -80 900])
-set(gca,'YTick',(-80:100:900))
+axis([0 tSimu -80 600])
+set(gca,'YTick',(-80:100:600))
+set(gca,'XTick',(0:5:tSimu))
 subplot(2,1,2)
 plot(t,ur)
+set(gca,'XTick',(0:5:tSimu))
 axis([0 tSimu -10 10])
 title('Figura (b)') 
 xlabel('tempo (s)')
 ylabel('V')
 grid on
 if(enableSave)
-    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('simulacaoOrientacaoFuncCustoTensao',nomeDoEnsaio)),'eps');
-    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('simulacaoOrientacaoFuncCustoTensao',nomeDoEnsaio)),'png');
+    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('experimentoOrientacaoRefThetaETensao',nomeDoEnsaio)),'epsc');
+    saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('experimentoOrientacaoRefThetaETensao',nomeDoEnsaio)),'png');
 
 end
 
