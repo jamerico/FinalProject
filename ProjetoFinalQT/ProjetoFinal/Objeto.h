@@ -87,6 +87,7 @@ public:
 	double outputFilter = 0;;
 	double outputFilter2 = 0;;
 	double integralESC = 0;
+	double integralESC2 = 0;
 	double ampSenoide = 0;
 	double freqSenoide = 0;
 	double ganhoESC = 0;

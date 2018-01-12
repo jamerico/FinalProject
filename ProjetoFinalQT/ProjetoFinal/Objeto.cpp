@@ -420,39 +420,38 @@ StrRetorno Objeto::ControleJacoud(paramControle pParam){
 
 StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
-	ofstream objectStream, signalsStream, testStream, fullStream;
-
+	// inicializacao dos arquivos de dados
+	ofstream objectStream, signalsStream, fullStream;
 	objectStream.open("roboData.txt", ios::out | ios::app);
 	signalsStream.open("signalsStream.txt", ios::out | ios::app);
-	testStream.open("testStream.txt", ios::out | ios::app);
 
+	// clock (tempo) do programa. Eh o tempo de execucao total do programa.
 	clock_t now = clock();
 	double t = (now*0.3) / CLOCKS_PER_SEC;
-	t = t - 7.9296;
+	t = t - 7.9296; // tempo de startup entre clciar em iniciar e o programa enviar a 1a mensagem
 
-	//variaveis init
+	// variaveis da tela
+	bool enableEsc = this->enableEsc;
+
+	//variaveis init do controle circular
 	//double Rr = 40;
 	double Rr = (40-10)*exp(-t/2)+10; // raio inicial 40, raio final 10. tau = 2. Lembrando que 5tau = tempo de decaimento
 	double kL = 250/Rr;
 	double v = kL*(M_PI*Rr); // 250*M_PI da bom
 	double h = (v / Rr) / 5; // filtro principal
 
-
-	bool enableEsc = this->enableEsc;
-	static bool tempoVirtualIniciado = false;
-
-
-
-
+	// mudança de coordenadas
 	double robotx = posAtual.y;
 	double roboty = posAtual.x;
-
-	double thetaRobot = -posAtual.ang;
+	double thetaRobot = -posAtual.ang; 
 	Position posVirtual(robotx, roboty, thetaRobot);
 	
-
+	// posicao da fonte
 	double xSource = objFuncCusto.posX;
 	double ySource = objFuncCusto.posY;
+
+	// script para fazer a fonte se mover apos um determinado tempo
+	static bool tempoVirtualIniciado = false;
 
 	clock_t now2;
 	if (enableEsc){
@@ -475,10 +474,35 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 		ySource = 100;
 	}
 
-
+	// setup da variavel de referencia da fonte
 	Position refPos;
 	refPos.setPos(xSource, ySource, 0);
 
+
+	// script do ESC: gera xSource e ysource
+	
+	double z = -(pow((posVirtual.y - refPos.y), 2) + pow((posVirtual.x - refPos.x), 2)) + 10;
+	double gain = 0.1;
+
+	// ESC: x
+	LowPassFilter(posVirtual.x, 0.1); //filtro lento
+	double xESCtemp = outputFilter * gain;
+
+	integralESC = integralESC + taxaH*xESCtemp; // integrador
+	double xESC = integralESC;
+
+	// ESC: y
+	LowPassFilter2(posVirtual.y, 0.1); //filtro lento
+	double yESCtemp = outputFilter2 * gain;
+
+	integralESC2 = integralESC2 + taxaH*yESCtemp; // integrador
+	double yESC = integralESC2;
+
+	//double xSource = xESC; 
+	//double ySource = yESC; 
+
+
+	// script do controle circular
 	double deltax = robotx - xSource;
 	double deltay = roboty - ySource;
 
@@ -500,9 +524,6 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double thetad = thetaaux -M_PI / 2+2*M_PI;
 	double thetatil = thetaRobot - thetad;
 
-
-
-		
 
 	double D = sqrt(pow(deltax,2) + pow(deltay,2));
 	double L = D - Rr;
@@ -527,14 +548,11 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	saidaControleLinear = ut;
 	saidaControleAngular = ur;
 
+	// sinais de tensao efetivo aplicados ao robo
 	MontaSinaisTensao();
 
 
-	// convert from -255/255 scale to -5/5 volts
-	double sinalTensao1Volts = sinalTensao1 * 5 / 255;
-	double sinalTensao2Volts = sinalTensao2 * 5 / 255;
-
-
+	// saidas do programa 
 	double outputHighPass = 0;
 	double sinDoubleFreq = 0;
 	double gradientEstimative = 0;
@@ -543,28 +561,18 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double angSource = 0;
 	double PosRef = 0;
 	double erroLin = 0;
-	double y = 0;
-	//signalsStream << "OutputLowPassFilter" << ',' << "OutputHighPassFilter" << ',' << "GradientEstimative" << "\n";
-	signalsStream << y << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << ',' << L << "\n";
-	// 	objectStream << "SinalTensao1Volts" << ',' << "SinalTensao2Volts" << ',' << "posAtualAng" << ',' << "refAngu" << "\n";
-	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posAtual.ang << ',' << posAtual.x << ',' << posAtual.y << ',' << t << ',' << angSource << ',' << PosRef << ',' << erroLin << ',' << "\n";
+	signalsStream << z << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << ',' << L <<  ',' << xESC << ',' << yESC <<"\n";
+	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posVirtual.ang << ',' << posVirtual.x << ',' << posVirtual.y << ',' << t << ',' << angSource << ',' << PosRef << ',' << erroLin << ',' << "\n";
 
 
 	signalsStream.close();
-
 	objectStream.close();
-	testStream.close();
 
+	// envio da mensagem
 	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
 
-
-
-
-	//return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
-	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
 	return StrRetorno(refPos, posVirtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC, t, L, ur, thetatil, thetaaux, thetad);
 
-	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
 }
 StrRetorno Objeto::Controle(){
 	return this->Controle(this->ctrl, true, 0.04);
