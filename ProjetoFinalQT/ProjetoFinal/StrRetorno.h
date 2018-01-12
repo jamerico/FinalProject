@@ -9,7 +9,7 @@ public:
 	StrRetorno();
 	StrRetorno(double velAtual, double velAtualDerivSuja, double setPoint, double erroVel, double angAtual, double angDesejado, double erroAng, double mDist, Position melhorPonto, double saidaControleLinear, double saidaControleAngular, double sinalControle1, double sinalControle2, bool sat, double pAngSource = 0);
 	StrRetorno(double refPos, double erroPos, Position posAtual, double angDesejado, double erroAng, double saidaControleLinear, double saidaControleAngular, double sinalControle1, double sinalControle2, bool sat, double pAngSource = 0, double pIntegralEsc = 0, double pt = 0);
-	StrRetorno(Position refPos, Position posAtual, double angDesejado, double erroAng, double saidaControleLinear, double saidaControleAngular, double sinalControle1, double sinalControle2, bool sat, double pAngSource = 0, double pIntegralEsc = 0, double pt = 0, double pL = 0, double puR = 0, double pThetaTil = 0);
+	StrRetorno(Position refPos, Position posAtual, double angDesejado, double erroAng, double saidaControleLinear, double saidaControleAngular, double sinalControle1, double sinalControle2, bool sat, double pAngSource = 0, double pIntegralEsc = 0, double pt = 0, double pL = 0, double puR = 0, double pThetaTil = 0, double thetaaux = 0, double thetaDesj = 0);
 
 	~StrRetorno();
 
@@ -33,6 +33,8 @@ public:
 	double L;
 	double uR;
 	double thetaTil;
+	double thetaAux;
+	double thetaDesj;
 
 	double sinalDeControle1;
 	double sinalDeControle2;

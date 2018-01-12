@@ -426,28 +426,56 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	signalsStream.open("signalsStream.txt", ios::out | ios::app);
 	testStream.open("testStream.txt", ios::out | ios::app);
 
-
+	clock_t now = clock();
+	double t = (now*0.3) / CLOCKS_PER_SEC;
+	t = t - 7.9296;
 
 	//variaveis init
-	double Rr = 5;
+	//double Rr = 40;
+	double Rr = (40-10)*exp(-t/2)+10; // raio inicial 40, raio final 10. tau = 2. Lembrando que 5tau = tempo de decaimento
 	double kL = 250/Rr;
 	double v = kL*(M_PI*Rr); // 250*M_PI da bom
 	double h = (v / Rr) / 5; // filtro principal
 
 
 	bool enableEsc = this->enableEsc;
+	static bool tempoVirtualIniciado = false;
 
 
-	clock_t now = clock();
-	double t = (now*0.3) / CLOCKS_PER_SEC;
-	t = t - 7.9296;
 
 
-	double robotx = posAtual.x;
-	double roboty = posAtual.y;
-	double thetaRobot = posAtual.ang;
+	double robotx = posAtual.y;
+	double roboty = posAtual.x;
+
+	double thetaRobot = -posAtual.ang;
+	Position posVirtual(robotx, roboty, thetaRobot);
+	
+
 	double xSource = objFuncCusto.posX;
 	double ySource = objFuncCusto.posY;
+
+	clock_t now2;
+	if (enableEsc){
+		if (!tempoVirtualIniciado){
+			clock_t now2 = clock();
+			tempoVirtualIniciado = true;
+		}
+		
+		double tempoVirtual = t - (now2*0.3) / CLOCKS_PER_SEC;
+		double kx = (objFuncCusto.posX - 50) / 20.0;
+		xSource = objFuncCusto.posX - kx*tempoVirtual;
+		double ky = (objFuncCusto.posY - 100) / 20.0;
+		ySource = objFuncCusto.posY - ky*tempoVirtual;
+	}
+
+	if (xSource < 50){
+		xSource = 50;
+	}
+	if (ySource < 100){
+		ySource = 100;
+	}
+
+
 	Position refPos;
 	refPos.setPos(xSource, ySource, 0);
 
@@ -469,8 +497,8 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	deltayold = deltay;
 	double thetaaux = atan2(deltay, deltax) + 2 *M_PI*count;
-	double thetad = thetaaux -M_PI / 2;
-	double thetatil = posAtual.ang - thetad;
+	double thetad = thetaaux -M_PI / 2+2*M_PI;
+	double thetatil = thetaRobot - thetad;
 
 
 
@@ -479,19 +507,23 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double D = sqrt(pow(deltax,2) + pow(deltay,2));
 	double L = D - Rr;
 	//double k2 = 0.0004; 
-	double k2 = 0.002;
+	double k2 = 0.0002*5;
 
-	double k3 = 0.001 * sqrt(2);
+	double k3 = 0.01 * sqrt(2);
 	double ut = v;
 
 	////double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
 	//double k = 6; // parece bom
-	double k = 30;
+	double k = 10;
 	//double ur = k*thetatil; 
 
-	double ur = -k2*v*L - k*thetatil - v*cos(thetatil) / (L + Rr);
+	//double ur = -k2*v*L - k*thetatil - v*cos(thetatil) / (L + Rr);
 
-	
+	double ur = k2*v*L + k*thetatil - 0*v*cos(thetatil) / (L + Rr); //atual
+
+	//double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
+
+
 	saidaControleLinear = ut;
 	saidaControleAngular = ur;
 
@@ -530,7 +562,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	//return StrRetorno(0, 0, 0, 0, posAtual.ang, AngRef, erroAng, 0, posAtual, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource);
 	//return StrRetorno(0, 0, 0, 0, posAtual.x, PosRef, erroLin, 0, Position(0, 0), saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false);
-	return StrRetorno(refPos, posAtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC, t, L,ur,thetatil);
+	return StrRetorno(refPos, posVirtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC, t, L, ur, thetatil, thetaaux, thetad);
 
 	//return StrRetorno(velAtual, setPointVel, erroVel, posAtual.ang, angDesejado, erroAng, mDist, mPos, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2);
 }

@@ -427,10 +427,15 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 				ui.XYText->appendPlainText("-------Posicao-------");
 				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
 				ui.XYText->appendPlainText("Pos Desejada (x,y): " + QString::number(rtn.posicaoRef.x) + " , " + QString::number(rtn.posicaoRef.y));
+				ui.XYText->appendPlainText("-------Orientacao-------");
+				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.posicaoAtual.ang * 180 / M_PI));
+				ui.XYText->appendPlainText("ThetaAux: " + QString::number(rtn.thetaAux* 180 / M_PI));
+				ui.XYText->appendPlainText("ThetaDesej: " + QString::number(rtn.thetaDesj * 180 / M_PI));
+				ui.XYText->appendPlainText("thetaTil: " + QString::number(rtn.thetaTil * 180 / M_PI));
+
 				ui.XYText->appendPlainText("-------Parâmetros-------");
 				ui.XYText->appendPlainText("L: " + QString::number(rtn.L));
 				ui.XYText->appendPlainText("uR: " + QString::number(rtn.uR));
-				ui.XYText->appendPlainText("thetaTil: " + QString::number(rtn.thetaTil * 180 / M_PI));
 
 				//ui.XYText->appendPlainText("Error Pos: " + QString::number(rtn.erroPos));
 				//ui.XYText->appendPlainText("");
@@ -1309,29 +1314,28 @@ void ProjetoFinal::selecionaMaxEsc(QString maxEscSelecionado){
 
 	funcCusto h;
 	h.ang = maxEscSelecionado.toInt();
-	h.posX = 225;
-	h.posY = 50;
+	h.posX = 119;
+	h.posY = 157;
 
 	//switch (maxEscSelecionado.toInt()){
-	//	case 1:
-	//		h.posX = 60;
-	//		h.posY = 68;
-	//		h.ang = 0;
+	//	case 0:
+	//		h.posX = 119;
+	//		h.posY = 157;
+	//		h.ang = maxEscSelecionado.toInt();
+	//	case 90:
+	//		h.posX = 157;
+	//		h.posY = 119;
+	//		h.ang = maxEscSelecionado.toInt();
 	//		break;
-	//	case 2:
-	//		h.posX = 240;
-	//		h.posY = 68;
-	//		h.ang = 90;
-	//		break;
-	//	case 3:
+	//	case 180:
 	//		h.posX = 60;
 	//		h.posY = 220;
-	//		h.ang = 420;
+	//		h.ang = maxEscSelecionado.toInt();
 	//		break;
-	//	case 4:
+	//	case 270:
 	//		h.posX = 240;
 	//		h.posY = 220;
-	//		h.ang = 540;
+	//		h.ang = maxEscSelecionado.toInt();
 	//		break;
 
 	//}
