@@ -1,6 +1,6 @@
 %% real world variables
 close all;
-diretorioBase = 'G:\Dropbox\Estudos\ProjetoFinal\ensaiosSalvos\esc_1_ref_540';
+diretorioBase = 'G:\Dropbox\Estudos\ProjetoFinal\ensaiosSalvos\esc_2_mudancas_lentas';
 xrobotDataDir = fullfile(diretorioBase,'roboData.txt');
 signalsDataDir = fullfile(diretorioBase,'signalsStream.txt');
 
@@ -29,13 +29,12 @@ v2 = sinalTensao2*5/255;
 ur = v1-v2; %ur angular
 ut = v1+v2; %ut linear
 % dados para salvar
-nomeDoEnsaio = '1dof_1ref_540_movendo';
+nomeDoEnsaio = '1dof_2mudancas';
 time = date;
 kp = 45;
 amp=20;
 freq=1.5;
-tSimu = 85;
-
+tSimu = 110;
 
 fullDir = fullfile(diretorioBase,nomeDoEnsaio);
 enableSave = true;
@@ -57,8 +56,8 @@ title('Figura (a)')
 xlabel('tempo (s)')
 ylabel('Função Custo')
 grid on
-axis([0 tSimu -0 11])
-set(gca,'YTick',(-0:1:11))
+axis([0 tSimu -2 11])
+set(gca,'YTick',(-2:1:11))
 subplot(2,1,2)
 plot(t,theta,t,maximizante)
 set(gca,'XTick',(0:5:tSimu))
@@ -66,8 +65,8 @@ title('Figura (b)')
 xlabel('tempo (s)')
 ylabel('angulo (graus)')
 grid on
-axis([0 tSimu -80 600])
-set(gca,'YTick',(-80:100:600))
+axis([0 tSimu -130 850])
+set(gca,'YTick',(-130:100:850))
 if(enableSave)
     saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('experimentoFuncaoCustoeOrientacao',nomeDoEnsaio)),'epsc');
     saveas(gcf,fullfile(diretorioBase,nomeDoEnsaio,strcat('experimentoFuncaoCustoeOrientacao',nomeDoEnsaio)),'png');
@@ -82,8 +81,8 @@ title('Figura (a)')
 xlabel('tempo (s)')
 ylabel('angulo(graus)')
 grid on
-axis([0 tSimu -80 600])
-set(gca,'YTick',(-80:100:600))
+axis([0 tSimu -130 850])
+set(gca,'YTick',(-130:100:850))
 set(gca,'XTick',(0:5:tSimu))
 subplot(2,1,2)
 plot(t,ur)
