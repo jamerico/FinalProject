@@ -481,19 +481,20 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	// script do ESC: gera xSource e ysource
 	
-	double z = -(pow((posVirtual.y - refPos.y), 2) + pow((posVirtual.x - refPos.x), 2)) + 10;
-	double gain = 0.1;
+	double z = -(pow((posVirtual.x - 150), 2) + pow((posVirtual.y - 150), 2)) + 400;
+	double ygain = 0.01;
+	double xgain = 0.01;
 
 	// ESC: x
-	LowPassFilter(posVirtual.x, 0.1); //filtro lento
-	double xESCtemp = outputFilter * gain;
+	LowPassFilter(posVirtual.x * z, 0.1); //filtro lento
+	double xESCtemp = outputFilter * xgain;
 
 	integralESC = integralESC + taxaH*xESCtemp; // integrador
 	double xESC = integralESC;
 
 	// ESC: y
-	LowPassFilter2(posVirtual.y, 0.1); //filtro lento
-	double yESCtemp = outputFilter2 * gain;
+	LowPassFilter2(posVirtual.y * z, 0.1); //filtro lento
+	double yESCtemp = outputFilter2 * ygain;
 
 	integralESC2 = integralESC2 + taxaH*yESCtemp; // integrador
 	double yESC = integralESC2;
@@ -561,7 +562,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double angSource = 0;
 	double PosRef = 0;
 	double erroLin = 0;
-	signalsStream << z << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << ',' << L <<  ',' << xESC << ',' << yESC <<"\n";
+	signalsStream << z << ',' << outputHighPass << ',' << sinDoubleFreq << ',' << gradientEstimative << ',' << integralESC << ',' << uEsc << ',' << L <<  ',' << xESC << ',' << yESC << ',' << outputFilter << ',' << outputFilter2 << "\n";
 	objectStream << sinalTensao1 << ',' << sinalTensao2 << ',' << saidaControleAngular << ',' << saidaControleLinear << ',' << AngRef << ',' << posVirtual.ang << ',' << posVirtual.x << ',' << posVirtual.y << ',' << t << ',' << angSource << ',' << PosRef << ',' << erroLin << ',' << "\n";
 
 
