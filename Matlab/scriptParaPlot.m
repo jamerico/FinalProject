@@ -65,7 +65,14 @@ plot(t,xESC)
 subplot(2,1,2);
 plot(t,yESC)
 
+
+
 figure;
+subplot(3,1,1);
+plot(t,x)
+subplot(3,1,2);
+plot(t,y)
+subplot(3,1,3)
 plot(t,source)
 
 %% primeiros plots
