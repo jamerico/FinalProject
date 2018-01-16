@@ -85,7 +85,11 @@ public:
 	double sinalTensao1, sinalTensao2;			// Sinais de tensao q serao enviados ao carrinho
 	bool saturouAng;
 	double outputFilter = 0;;
-	double outputFilter2 = 0;;
+	double outputFilter2 = 0;
+	double outputFilter3 = 0;
+	double outputFilter4 = 0;
+	double outputFilter5 = 0;
+
 	double integralESC = 0;
 	double integralESC2 = 0;
 	double ampSenoide = 0;
@@ -98,6 +102,9 @@ public:
 
 	void LowPassFilter(double input, double omegaH);
 	void LowPassFilter2(double input, double omegaH);
+	void LowPassFilter3(double input, double omegaH);
+	void LowPassFilter4(double input, double omegaH);
+	void LowPassFilter5(double input, double omegaH);
 
 
 	//Serial s;

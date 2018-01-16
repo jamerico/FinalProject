@@ -460,11 +460,11 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 			tempoVirtualIniciado = true;
 		}
 		
-		double tempoVirtual = t - (now2*0.3) / CLOCKS_PER_SEC;
-		double kx = (objFuncCusto.posX - 50) / 20.0;
-		xSource = objFuncCusto.posX - kx*tempoVirtual;
-		double ky = (objFuncCusto.posY - 100) / 20.0;
-		ySource = objFuncCusto.posY - ky*tempoVirtual;
+		//double tempoVirtual = t - (now2*0.3) / CLOCKS_PER_SEC;
+		//double kx = (objFuncCusto.posX - 50) / 20.0;
+		//xSource = objFuncCusto.posX - kx*tempoVirtual;
+		//double ky = (objFuncCusto.posY - 100) / 20.0;
+		//ySource = objFuncCusto.posY - ky*tempoVirtual;
 	}
 
 	if (xSource < 50){
@@ -481,26 +481,50 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	// script do ESC: gera xSource e ysource
 	
-	double z = -(pow((posVirtual.x - 150), 2) + pow((posVirtual.y - 150), 2)) + 400;
+	double z = -(pow((posVirtual.x - 175), 2) + pow((posVirtual.y - 224), 2)) + 400;
 	double ygain = 0.01;
 	double xgain = 0.01;
 
+
+
 	// ESC: x
-	LowPassFilter(posVirtual.x * z, 0.1); //filtro lento
-	double xESCtemp = outputFilter * xgain;
+	double xESC;
+	double yESC;
+	double gainESC = 0.002;
 
-	integralESC = integralESC + taxaH*xESCtemp; // integrador
-	double xESC = integralESC;
 
-	// ESC: y
-	LowPassFilter2(posVirtual.y * z, 0.1); //filtro lento
-	double yESCtemp = outputFilter2 * ygain;
+	if (enableEsc){
+		// remove valor medio de x
+		LowPassFilter3(posVirtual.x, 0.1);
+		double xFiltered = posVirtual.x - outputFilter3;
 
-	integralESC2 = integralESC2 + taxaH*yESCtemp; // integrador
-	double yESC = integralESC2;
+		// remove valor medio de y
+		LowPassFilter4(posVirtual.y, 0.1);
+		double yFiltered = posVirtual.y - outputFilter4;
 
-	//double xSource = xESC; 
-	//double ySource = yESC; 
+		// remove valor medio de z
+		LowPassFilter5(z, 0.1);
+		double zFiltered = z - outputFilter5;
+
+		LowPassFilter(xFiltered * zFiltered, 0.1); //filtro lento
+		double xESCtemp = outputFilter * xgain;
+
+		integralESC = integralESC + taxaH*xESCtemp; // integrador
+		xESC = integralESC*gainESC;
+
+		// ESC: y
+		LowPassFilter2(yFiltered * zFiltered, 0.1); //filtro lento
+		double yESCtemp = outputFilter2 * ygain;
+
+		integralESC2 = integralESC2 + taxaH*yESCtemp; // integrador
+		yESC = integralESC2*gainESC;
+
+		xSource = xESC+119; 
+		ySource = yESC+155; 
+		refPos.setPos(xSource, ySource, 0);
+	}
+
+
 
 
 	// script do controle circular
@@ -652,6 +676,33 @@ void Objeto::LowPassFilter2(double input, double omegaH)
 	//double omegaH = 0.35;// tem que matar a senoide
 
 	outputFilter2 = (1 - taxaH * omegaH)*outputFilter2 + taxaH*omegaH*input;
+
+}
+
+void Objeto::LowPassFilter3(double input, double omegaH)
+{
+	//double omegaH = 0.25;// tem que matar a senoide
+	//double omegaH = 0.35;// tem que matar a senoide
+
+	outputFilter3 = (1 - taxaH * omegaH)*outputFilter3 + taxaH*omegaH*input;
+
+}
+
+void Objeto::LowPassFilter4(double input, double omegaH)
+{
+	//double omegaH = 0.25;// tem que matar a senoide
+	//double omegaH = 0.35;// tem que matar a senoide
+
+	outputFilter4 = (1 - taxaH * omegaH)*outputFilter4 + taxaH*omegaH*input;
+
+}
+
+void Objeto::LowPassFilter5(double input, double omegaH)
+{
+	//double omegaH = 0.25;// tem que matar a senoide
+	//double omegaH = 0.35;// tem que matar a senoide
+
+	outputFilter5 = (1 - taxaH * omegaH)*outputFilter5 + taxaH*omegaH*input;
 
 }
 
