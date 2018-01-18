@@ -17,7 +17,11 @@ t = robotData(:,9)-robotData(1,9);
 source = signalsData(:,1);
 gradientStimative = signalsData(:,4);
 integralEsc = signalsData(:,5);
-
+xESC = signalsData(:,8);
+yESC = signalsData(:,9);
+filterX = signalsData(:,10);
+filterY = signalsData(:,11);
+    
 maximizante = robotData(:,10);
 refPos = robotData(:,11);
 erroPos = robotData(:,12);
@@ -44,7 +48,27 @@ if(enableSave)
     copyfile(signalsDataDir,fullDir)
 end
 
+figure;
+subplot(3,1,1);
+x = x-mean(x);
+plot(t,x)
+subplot(3,1,2);
+source = source-mean(source);
+plot(t,source)
+subplot(3,1,3)
+plot(t,x.*source)
 
+
+figure;
+subplot(2,1,1);
+plot(t,xESC)
+subplot(2,1,2);
+plot(t,yESC)
+
+figure;
+plot(t,source)
+
+%% primeiros plots
 % posicao robot
 figure(1)
 subplot(2,1,1);
