@@ -2,9 +2,9 @@
 clear all
 
 
-global m J l k r R count1 deltayold cinematico v Rr
+global m J l k r R count1 deltayold cinematico v Rr 
 
-global xstar ystar
+global xstar ystar xstarArray ystarArray
 
 
 %planta
@@ -18,18 +18,19 @@ R=10;
 
 
 %custo
-xstar=30;
-ystar=-30;
+xstar=0;
+ystar=0;
+xstarArray = 0;
+ystarArray = 0;
 
 %Evitando descontinuidade do atan2
 count1=0;
 
 
 % ESC
-Kesc = 0.02;
+Kesc = 0.06; %0.04
 Rr=1;
-v=pi*Rr; % 1 volta a cada 2 s --> w=pi
-
+v=1*pi*Rr; % 1 volta a cada 2 s --> w=pi
 
 
 h=(v/Rr)/5; % filtro principal
@@ -38,12 +39,12 @@ N=10;
 
 
 
-Tsimu = 50*5*2*2*4;
+Tsimu = 50*2*400;
 passo = 1e-2; %Euler
 x0=zeros(1,5)';
 x0(3)=-0*45*pi/180;
 x0(1)=0;
-x0(2)=0;
+x0(2)=5;
 
 yc0=0;
 deltayold=x0(2)-yc0;
