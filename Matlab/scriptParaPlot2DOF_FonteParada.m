@@ -48,27 +48,15 @@ if(enableSave)
     copyfile(signalsDataDir,fullDir)
 end
 
-% figure;
-% subplot(3,1,1);
-% x = x-mean(x);
-% plot(t,x)
-% subplot(3,1,2);
-% source = source-mean(source);
-% plot(t,source)
-% subplot(3,1,3)
-% plot(t,x.*source)
 
 
-figure;
-subplot(2,1,1);
-plot(t,xESC)
-subplot(2,1,2);
-plot(t,yESC)
 
-figure;
-plot(t,source)
+
+
 
 %% primeiros plots
+close all
+
 % apenas para testes
 % figure(1)
 % subplot(2,1,1);
@@ -80,84 +68,38 @@ plot(t,source)
 % plot(166,212,'r*')
 % legend('robot','fonte');
 
+% axis([0 tSimu -130 850])
+% set(gca,'YTick',(-500:100:100))
 
 
+% posicao robot e funcao custo
 figure(1)
 subplot(2,1,1);
 plot(t,x,t,y)
 hold on
-plot(t,166*ones(size(t,1),1),t,212*ones(size(t,1),1))
+plot(t,166*ones(size(t,1),1),t,212*ones(size(t,1),1),'linewidth',1.5)
 legend('posicao x','posicao y','fonte x', 'fonte y');
+set(gca,'YTick',(20:40:240))
+grid on
 subplot(2,1,2);
 plot(t,source)
+grid on
 legend('funcao custo');
 
 
-%%
-
-
-
-% posicao
-figure(2);
-subplot(2,1,1);
-plot(t,refPos,t,x);
-legend('x ref','x robot');
-subplot(2,1,2);
-plot(t,ut);
-grid on
-legend('ut');
-titulo = 'xRef_xRobot';
-if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
-end
-
-% orientacao
-figure(3);
-subplot(2,1,1);
-plot(t,refTheta,t,theta);
-legend('theta ref','theta robot');
-subplot(2,1,2);
-plot(t,ur);
-grid on
-legend('ur');
-titulo = '_refTheta_theta';
-if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
-end
-
-
-
-% ang robot x ang source
-figure(4)
-plot(t,theta,t,maximizante)
-grid on
-legend('ang robot', 'ang source')
-titulo='_theta_maximizante_';
-grid on
-if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
-end
 
 % sinal tensao
-figure(5)
-plot(t,v1,t,v2)
+figure(2)
+subplot(2,1,1);
+plot(t,xESC+60,t,yESC+88) %offset inicial da referencia para nao partir do zero
+hold on
+legend('Ref x', 'Ref y');
 grid on
-legend('v1','v2')
-titulo='_sinal_tensao_';
-if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
-
-end
-
-% integralESC
-figure(6)
-plot(t,integralEsc*180/pi)
-legend('integralESC');
-titulo='_integral_ESC_';
+subplot(2,1,2);
+plot(t,ur,t,ut)
 grid on
-if(enableSave)
-    saveas(gcf,fullfile(localParaSalvamento,strBase,titulo),'png');
+legend('ur','ut');
 
-end
+
 
 
