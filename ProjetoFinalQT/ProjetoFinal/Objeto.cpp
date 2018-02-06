@@ -447,8 +447,8 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	Position posVirtual(robotx, roboty, thetaRobot);
 	
 	// posicao da fonte
-	double xSource = objFuncCusto.posX;
-	double ySource = objFuncCusto.posY;
+	double xSource = 62;; // objFuncCusto.posX;
+	double ySource = 88; // objFuncCusto.posY;
 
 	// script para fazer a fonte se mover apos um determinado tempo
 	static bool tempoVirtualIniciado = false;
@@ -467,12 +467,12 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 		//ySource = objFuncCusto.posY - ky*tempoVirtual;
 	}
 
-	if (xSource < 50){
-		xSource = 50;
-	}
-	if (ySource < 100){
-		ySource = 100;
-	}
+	//if (xSource < 50){
+	//	xSource = 50;
+	//}
+	//if (ySource < 100){
+	//	ySource = 100;
+	//}
 
 	// setup da variavel de referencia da fonte
 	Position refPos;
@@ -481,7 +481,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	// script do ESC: gera xSource e ysource
 	
-	double z = -(pow((posVirtual.x - 175), 2) + pow((posVirtual.y - 224), 2)) + 400;
+	double z = - (  pow((posVirtual.x - 166), 2) + pow((posVirtual.y - 212), 2)  ) + 400;
 	double ygain = 0.01;
 	double xgain = 0.01;
 
@@ -491,36 +491,39 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	double xESC;
 	double yESC;
 	double gainESC = 0.002;
+	double filterConstant = 0.5;
 
 
 	if (enableEsc){
 		// remove valor medio de x
-		LowPassFilter3(posVirtual.x, 0.1);
+		LowPassFilter3(posVirtual.x, filterConstant);
 		double xFiltered = posVirtual.x - outputFilter3;
 
 		// remove valor medio de y
-		LowPassFilter4(posVirtual.y, 0.1);
+		LowPassFilter4(posVirtual.y, filterConstant);
 		double yFiltered = posVirtual.y - outputFilter4;
 
 		// remove valor medio de z
-		LowPassFilter5(z, 0.1);
+		LowPassFilter5(z, filterConstant);
 		double zFiltered = z - outputFilter5;
 
-		LowPassFilter(xFiltered * zFiltered, 0.1); //filtro lento
+		LowPassFilter(xFiltered * zFiltered, filterConstant); //filtro lento
 		double xESCtemp = outputFilter * xgain;
 
 		integralESC = integralESC + taxaH*xESCtemp; // integrador
 		xESC = integralESC*gainESC;
 
 		// ESC: y
-		LowPassFilter2(yFiltered * zFiltered, 0.1); //filtro lento
+		LowPassFilter2(yFiltered * zFiltered, filterConstant); //filtro lento
 		double yESCtemp = outputFilter2 * ygain;
 
 		integralESC2 = integralESC2 + taxaH*yESCtemp; // integrador
 		yESC = integralESC2*gainESC;
 
-		xSource = xESC+119; 
-		ySource = yESC+155; 
+		xSource = xESC+62; // 		xSource = xESC+119; 
+
+		ySource = yESC+88; // 		ySource = yESC+155; 
+
 		refPos.setPos(xSource, ySource, 0);
 	}
 
