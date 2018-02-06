@@ -1,7 +1,7 @@
 %% real world variables
 close all;
-xrobotDataDir = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\roboData.txt';
-signalsDataDir = 'C:\Users\jeant\OneDrive\Documentos\gitProjetoFinal\ProjetoFinalQT\ProjetoFinal\signalsStream.txt';
+xrobotDataDir = 'G:\Google Drive\Jean\ProjetoFinal\ensaiosSalvos\esc_2DOF_AlvoMovimento_SegundoTeste\roboData.txt';
+signalsDataDir = 'G:\Google Drive\Jean\ProjetoFinal\ensaiosSalvos\esc_2DOF_AlvoMovimento_SegundoTeste\signalsStream.txt';
 
 robotData = load(xrobotDataDir);
 signalsData = load(signalsDataDir);
@@ -77,7 +77,7 @@ figure(1)
 subplot(2,1,1);
 plot(t,x,t,y)
 hold on
-plot(t,70*sin(t*0.04)+119,t,70*cos(t*0.04)+226-70,'linewidth',1.5)
+plot(t,70*sin(t*0.04)+119,'b',t,70*cos(t*0.04)+226-70,'r','linewidth',1.5)
 legend('posicao x','posicao y','fonte x', 'fonte y');
 set(gca,'YTick',(20:40:240))
 grid on
@@ -91,12 +91,14 @@ figure(2)
 subplot(2,1,1);
 plot(t,x,t,y)
 hold on
-plot(t,70*sin(t*0.04)+119,t,70*cos(t*0.04)+226-70,'linewidth',1.5)
+plot(t,70*sin(t*0.04)+119,'b',t,70*cos(t*0.04)+226-70,'r','linewidth',1.5)
 legend('posicao x','posicao y','fonte x', 'fonte y');
 set(gca,'YTick',(20:40:240))
 grid on
 subplot(2,1,2);
-plot(x,y,70*sin(t*0.04)+119,70*cos(t*0.04)+226-70)
+plot(x,y)
+hold on
+plot(70*sin(t*0.04)+119,70*cos(t*0.04)+226-70,'linewidth',1.5)
 legend('robot','fonte');
 
 

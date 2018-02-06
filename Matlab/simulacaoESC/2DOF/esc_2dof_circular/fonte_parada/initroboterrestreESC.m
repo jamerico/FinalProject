@@ -18,8 +18,8 @@ R=10;
 
 
 %custo
-xstar=0;
-ystar=0;
+xstar=30;
+ystar=50;
 xstarArray = 0;
 ystarArray = 0;
 
@@ -30,7 +30,7 @@ count1=0;
 % ESC
 % esse ganho controla a velocidade de seguimento do algoritmo.
 % Quanto maior for o ganho, mais rapido o algoritmo chega na fonte
-Kesc = 0.08; %0.08
+Kesc = 0.02; %0.08
 
 Rr=1;
 v=1*pi*Rr; % 1 volta a cada 2 s --> w=pi
