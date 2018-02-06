@@ -447,20 +447,28 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	Position posVirtual(robotx, roboty, thetaRobot);
 	
 	// posicao da fonte
-	double xSource = 62;; // objFuncCusto.posX;
-	double ySource = 88; // objFuncCusto.posY;
+	double xSourceInit = 119;
+	double ySourceInit = 226;
+
+	double xSource = xSourceInit; // objFuncCusto.posX;
+	double ySource = ySourceInit; // objFuncCusto.posY;
 
 	// script para fazer a fonte se mover apos um determinado tempo
 	static bool tempoVirtualIniciado = false;
 
-	clock_t now2;
 	if (enableEsc){
+		static double t2;
 		if (!tempoVirtualIniciado){
-			clock_t now2 = clock();
+			t2 = t;
 			tempoVirtualIniciado = true;
 		}
 		
-		//double tempoVirtual = t - (now2*0.3) / CLOCKS_PER_SEC;
+		double raio = 70;
+		double tempoVirtual = t - t2;
+		tempoVirtual = tempoVirtual*0.04;
+		xSource = raio * sin(tempoVirtual) + xSource;
+		ySource = raio * cos(tempoVirtual) + (ySource - raio);
+
 		//double kx = (objFuncCusto.posX - 50) / 20.0;
 		//xSource = objFuncCusto.posX - kx*tempoVirtual;
 		//double ky = (objFuncCusto.posY - 100) / 20.0;
@@ -475,13 +483,15 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	//}
 
 	// setup da variavel de referencia da fonte
-	Position refPos;
-	refPos.setPos(xSource, ySource, 0);
+	Position posSource;
+	posSource.setPos(xSource, ySource, 0);
+
+
 
 
 	// script do ESC: gera xSource e ysource
 	
-	double z = - (  pow((posVirtual.x - 166), 2) + pow((posVirtual.y - 212), 2)  ) + 400;
+	double z = -(pow((posVirtual.x - xSource), 2) + pow((posVirtual.y - ySource), 2)) + 400;
 	double ygain = 0.01;
 	double xgain = 0.01;
 
@@ -490,7 +500,9 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	// ESC: x
 	double xESC;
 	double yESC;
-	double gainESC = 0.002;
+	double xRefESC;
+	double yRefESC;
+	double gainESC = 0.04; // 0.002 para fonte parada e distante
 	double filterConstant = 0.5;
 
 
@@ -520,19 +532,28 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 		integralESC2 = integralESC2 + taxaH*yESCtemp; // integrador
 		yESC = integralESC2*gainESC;
 
-		xSource = xESC+62; // 		xSource = xESC+119; 
+		xRefESC = xESC + xSourceInit; // 		xSource = xESC+119; 
 
-		ySource = yESC+88; // 		ySource = yESC+155; 
+		yRefESC = yESC + ySourceInit; // 		ySource = yESC+155; 
 
-		refPos.setPos(xSource, ySource, 0);
 	}
+	else{
+		xRefESC = xSource;
+		yRefESC = ySource;
+
+	}
+
+	Position refPos;
+	refPos.setPos(xRefESC, yRefESC, 0);
+
 
 
 
 
 	// script do controle circular
-	double deltax = robotx - xSource;
-	double deltay = roboty - ySource;
+
+	double deltax = robotx - xRefESC;
+	double deltay = roboty - yRefESC;
 
 	if (deltax < 0){
 		if (deltay < 0){
@@ -563,7 +584,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 
 	////double ur = -k2*v*L - k3*abs(v)*thetatil - v*cos(thetatil) / (L + Rr);
 	//double k = 6; // parece bom
-	double k = 10;
+	double k = 15; // k = 10 foi o melhor
 	//double ur = k*thetatil; 
 
 	//double ur = -k2*v*L - k*thetatil - v*cos(thetatil) / (L + Rr);
@@ -599,7 +620,7 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 	// envio da mensagem
 	Serial::instance()->EnviarMensagem2(sinalTensao1, sinalTensao2, cfgXbee); // GARANTIR QUE ESSES SINAIS DE TENSAO ESTEJAM ENTRE -255 ATE 255
 
-	return StrRetorno(refPos, posVirtual, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC, t, L, ur, thetatil, thetaaux, thetad);
+	return StrRetorno(refPos, posVirtual, posSource, AngRef, erroAng, saidaControleLinear, saidaControleAngular, sinalTensao1, sinalTensao2, false, angSource, integralESC, t, L, ur, thetatil, thetaaux, thetad);
 
 }
 StrRetorno Objeto::Controle(){

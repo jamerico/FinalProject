@@ -48,15 +48,15 @@ if(enableSave)
     copyfile(signalsDataDir,fullDir)
 end
 
-figure;
-subplot(3,1,1);
-x = x-mean(x);
-plot(t,x)
-subplot(3,1,2);
-source = source-mean(source);
-plot(t,source)
-subplot(3,1,3)
-plot(t,x.*source)
+% figure;
+% subplot(3,1,1);
+% x = x-mean(x);
+% plot(t,x)
+% subplot(3,1,2);
+% source = source-mean(source);
+% plot(t,source)
+% subplot(3,1,3)
+% plot(t,x.*source)
 
 
 figure;

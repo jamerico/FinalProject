@@ -81,11 +81,12 @@ StrRetorno::StrRetorno(double pRefPos, double pErroPos, Position pPosAtual, doub
 }
 
 
-StrRetorno::StrRetorno(Position pRefPos, Position pPosAtual, double pAngDesejado, double pErroAng, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource, double pIntegralEsc, double pt, double pL, double puR, double pThetaTil, double pThetaaux, double pthetaDeseh)
+StrRetorno::StrRetorno(Position pRefPos, Position pPosAtual, Position pSource, double pAngDesejado, double pErroAng, double pSaidaControleLinear, double pSaidaControleAngular, double pSinalControle1, double pSinalControle2, bool pSat, double pAngSource, double pIntegralEsc, double pt, double pL, double puR, double pThetaTil, double pThetaaux, double pthetaDeseh)
 {
 	satAng = pSat;
 
 	posicaoRef = pRefPos;
+	posicaoSource = pSource;
 	saidaControleLinear = pSaidaControleLinear;
 
 	this->posicaoAtual = pPosAtual;

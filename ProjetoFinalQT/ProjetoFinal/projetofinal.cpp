@@ -426,7 +426,9 @@ void ProjetoFinal::processFrameAndUpdateGUI(){
 
 				ui.XYText->appendPlainText("-------Posicao-------");
 				ui.XYText->appendPlainText("Pos Robot (x,y): " + QString::number(rtn.posicaoAtual.x) + " , " + QString::number(rtn.posicaoAtual.y));
-				ui.XYText->appendPlainText("Pos Desejada (x,y): " + QString::number(rtn.posicaoRef.x) + " , " + QString::number(rtn.posicaoRef.y));
+				ui.XYText->appendPlainText("Pos Source (x,y): " + QString::number(rtn.posicaoSource.x) + " , " + QString::number(rtn.posicaoSource.y));
+				ui.XYText->appendPlainText("Pos Ref ESC (x,y): " + QString::number(rtn.posicaoRef.x) + " , " + QString::number(rtn.posicaoRef.y));
+
 				ui.XYText->appendPlainText("-------Orientacao-------");
 				ui.XYText->appendPlainText("Ang Robot: " + QString::number(rtn.posicaoAtual.ang * 180 / M_PI));
 				ui.XYText->appendPlainText("ThetaAux: " + QString::number(rtn.thetaAux* 180 / M_PI));
