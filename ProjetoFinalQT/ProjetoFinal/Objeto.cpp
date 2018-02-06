@@ -466,8 +466,8 @@ StrRetorno Objeto::ControleJacoudCircular(paramControle pParam){
 		double raio = 70;
 		double tempoVirtual = t - t2;
 		tempoVirtual = tempoVirtual*0.04;
-		xSource = raio * sin(tempoVirtual) + xSource;
-		ySource = raio * cos(tempoVirtual) + (ySource - raio);
+		xSource = raio * sin(tempoVirtual) + xSourceInit;
+		ySource = raio * cos(tempoVirtual) + (ySourceInit - raio);
 
 		//double kx = (objFuncCusto.posX - 50) / 20.0;
 		//xSource = objFuncCusto.posX - kx*tempoVirtual;
