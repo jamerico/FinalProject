@@ -52,7 +52,7 @@ end
 D=sqrt(deltax^2+deltay^2);
 L=D-Rr;
 % 
-k2=4;k3=2*sqrt(2)*2;  %2*sqrt(2)*8
+k2=4;k3=2*sqrt(2)*6;  %2*sqrt(2)*8
 % 
 ut=v;
 %ur=-k2*v*L*aux-k3*abs(v)*thetatil-v*cos(thetatil)/(L+Rr);

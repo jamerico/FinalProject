@@ -32,8 +32,8 @@ count1=0;
 % Quanto maior for o ganho, mais rapido o algoritmo chega na fonte
 Kesc = 0.08; %0.08
 
-Rr=1;
-v=1*pi*Rr; % 1 volta a cada 2 s --> w=pi
+Rr=2;
+v=1*pi*Rr/2; % 1 volta a cada 2 s --> w=pi
 
 
 h=(v/Rr)/5; % filtro principal
