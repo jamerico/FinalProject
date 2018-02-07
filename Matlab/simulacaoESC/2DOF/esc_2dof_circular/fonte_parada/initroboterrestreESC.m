@@ -30,10 +30,10 @@ count1=0;
 % ESC
 % esse ganho controla a velocidade de seguimento do algoritmo.
 % Quanto maior for o ganho, mais rapido o algoritmo chega na fonte
-Kesc = 0.02; %0.08
+Kesc = 0.015; %0.08
 
-Rr=1;
-v=1*pi*Rr; % 1 volta a cada 2 s --> w=pi
+Rr=2;
+v=1*pi*Rr/2; % 1 volta a cada 2 s --> w=pi
 
 
 h=(v/Rr)/5; % filtro principal
@@ -52,21 +52,4 @@ x0(2)=0;
 yc0=0;
 deltayold=x0(2)-yc0;
 
-%% 
 
-% posicao robot
-figure(1)
-subplot(2,1,1);
-plot(t,x(:,2),t,xstarArray(1:end-2)')
-legend('posicao x','fonte x');
-subplot(2,1,2);
-plot(t,y(:,2),t,ystarArray(1:end-2)')
-legend('posicao y','fonte y');
-
-figure(2)
-subplot(2,1,1);
-plot(t,z(:,2),t,400*ones(1,size(t,1)))
-legend('func custo ao longo do tempo','maximo');
-subplot(2,1,2);
-plot(t,ur(:,2))
-legend('Ur');
