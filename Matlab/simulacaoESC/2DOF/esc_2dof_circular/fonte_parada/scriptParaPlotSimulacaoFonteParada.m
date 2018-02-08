@@ -1,3 +1,4 @@
+load fonte_parada.mat
 %% real world variables
 close all;
 
@@ -24,7 +25,7 @@ plot(t,y(:,2),t,ystar*ones(1,size(t,1)))
 grid on
 legend('posicao x','fonte x','posicao y','fonte y');
 saveas(gcf,'fonteParada_FuncaoCustoValorMaximo','png');
-saveas(gcf,'fonteParada_FuncaoCustoValorMaximo','eps');
+saveas(gcf,'fonteParada_FuncaoCustoValorMaximo','epsc');
 
 
 
@@ -41,11 +42,22 @@ axis([0 max(t) -10 10 ])
 legend('ur');
 grid on
 saveas(gcf,'fonteParada_RefESCeTensao','png');
-saveas(gcf,'fonteParada_RefESCeTensao','eps');
+saveas(gcf,'fonteParada_RefESCeTensao','epsc');
 
 
+figure(3)
+plot(x(:,2),y(:,2))
+grid on
+hold on
+plot(30,50,'*')
+legend('Posicao Robô (x,y)', 'Fonte (x,y)');
+saveas(gcf,'fonteParada_VisaoGeralMovimento','png');
+saveas(gcf,'fonteParada_VisaoGeralMovimento','epsc');
+
+
+if(false)
 save fonte_parada.mat
-
+end
 
 
 
