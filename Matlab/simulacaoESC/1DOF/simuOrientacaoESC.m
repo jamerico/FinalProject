@@ -30,6 +30,9 @@ set(gca,'YTick',(-80:40:400))
 if(salvar)
 hgexport(fig1,strcat('simulacaoFuncaoCustoeOrientacao',label)) 
 end
+
+
+
 fig2 = figure(2)
 subplot(2,1,1);
 plot(t.signals.values,uEsc.signals.values*180/pi)
